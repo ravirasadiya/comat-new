@@ -3,7 +3,7 @@ import React from 'react'
 import ToolCard from '../tool-card';
 
 import { ToolInvocation } from 'ai';
-import { RequestFundsArgumentsType, RequestFundsResultType } from '@/agentkit/actions/solana/types';
+import { RequestFundsResultType } from '@/agentkit/actions/solana/types';
 
 interface Props {
     tool: ToolInvocation

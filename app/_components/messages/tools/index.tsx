@@ -20,7 +20,12 @@ import {
     SOLANA_GET_TOKEN_DATA_NAME
 } from '@/agentkit/actions/solana/names'
 
+import {
+    TWITTER_SEARCH_RECENT_NAME
+} from '@/agentkit/actions/twitter/names'
+
 import type { ToolInvocation as ToolInvocationType } from 'ai'
+import { SearchRecentTweets } from './twitter'
 
 interface Props {
     tool: ToolInvocationType
@@ -41,12 +46,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <GetTrendingTokens tool={tool} />
         case SOLANA_GET_TOKEN_DATA_NAME:
             return <GetTokenData tool={tool} />
-        // case DEPLOY_NFT_NAME:
-        //     return <DeployNFT tool={tool} />
-        // case DEPLOY_TOKEN_NAME:
-        //     return <DeployToken tool={tool} />
-        // case TRANSFER_NAME:
-        //     return <Transfer tool={tool} />
+        case TWITTER_SEARCH_RECENT_NAME:
+            return <SearchRecentTweets tool={tool} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

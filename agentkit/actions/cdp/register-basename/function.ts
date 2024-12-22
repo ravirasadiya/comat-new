@@ -171,7 +171,6 @@ export async function registerBasename(
       }
     };
   } catch (error) {
-    console.error(error);
     return {
       message: `Error registering basename: Error: ${error}`,
     };

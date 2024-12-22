@@ -1,8 +1,7 @@
 import { SolanaAgentKit } from "solana-agent-kit";
 import { GetTokenDataArgumentsType, GetTokenDataResultBodyType } from "./types";
 import { SolanaActionResult } from "../../solana-action";
-import { SolanaToken } from "@/types/solana-token";
-import { getPrice } from "../utils/get-price";
+import { getTokenDataByTicker } from "../utils/get-token-data";
 
 /**
  * Gets the token data for a given ticker.
@@ -16,12 +15,8 @@ export async function getTokenData(
   args: GetTokenDataArgumentsType
 ): Promise<SolanaActionResult<GetTokenDataResultBodyType>> {
   try {
-    const response = await fetch('https://tokens.jup.ag/tokens?tags=birdeye-trending');
-    if (!response.ok) {
-      throw new Error('Failed to fetch trending tokens');
-    }
 
-    const token = await solanaKit.getTokenDataByTicker(args.ticker);
+    const token = await getTokenDataByTicker(args.ticker);
 
     if (!token) {
       throw new Error('Failed to fetch token data');

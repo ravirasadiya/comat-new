@@ -21,8 +21,6 @@ export async function mintNft(
     const transaction = result.getTransaction();
     const transactionHash = transaction.getTransactionHash();
 
-    console.log(transaction.content())
-
     if (!transactionHash) {
       throw new Error("Failed to get transaction hash");
     }
