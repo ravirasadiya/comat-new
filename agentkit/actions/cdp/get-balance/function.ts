@@ -21,7 +21,7 @@ export async function getBalance(
     return {
       message: `Balances for wallet ${wallet.getId()}:\n${balance}`,
       body: {
-        balance: balance
+        balance
       }
     };
   } catch (error) {

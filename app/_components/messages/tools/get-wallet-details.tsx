@@ -13,7 +13,7 @@ const GetWalletDetails: React.FC<Props> = ({ tool }) => {
             tool={tool}
             icon="Wallet"
             loadingText="Getting Wallet Details..."
-            resultHeading={() => "Wallet Details"}
+            resultHeading={() => "Fetched Wallet Details"}
             resultBody={(result: GetWalletDetailsActionResultType) => result.body?.address ?? "No address found"}
         />
     )

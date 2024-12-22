@@ -2,7 +2,6 @@
 
 import React from 'react'
 
-
 import EmptyChat from './empty';
 import Messages from './messages';
 import ChatInput from './input';

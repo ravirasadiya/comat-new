@@ -16,7 +16,7 @@ const RequestFaucet: React.FC<Props> = ({ tool }) => {
             tool={tool}
             icon="Droplet"
             loadingText="Requesting Faucet Funds..."
-            resultHeading={() => "Faucet Funds Success"}
+            resultHeading={() => "Received Faucet Funds"}
             resultBody={(result: RequestFaucetFundsActionResultType) => result.body 
                 ? `[Transaction Link](${result.body.transactionLink})` 
                 : result.message}

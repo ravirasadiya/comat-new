@@ -10,14 +10,17 @@ interface Props {
 }
 
 const GetBalance: React.FC<Props> = ({ tool }) => {
+    
 
     return (
         <ToolCard 
             tool={tool}
             icon="HandCoins"
             loadingText={`Getting ${tool.args.assetId} Balance...`}
-            resultHeading={() => `${tool.args.assetId.toUpperCase()} Balance`}
-            resultBody={(result: GetBalanceActionResultType) => result.body?.balance.toString() ?? "No balance found"}
+            resultHeading={() => `Read ${tool.args.assetId.toUpperCase()} Balance`}
+            resultBody={(result: GetBalanceActionResultType) => result.body 
+                ? `${result.body.balance.toFixed(4)} ${tool.args.assetId.toUpperCase()}` 
+                :  "No balance found"}
         />
     )
 }
