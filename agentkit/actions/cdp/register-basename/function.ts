@@ -1,16 +1,7 @@
-import { CdpAction, CdpActionResult } from "../cdp_action";
-import { Coinbase, Wallet } from "@coinbase/coinbase-sdk";
-import { encodeFunctionData, namehash } from "viem";
-import { z } from "zod";
+import { Wallet, Coinbase } from "@coinbase/coinbase-sdk";
+import { Abi, encodeFunctionData, namehash } from "viem";
 import { Decimal } from "decimal.js";
-import { REGISTER_BASENAME } from "./action-names";
-
-const REGISTER_BASENAME_PROMPT = `
-This tool will register a Basename for the agent. The agent should have a wallet associated to register a Basename.
-When your network ID is 'base-mainnet' (also sometimes known simply as 'base'), the name must end with .base.eth, and when your network ID is 'base-sepolia', it must ends with .basetest.eth.
-Do not suggest any alternatives and never try to register a Basename with another postfix. The prefix of the name must be unique so if the registration of the
-Basename fails, you should prompt to try again with a more unique name.
-`;
+import { RegisterBasenameArgumentsType, RegisterBasenameActionResultType } from "./types";
 
 // Contract addresses
 export const BASENAMES_REGISTRAR_CONTROLLER_ADDRESS_MAINNET =
@@ -25,7 +16,7 @@ export const L2_RESOLVER_ADDRESS_TESTNET = "0x6533C94869D28fAA8dF77cc63f9e2b2D6C
 export const REGISTRATION_DURATION = "31557600";
 
 // Relevant ABI for L2 Resolver Contract.
-export const L2_RESOLVER_ABI = [
+export const L2_RESOLVER_ABI: Abi = [
   {
     inputs: [
       { internalType: "bytes32", name: "node", type: "bytes32" },
@@ -97,25 +88,6 @@ export const REGISTRAR_ABI = [
   },
 ];
 
-/**
- * Input schema for registering a Basename.
- */
-export const RegisterBasenameInput = z
-  .object({
-    basename: z.string().describe("The Basename to assign to the agent"),
-    amount: z.string().default("0.002").describe("The amount of ETH to pay for registration"),
-  })
-  .strip()
-  .describe("Instructions for registering a Basename");
-
-/**
- * Creates registration arguments for Basenames.
- *
- * @param baseName - The Basename (e.g., "example.base.eth" or "example.basetest.eth").
- * @param addressId - The Ethereum address.
- * @param isMainnet - True if on mainnet, False if on testnet.
- * @returns Formatted arguments for the register contract method.
- */
 function createRegisterContractMethodArgs(
   baseName: string,
   addressId: string,
@@ -149,22 +121,10 @@ function createRegisterContractMethodArgs(
   return registerArgs;
 }
 
-export type RegisterBasenameResultBody = {
-  basename: string;
-  transactionHash: string;
-};
-
-/**
- * Registers a Basename for the agent.
- *
- * @param wallet - The wallet to register the Basename with.
- * @param args - The input arguments for the action.
- * @returns Confirmation message with the basename.
- */
 export async function registerBasename(
   wallet: Wallet,
-  args: z.infer<typeof RegisterBasenameInput>,
-): Promise<CdpActionResult<RegisterBasenameResultBody>> {
+  args: RegisterBasenameArgumentsType,
+): Promise<RegisterBasenameActionResultType> {
   const addressId = (await wallet.getDefaultAddress()).getId();
   const isMainnet = wallet.getNetworkId() === Coinbase.networks.BaseMainnet;
 
@@ -210,21 +170,10 @@ export async function registerBasename(
         transactionHash
       }
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
     console.error(error);
     return {
       message: `Error registering basename: Error: ${error}`,
     };
   }
-}
-
-/**
- * Register Basename action.
- */
-export class RegisterBasenameAction implements CdpAction<typeof RegisterBasenameInput, RegisterBasenameResultBody> {
-  public name = REGISTER_BASENAME;
-  public description = REGISTER_BASENAME_PROMPT;
-  public argsSchema = RegisterBasenameInput;
-  public func = registerBasename;
-}
+} 

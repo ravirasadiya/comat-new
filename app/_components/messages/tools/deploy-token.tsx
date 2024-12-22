@@ -2,8 +2,6 @@ import React from 'react'
 
 import Link from 'next/link';
 
-import { z } from 'zod';
-
 import { Button } from '@/components/ui';
 
 import ToolCard from './tool-card';
@@ -11,7 +9,7 @@ import ToolCard from './tool-card';
 import { getExplorerAddressUrl, getExplorerTransactionUrl } from '@/lib/explorers';
 
 import type { ToolInvocation } from 'ai';
-import type { DeployTokenInput, DeployTokenResultBody } from '@/agentkit/actions/cdp/deploy_token';
+import type { DeployTokenArgumentsType, DeployTokenActionResultType, DeployTokenResultBodyType } from '@/agentkit';
 
 interface Props {
     tool: ToolInvocation
@@ -24,11 +22,11 @@ const DeployToken: React.FC<Props> = ({ tool }) => {
             tool={tool}
             icon="Coins"
             loadingText={`Deploying Token...`}
-            resultHeading={(result) => result.body ? `Token Deployed` : `Token Deployment Failed`}
-            resultBody={(result) => result.body 
+            resultHeading={(result: DeployTokenActionResultType) => result.body ? `Token Deployed` : `Token Deployment Failed`}
+            resultBody={(result: DeployTokenActionResultType) => result.body 
                 ? (
                     <TokenDeploymentSuccess 
-                        args={tool.args} 
+                        args={tool.args}
                         body={result.body}
                     />
                 ) : "No transaction link found"}
@@ -37,8 +35,8 @@ const DeployToken: React.FC<Props> = ({ tool }) => {
 }
 
 interface TokenDeploymentSuccessProps {
-    args: z.infer<typeof DeployTokenInput>,
-    body: DeployTokenResultBody
+    args: DeployTokenArgumentsType,
+    body: DeployTokenResultBodyType
 }
 
 const TokenDeploymentSuccess: React.FC<TokenDeploymentSuccessProps> = ({

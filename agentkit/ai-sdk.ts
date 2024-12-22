@@ -2,7 +2,7 @@ import { CoreTool, tool } from "ai";
 
 import { CdpAgentkit } from "./cdp_agentkit";
 
-import { CdpAction, CdpActionSchemaAny, getAllCdpActions } from "./actions/cdp";
+import { getAllCdpActions, CdpAction, CdpActionSchemaAny } from "./actions";
 
 export const cdpTool = <TActionSchema extends CdpActionSchemaAny, TResultBody>(action: CdpAction<TActionSchema, TResultBody>, agentkit: CdpAgentkit) => tool({
     description: action.description,

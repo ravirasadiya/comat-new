@@ -10,13 +10,13 @@ import DeployNFT from './deploy-nft';
 import DeployToken from './deploy-token';
 
 import { 
-    DEPLOY_NFT,
-    DEPLOY_TOKEN,
-    GET_BALANCE, 
-    GET_WALLET_DETAILS, 
-    REGISTER_BASENAME, 
-    REQUEST_FAUCET_FUNDS
-} from '@/agentkit/actions/cdp/action-names'
+    DEPLOY_NFT_NAME,
+    DEPLOY_TOKEN_NAME,
+    GET_BALANCE_NAME, 
+    GET_WALLET_DETAILS_NAME, 
+    REGISTER_BASENAME_NAME, 
+    REQUEST_FAUCET_FUNDS_NAME
+} from '@/agentkit/actions/names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
 
@@ -27,17 +27,17 @@ interface Props {
 const ToolInvocation: React.FC<Props> = ({ tool }) => {
     
     switch(tool.toolName) {
-        case GET_WALLET_DETAILS:
+        case GET_WALLET_DETAILS_NAME:
             return <GetWalletDetails tool={tool} />
-        case GET_BALANCE:
+        case GET_BALANCE_NAME:
             return <GetBalance tool={tool} />
-        case REGISTER_BASENAME:
+        case REGISTER_BASENAME_NAME:
             return <RegisterBasename tool={tool} />
-        case REQUEST_FAUCET_FUNDS:
+        case REQUEST_FAUCET_FUNDS_NAME:
             return <RequestFaucet tool={tool} />
-        case DEPLOY_NFT:
+        case DEPLOY_NFT_NAME:
             return <DeployNFT tool={tool} />
-        case DEPLOY_TOKEN:
+        case DEPLOY_TOKEN_NAME:
             return <DeployToken tool={tool} />
         default:
             return null;

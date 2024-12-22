@@ -15,7 +15,6 @@ interface ChatContextType {
     setInput: (input: string) => void;
     onSubmit: () => Promise<void>;
     isLoading: boolean;
-    addToolResult: (props: { toolCallId: string, result: any }) => void;
     sendMessage: (message: string) => void;
     isResponseLoading: boolean;
 }
@@ -26,7 +25,6 @@ const ChatContext = createContext<ChatContextType>({
     setInput: () => {},
     onSubmit: async () => {},
     isLoading: false,
-    addToolResult: () => {},
     sendMessage: () => {},
     isResponseLoading: false,
 });
@@ -42,7 +40,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
     const [isResponseLoading, setIsResponseLoading] = useState(false);
 
-    const { messages, input, setInput, append, isLoading, addToolResult } = useAiChat({
+    const { messages, input, setInput, append, isLoading } = useAiChat({
         maxSteps: 5,
         initialMessages: [
             {
@@ -81,7 +79,6 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             setInput, 
             onSubmit, 
             isLoading,
-            addToolResult,
             sendMessage,
             isResponseLoading,
         }}>

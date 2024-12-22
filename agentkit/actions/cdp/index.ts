@@ -1,11 +1,12 @@
-import { CdpAction, CdpActionSchemaAny } from "../cdp_action";
-import { DeployNftAction } from "./deploy-nft/deploy_nft";
-import { DeployTokenAction } from "./deploy_token";
-import { GetBalanceAction } from "./get_balance";
-import { GetWalletDetailsAction } from "./get_wallet_details";
-import { MintNftAction } from "./mint_nft";
-import { RegisterBasenameAction } from "./register_basename";
-import { RequestFaucetFundsAction } from "./request_faucet_funds";
+import { CdpAction, CdpActionSchemaAny } from "@/agentkit";
+
+import { DeployNftAction } from "./deploy-nft";
+import { DeployTokenAction } from "./deploy-token";
+import { GetBalanceAction } from "./get-balance";
+import { GetWalletDetailsAction } from "./get-wallet-details";
+import { MintNftAction } from "./mint-nft";
+import { RegisterBasenameAction } from "./register-basename";
+import { RequestFaucetFundsAction } from "./request-faucet-funds";
 import { TradeAction } from "./trade";
 import { TransferAction } from "./transfer";
 
@@ -34,8 +35,6 @@ export const CDP_ACTIONS = getAllCdpActions();
 export * from './types';
 
 export {
-  type CdpAction,
-  type CdpActionSchemaAny,
   GetWalletDetailsAction,
   DeployNftAction,
   DeployTokenAction,
