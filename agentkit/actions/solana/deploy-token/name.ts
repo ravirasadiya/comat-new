@@ -1,0 +1,1 @@
+export const SOLANA_DEPLOY_TOKEN_NAME = "solana_deploy_token"; 

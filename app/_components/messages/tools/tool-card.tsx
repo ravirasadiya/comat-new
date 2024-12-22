@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Card, AnimatedShinyText } from '@/components/ui'
+import { AnimatedShinyText } from '@/components/ui'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
 
 import { ToolInvocation } from 'ai'
@@ -13,10 +13,11 @@ interface Props<ActionResultBodyType> {
     icon: IconName,
     loadingText: string,
     resultHeading: (result: CdpActionResult<ActionResultBodyType>) => string,
-    resultBody: (result: CdpActionResult<ActionResultBodyType>) => React.ReactNode
+    resultBody: (result: CdpActionResult<ActionResultBodyType>) => React.ReactNode,
+    defaultOpen?: boolean,
 }
 
-const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody }: Props<ActionResultBodyType>) => {
+const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody, defaultOpen = false }: Props<ActionResultBodyType>) => {
 
     if (tool.state === "partial-call" || tool.state === "call") {
         return (
@@ -26,7 +27,7 @@ const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeadin
         )
     }
     return (
-        <Collapsible>
+        <Collapsible defaultOpen={defaultOpen}>
             <CollapsibleTrigger className="flex items-center gap-2">
                 <Icon 
                     name={icon} 

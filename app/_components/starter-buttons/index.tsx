@@ -11,9 +11,7 @@ const starterButtons = [
     }
 ] as const
 
-interface Props {}
-
-const StarterButtons: React.FC<Props> = ({ }) => {
+const StarterButtons = () => {
     return (
         <div className="grid grid-cols-2 gap-2">
             {starterButtons.map((button) => (

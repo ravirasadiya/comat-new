@@ -2,23 +2,21 @@
 
 import React from 'react'
 
-import GetWalletDetails from './get-wallet-details';
-import GetBalance from './get-balance';
-import RegisterBasename from './register-basename';
-import RequestFaucet from './request-faucet';
-import DeployNFT from './deploy-nft';
-import DeployToken from './deploy-token';
-import Transfer from './transfer';
+import {
+    Balance,
+    GetWalletAddress,
+    GetDomain,
+    RequestFunds,
+    GetTrendingTokens
+} from './solana'
 
 import { 
-    DEPLOY_NFT_NAME,
-    DEPLOY_TOKEN_NAME,
-    GET_BALANCE_NAME, 
-    GET_WALLET_DETAILS_NAME, 
-    REGISTER_BASENAME_NAME, 
-    REQUEST_FAUCET_FUNDS_NAME,
-    TRANSFER_NAME
-} from '@/agentkit/actions/names'
+    SOLANA_BALANCE_NAME,
+    SOLANA_GET_WALLET_ADDRESS_NAME,
+    SOLANA_GET_DOMAIN_NAME,
+    SOLANA_REQUEST_FUNDS_NAME,
+    SOLANA_GET_TRENDING_TOKENS_NAME
+} from '@/agentkit/actions/solana/names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
 
@@ -29,22 +27,30 @@ interface Props {
 const ToolInvocation: React.FC<Props> = ({ tool }) => {
     
     switch(tool.toolName) {
-        case GET_WALLET_DETAILS_NAME:
-            return <GetWalletDetails tool={tool} />
-        case GET_BALANCE_NAME:
-            return <GetBalance tool={tool} />
-        case REGISTER_BASENAME_NAME:
-            return <RegisterBasename tool={tool} />
-        case REQUEST_FAUCET_FUNDS_NAME:
-            return <RequestFaucet tool={tool} />
-        case DEPLOY_NFT_NAME:
-            return <DeployNFT tool={tool} />
-        case DEPLOY_TOKEN_NAME:
-            return <DeployToken tool={tool} />
-        case TRANSFER_NAME:
-            return <Transfer tool={tool} />
+        case SOLANA_BALANCE_NAME:
+            return <Balance tool={tool} />
+        case SOLANA_GET_WALLET_ADDRESS_NAME:
+            return <GetWalletAddress tool={tool} />
+        case SOLANA_GET_DOMAIN_NAME:
+            return <GetDomain tool={tool} />
+        case SOLANA_REQUEST_FUNDS_NAME:
+            return <RequestFunds tool={tool} />
+        case SOLANA_GET_TRENDING_TOKENS_NAME:
+            return <GetTrendingTokens tool={tool} />
+        // case REQUEST_FAUCET_FUNDS_NAME:
+        //     return <RequestFaucet tool={tool} />
+        // case DEPLOY_NFT_NAME:
+        //     return <DeployNFT tool={tool} />
+        // case DEPLOY_TOKEN_NAME:
+        //     return <DeployToken tool={tool} />
+        // case TRANSFER_NAME:
+        //     return <Transfer tool={tool} />
         default:
-            return null;
+            return (
+                <pre className="whitespace-pre-wrap">
+                    {JSON.stringify(tool, null, 2)}
+                </pre>
+            );
     }
 }
 

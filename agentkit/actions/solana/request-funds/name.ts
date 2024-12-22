@@ -1,0 +1,1 @@
+export const SOLANA_REQUEST_FUNDS_NAME = "solana_request_funds"; 

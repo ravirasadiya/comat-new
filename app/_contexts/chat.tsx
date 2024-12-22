@@ -52,6 +52,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         onResponse: () => {
             setIsResponseLoading(false);
         },
+        api: '/api/chat/solana',
     });
 
     const onSubmit = async () => {

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { Wallet } from "@coinbase/coinbase-sdk";
+import { SolanaAgentKit } from "solana-agent-kit";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CdpActionSchemaAny = z.ZodObject<any, any, any, any>;
@@ -34,5 +35,5 @@ export interface CdpAction<TActionSchema extends CdpActionSchemaAny, TBody> {
    */
   func:
     | ((wallet: Wallet, args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>)
-    | ((args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>);
+    | ((args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>)
 }
