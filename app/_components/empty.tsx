@@ -18,10 +18,10 @@ const EmptyChat: React.FC = () => {
                 <div className="flex flex-col gap-4 items-center justify-center">
                     <div className="flex flex-col gap-1">
                         <h1 className="font-semibold text-center text-2xl">
-                            What would you like to do on Base today?
+                            What would you like to do on Solana today?
                         </h1>
                         <p className="text-center text-sm text-neutral-600 dark:text-neutral-400">
-                            Get answers with citations to your relevant files.
+                            Query the blockchain, make swaps, search X, and more.
                         </p>
                     </div>
                 </div>

@@ -10,3 +10,4 @@ export * from "./resolve-domain/name";
 export * from "./get-domain/name";
 export * from "./get-wallet-address/name";
 export * from "./get-trending-tokens/name";
+export * from "./get-token-data/name";

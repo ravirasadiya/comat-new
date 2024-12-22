@@ -11,6 +11,7 @@ import { GetDomainAction } from "./get-domain";
 import { GetWalletAddressAction } from "./get-wallet-address";
 import { LaunchPumpfunTokenAction } from "./launch-pumpfun-token";
 import { GetTrendingTokensAction } from "./get-trending-tokens";
+import { GetTokenDataAction } from "./get-token-data";
 
 
 import { SolanaAction, SolanaActionSchemaAny } from "../solana-action";
@@ -35,7 +36,8 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new GetDomainAction(),
     new GetWalletAddressAction(),
     new LaunchPumpfunTokenAction(),
-    new GetTrendingTokensAction()
+    new GetTrendingTokensAction(),
+    new GetTokenDataAction()
   ];
 }
 
@@ -54,5 +56,6 @@ export {
   GetDomainAction,
   GetWalletAddressAction,
   LaunchPumpfunTokenAction,
-  GetTrendingTokensAction
+  GetTrendingTokensAction,
+  GetTokenDataAction
 };

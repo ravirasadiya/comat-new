@@ -10,3 +10,4 @@ export * from './resolve-domain/types';
 export * from './trade/types';
 export * from './transfer/types';
 export * from './get-trending-tokens/types';
+export * from './get-token-data/types';
