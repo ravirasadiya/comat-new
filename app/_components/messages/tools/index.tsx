@@ -8,6 +8,7 @@ import RegisterBasename from './register-basename';
 import RequestFaucet from './request-faucet';
 import DeployNFT from './deploy-nft';
 import DeployToken from './deploy-token';
+import Transfer from './transfer';
 
 import { 
     DEPLOY_NFT_NAME,
@@ -15,7 +16,8 @@ import {
     GET_BALANCE_NAME, 
     GET_WALLET_DETAILS_NAME, 
     REGISTER_BASENAME_NAME, 
-    REQUEST_FAUCET_FUNDS_NAME
+    REQUEST_FAUCET_FUNDS_NAME,
+    TRANSFER_NAME
 } from '@/agentkit/actions/names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -39,6 +41,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <DeployNFT tool={tool} />
         case DEPLOY_TOKEN_NAME:
             return <DeployToken tool={tool} />
+        case TRANSFER_NAME:
+            return <Transfer tool={tool} />
         default:
             return null;
     }

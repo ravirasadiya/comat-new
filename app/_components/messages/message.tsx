@@ -2,9 +2,7 @@
 
 import React from 'react'
 
-import { Bot, User } from 'lucide-react';
-
-import { Markdown } from '@/components/ui';
+import { Markdown, Icon } from '@/components/ui';
 
 import ToolInvocation from './tools';
 
@@ -40,18 +38,16 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
             className,
 
         )}>
-            <div className="flex items-center md:items-start gap-2">
-                {
-                    isUser ? (
-                        <User
-                            className="w-6 h-6 md:w-10 md:h-10 rounded-full"
-                        />
-                    ) : (
-                        <Bot
-                            className={cn("w-6 h-6 md:w-10 md:h-10 rounded-full", previousMessageSameRole && "opacity-0")}
-                        />
-                    )
-                }
+            <div className="flex items-center md:items-start gap-4">
+                <div className={cn(
+                    "flex items-center justify-center w-6 h-6 md:w-10 md:h-10 bg-neutral-100 dark:bg-neutral-800 shadow-md rounded-full",
+                    previousMessageSameRole && "opacity-0"
+                )}>
+                    <Icon
+                        name={isUser ? "User" : "Bot"}
+                        className="w-4 h-4 md:w-6 md:h-6"
+                    />
+                </div>
                 <p className={cn(
                     "text-sm font-semibold md:hidden",
                     isUser ? "text-neutral-900 dark:text-neutral-100" : "text-brand-500 dark:text-brand-500"

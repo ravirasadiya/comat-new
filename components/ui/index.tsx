@@ -4,3 +4,4 @@ export * from "./tooltip";
 export * from "./markdown";
 export * from "./animated-shiny-text";
 export * from "./card";
+export * from "./icon";
