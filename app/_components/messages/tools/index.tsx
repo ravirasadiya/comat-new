@@ -2,11 +2,16 @@
 
 import React from 'react'
 
-import GetWalletDetails from './get-wallet-details'
-import GetBalance from './get-balance'
-import RegisterBasename from './register-basename'
+import GetWalletDetails from './get-wallet-details';
+import GetBalance from './get-balance';
+import RegisterBasename from './register-basename';
+import RequestFaucet from './request-faucet';
+import DeployNFT from './deploy-nft';
+import DeployToken from './deploy-token';
 
 import { 
+    DEPLOY_NFT,
+    DEPLOY_TOKEN,
     GET_BALANCE, 
     GET_WALLET_DETAILS, 
     REGISTER_BASENAME, 
@@ -14,7 +19,6 @@ import {
 } from '@/agentkit/actions/cdp/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
-import RequestFaucet from './request-faucet'
 
 interface Props {
     tool: ToolInvocationType
@@ -31,6 +35,10 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <RegisterBasename tool={tool} />
         case REQUEST_FAUCET_FUNDS:
             return <RequestFaucet tool={tool} />
+        case DEPLOY_NFT:
+            return <DeployNFT tool={tool} />
+        case DEPLOY_TOKEN:
+            return <DeployToken tool={tool} />
         default:
             return null;
     }

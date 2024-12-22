@@ -6,9 +6,7 @@ import ChatInput from './input';
 
 import { cn } from '@/lib/utils';
 
-interface Props {}
-
-const EmptyChat: React.FC<Props> = () => {
+const EmptyChat: React.FC = () => {
 
     return (
         <div className={cn(

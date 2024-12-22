@@ -1,7 +1,8 @@
 import React from 'react'
 
+import ToolCard from './tool-card';
+
 import { ToolInvocation } from 'ai';
-import { AnimatedShinyText, Card } from '@/components/ui';
 
 interface Props {
     tool: ToolInvocation
@@ -9,26 +10,14 @@ interface Props {
 
 const GetWalletDetails: React.FC<Props> = ({ tool }) => {
 
-
     return (
-        <Card className="p-4">
-            {
-                (tool.state === "partial-call" || tool.state === "call") ? (
-                    <AnimatedShinyText>
-                        Getting Wallet Details...
-                    </AnimatedShinyText>
-                ) : (
-                    <div className="flex flex-col gap-1">
-                        <p className="text-sm font-bold">
-                            Wallet Details
-                        </p>
-                        <p>
-                            {tool.result.address ?? "No address found"}
-                        </p>
-                    </div>
-                )
-            }
-        </Card>
+        <ToolCard
+            tool={tool}
+            icon="Wallet"
+            loadingText="Getting Wallet Details..."
+            resultHeading={() => "Wallet Details"}
+            resultBody={(result) => result.address ?? "No address found"}
+        />
     )
 }
 

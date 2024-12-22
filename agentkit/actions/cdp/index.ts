@@ -1,5 +1,5 @@
-import { CdpAction, CdpActionSchemaAny } from "./cdp_action";
-import { DeployNftAction } from "./deploy_nft";
+import { CdpAction, CdpActionSchemaAny } from "../cdp_action";
+import { DeployNftAction } from "./deploy-nft/deploy_nft";
 import { DeployTokenAction } from "./deploy_token";
 import { GetBalanceAction } from "./get_balance";
 import { GetWalletDetailsAction } from "./get_wallet_details";
@@ -8,7 +8,6 @@ import { RegisterBasenameAction } from "./register_basename";
 import { RequestFaucetFundsAction } from "./request_faucet_funds";
 import { TradeAction } from "./trade";
 import { TransferAction } from "./transfer";
-import { WOW_ACTIONS } from "./defi/wow";
 
 /**
  * Retrieves all CDP action instances.
@@ -16,7 +15,7 @@ import { WOW_ACTIONS } from "./defi/wow";
  *
  * @returns - Array of CDP action instances
  */
-export function getAllCdpActions(): CdpAction<CdpActionSchemaAny>[] {
+export function getAllCdpActions(): CdpAction<CdpActionSchemaAny, any>[] {
   return [
     new GetWalletDetailsAction(),
     new DeployNftAction(),
@@ -30,7 +29,9 @@ export function getAllCdpActions(): CdpAction<CdpActionSchemaAny>[] {
   ];
 }
 
-export const CDP_ACTIONS = getAllCdpActions().concat(WOW_ACTIONS);
+export const CDP_ACTIONS = getAllCdpActions();
+
+export * from './types';
 
 export {
   type CdpAction,

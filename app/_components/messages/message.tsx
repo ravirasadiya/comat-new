@@ -2,18 +2,15 @@
 
 import React from 'react'
 
-import Image from 'next/image';
+import { Bot, User } from 'lucide-react';
 
 import { Markdown } from '@/components/ui';
 
 import ToolInvocation from './tools';
 
-import { useChat } from '../../_contexts/chat';
-
 import { cn } from '@/lib/utils';
 
 import type { Message } from 'ai';
-import { Bot, User } from 'lucide-react';
 
 interface Props {
     message: Message,

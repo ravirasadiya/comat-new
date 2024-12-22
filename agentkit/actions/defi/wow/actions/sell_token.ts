@@ -1,4 +1,4 @@
-import { CdpAction } from "../../../cdp_action";
+import { CdpAction, CdpActionResult } from "@/agentkit/actions/cdp_action";
 import { Wallet } from "@coinbase/coinbase-sdk";
 import { WOW_ABI } from "../constants";
 import { getHasGraduated } from "../uniswap/utils";
@@ -42,6 +42,10 @@ export const WowSellTokenInput = z
   .strip()
   .describe("Instructions for selling WOW tokens");
 
+type WowSellTokenResultBody = {
+  transactionHash: string;
+};
+
 /**
  * Sells WOW tokens for ETH.
  *
@@ -52,7 +56,7 @@ export const WowSellTokenInput = z
 export async function wowSellToken(
   wallet: Wallet,
   args: z.infer<typeof WowSellTokenInput>,
-): Promise<string> {
+): Promise<CdpActionResult<WowSellTokenResultBody>> {
   try {
     const ethQuote = await getSellQuote(
       wallet.getNetworkId(),
@@ -80,16 +84,30 @@ export async function wowSellToken(
     });
 
     const result = await invocation.wait();
-    return `Sold WoW ERC20 memecoin with transaction hash: ${result.getTransaction().getTransactionHash()}`;
+
+    const transactionHash = result.getTransaction().getTransactionHash();
+
+    if (!transactionHash) {
+      throw new Error("Could not get transaction hash");
+    }
+
+    return {
+      message: `Sold WoW ERC20 memecoin with transaction hash: ${transactionHash}`,
+      body: {
+        transactionHash,
+      },
+    };
   } catch (error) {
-    return `Error selling Zora Wow ERC20 memecoin: ${error}`;
+    return {
+      message: `Error selling Zora Wow ERC20 memecoin: ${error}`,
+    };
   }
 }
 
 /**
  * Zora Wow sell token action.
  */
-export class WowSellTokenAction implements CdpAction<typeof WowSellTokenInput> {
+export class WowSellTokenAction implements CdpAction<typeof WowSellTokenInput, WowSellTokenResultBody> {
   public name = "wow_sell_token";
   public description = WOW_SELL_TOKEN_PROMPT;
   public argsSchema = WowSellTokenInput;

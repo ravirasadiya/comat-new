@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CdpAction } from "./cdp_action";
+import { CdpAction, CdpActionResult } from "../cdp_action";
 import { Wallet } from "@coinbase/coinbase-sdk";
 import { GET_WALLET_DETAILS } from "./action-names";
 
@@ -8,6 +8,10 @@ import { GET_WALLET_DETAILS } from "./action-names";
  * This schema intentionally accepts no parameters as the wallet is injected separately.
  */
 export const GetWalletDetailsInput = z.object({});
+
+export type GetWalletDetailsResultBody = {
+  address: string;
+};
 
 /**
  * Gets a wallet's details.
@@ -20,15 +24,14 @@ export async function getWalletDetails(
   wallet: Wallet,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: z.infer<typeof GetWalletDetailsInput>,
-): Promise<{
-  message: string;
-  address?: string;
-}> {
+): Promise<CdpActionResult<GetWalletDetailsResultBody>> {
   try {
     const defaultAddress = await wallet.getDefaultAddress();
     return {
       message: `Wallet: ${wallet.getId()} on network: ${wallet.getNetworkId()} with default address: ${defaultAddress.getId()}`,
-      address: defaultAddress.getId()
+      body: {
+        address: defaultAddress.getId()
+      }
     };
   } catch (error) {
     return {
@@ -40,7 +43,7 @@ export async function getWalletDetails(
 /**
  * Get wallet details action.
  */
-export class GetWalletDetailsAction implements CdpAction<typeof GetWalletDetailsInput> {
+export class GetWalletDetailsAction implements CdpAction<typeof GetWalletDetailsInput, GetWalletDetailsResultBody> {
   /**
    * The name of the action
    */

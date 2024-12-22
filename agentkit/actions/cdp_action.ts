@@ -1,13 +1,19 @@
 import { z } from "zod";
+
 import { Wallet } from "@coinbase/coinbase-sdk";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CdpActionSchemaAny = z.ZodObject<any, any, any, any>;
 
+export type CdpActionResult<TBody> = {
+    message: string;
+    body?: TBody;
+}
+
 /**
  * Represents the base structure for CDP Actions.
  */
-export interface CdpAction<TActionSchema extends CdpActionSchemaAny> {
+export interface CdpAction<TActionSchema extends CdpActionSchemaAny, TBody> {
   /**
    * The name of the action
    */
@@ -27,6 +33,6 @@ export interface CdpAction<TActionSchema extends CdpActionSchemaAny> {
    * The function to execute for this action
    */
   func:
-    | ((wallet: Wallet, args: z.infer<TActionSchema>) => Promise<any>)
-    | ((args: z.infer<TActionSchema>) => Promise<any>);
+    | ((wallet: Wallet, args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>)
+    | ((args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>);
 }

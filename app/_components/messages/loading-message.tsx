@@ -2,16 +2,13 @@
 
 import React from 'react'
 
-import Image from 'next/image';
+import { Bot } from 'lucide-react';
 
 import { AnimatedShinyText } from '@/components/ui';
 
 import { cn } from '@/lib/utils';
-import { Bot } from 'lucide-react';
 
-interface Props {}
-
-const LoadingMessage: React.FC<Props> = ({ }) => {
+const LoadingMessage: React.FC = () => {
 
     return (
         <div className={cn(

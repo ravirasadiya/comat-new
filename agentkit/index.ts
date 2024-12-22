@@ -1,11 +1,5 @@
 // Export CDP actions
-export * from "./actions/cdp";
-
-// Export CDP DeFi actions
-export * from "./actions/cdp/defi/wow";
-
-// Export CDP Action
-export type { CdpAction } from "./actions/cdp/cdp_action";
+export * from "./actions";
 
 // Export CDP AgentKit
 export { CdpAgentkit } from "./cdp_agentkit";

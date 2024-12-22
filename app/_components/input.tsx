@@ -14,9 +14,7 @@ import { useChat } from '../_contexts/chat';
 
 import { cn } from '@/lib/utils';
 
-interface Props {}
-
-const ChatInput: React.FC<Props> = () => {
+const ChatInput: React.FC = () => {
 
     const { input, setInput, onSubmit, isLoading } = useChat();
 

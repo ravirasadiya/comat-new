@@ -1,4 +1,4 @@
-import { CdpAction } from "./cdp_action";
+import { CdpAction, CdpActionResult } from "../cdp_action";
 import { Coinbase, Wallet } from "@coinbase/coinbase-sdk";
 import { encodeFunctionData, namehash } from "viem";
 import { z } from "zod";
@@ -149,6 +149,11 @@ function createRegisterContractMethodArgs(
   return registerArgs;
 }
 
+export type RegisterBasenameResultBody = {
+  basename: string;
+  transactionHash: string;
+};
+
 /**
  * Registers a Basename for the agent.
  *
@@ -159,10 +164,7 @@ function createRegisterContractMethodArgs(
 export async function registerBasename(
   wallet: Wallet,
   args: z.infer<typeof RegisterBasenameInput>,
-): Promise<{
-  message: string;
-  basename?: string;
-}> {
+): Promise<CdpActionResult<RegisterBasenameResultBody>> {
   const addressId = (await wallet.getDefaultAddress()).getId();
   const isMainnet = wallet.getNetworkId() === Coinbase.networks.BaseMainnet;
 
@@ -188,9 +190,25 @@ export async function registerBasename(
     });
 
     await invocation.wait();
+
+    const transaction = invocation.getTransaction();
+
+    if (!transaction) {
+      throw new Error("Failed to get transaction");
+    }
+
+    const transactionHash = transaction.getTransactionHash();
+
+    if (!transactionHash) {
+      throw new Error("Failed to get transaction hash");
+    }
+
     return {
       message: `Successfully registered basename ${args.basename} for address ${addressId}`,
-      basename: args.basename
+      body: {
+        basename: args.basename,
+        transactionHash
+      }
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
@@ -204,7 +222,7 @@ export async function registerBasename(
 /**
  * Register Basename action.
  */
-export class RegisterBasenameAction implements CdpAction<typeof RegisterBasenameInput> {
+export class RegisterBasenameAction implements CdpAction<typeof RegisterBasenameInput, RegisterBasenameResultBody> {
   public name = REGISTER_BASENAME;
   public description = REGISTER_BASENAME_PROMPT;
   public argsSchema = RegisterBasenameInput;

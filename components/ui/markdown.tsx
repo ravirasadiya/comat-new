@@ -81,7 +81,7 @@ export const Markdown: React.FC<Props> = ({ children, asSpan = false, components
                     return <ul className="list-disc pl-4 text-sm md:text-base flex flex-col gap-2">{children}</ul>
                 },
                 li({ children }) {
-                    return <li className="ml-2 pl-2 text-sm md:text-base space-y-2">{children}</li>
+                    return <li className="pl-0 ml-4 text-sm md:text-base space-y-2">{children}</li>
                 },
                 img({ src, alt }) {
                     return <img

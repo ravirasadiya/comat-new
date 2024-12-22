@@ -1,6 +1,9 @@
-import { CdpAction } from "./cdp_action";
 import { Wallet, Amount } from "@coinbase/coinbase-sdk";
+
 import { z } from "zod";
+
+import { CdpAction, CdpActionResult } from "../cdp_action";
+
 
 const TRANSFER_PROMPT = `
 This tool will transfer an asset from the wallet to another onchain address.
@@ -32,6 +35,10 @@ export const TransferInput = z
   .strip()
   .describe("Instructions for transferring assets");
 
+type TransferResultBody = {
+  transactionHash: string;
+};
+
 /**
  * Transfers a specified amount of an asset to a destination onchain.
  *
@@ -42,7 +49,7 @@ export const TransferInput = z
 export async function transfer(
   wallet: Wallet,
   args: z.infer<typeof TransferInput>,
-): Promise<string> {
+): Promise<CdpActionResult<TransferResultBody>> {
   try {
     const transferResult = await wallet.createTransfer({
       amount: args.amount,
@@ -53,16 +60,35 @@ export async function transfer(
 
     const result = await transferResult.wait();
 
-    return `Transferred ${args.amount} of ${args.assetId} to ${args.destination}.\nTransaction hash for the transfer: ${result.getTransactionHash()}\nTransaction link for the transfer: ${result.getTransactionLink()}`;
+    const transaction = result.getTransaction();
+
+    if (!transaction) {
+      throw new Error("Failed to get transaction");
+    }
+
+    const transactionHash = transaction.getTransactionHash();
+
+    if (!transactionHash) {
+      throw new Error("Failed to get transaction hash");
+    }
+
+    return {
+      message: `Transferred ${args.amount} of ${args.assetId} to ${args.destination}.\nTransaction hash for the transfer: ${transactionHash}\nTransaction link for the transfer: ${transaction.getTransactionLink()}`,
+      body: {
+        transactionHash
+      }
+    };
   } catch (error) {
-    return `Error transferring the asset: ${error}`;
+    return {
+      message: `Error transferring the asset: ${error}`
+    };
   }
 }
 
 /**
  * Transfer action.
  */
-export class TransferAction implements CdpAction<typeof TransferInput> {
+export class TransferAction implements CdpAction<typeof TransferInput, TransferResultBody> {
   public name = "transfer";
   public description = TRANSFER_PROMPT;
   public argsSchema = TransferInput;

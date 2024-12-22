@@ -1,4 +1,4 @@
-import { CdpAction } from "./cdp_action";
+import { CdpAction, CdpActionResult } from "../cdp_action";
 import { Wallet } from "@coinbase/coinbase-sdk";
 import Decimal from "decimal.js";
 import { z } from "zod";
@@ -19,6 +19,10 @@ export const GetBalanceInput = z
   .strip()
   .describe("Instructions for getting wallet balance");
 
+export type GetBalanceResultBody = {
+  balance: Decimal;
+};
+
 /**
  * Gets balance for all addresses in the wallet for a given asset.
  *
@@ -29,21 +33,19 @@ export const GetBalanceInput = z
 export async function getBalance(
   wallet: Wallet,
   args: z.infer<typeof GetBalanceInput>,
-): Promise<{
-  message: string;
-  balance?: Decimal;
-}> {
+): Promise<CdpActionResult<GetBalanceResultBody>> {
   try {
     const addresses = await wallet.getDefaultAddress();
     const balance = await addresses.getBalance(args.assetId);
     return {
       message: `Balances for wallet ${wallet.getId()}:\n${balance}`,
-      balance: balance
+      body: {
+        balance: balance
+      }
     };
   } catch (error) {
     return {
       message: `Error getting balance for all addresses in the wallet: ${error}`,
-      balance: undefined
     };
   }
 }
@@ -51,7 +53,7 @@ export async function getBalance(
 /**
  * Get wallet balance action.
  */
-export class GetBalanceAction implements CdpAction<typeof GetBalanceInput> {
+export class GetBalanceAction implements CdpAction<typeof GetBalanceInput, GetBalanceResultBody> {
   public name = GET_BALANCE;
   public description = GET_BALANCE_PROMPT;
   public argsSchema = GetBalanceInput;

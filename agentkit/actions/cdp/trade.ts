@@ -1,4 +1,4 @@
-import { CdpAction } from "./cdp_action";
+import { CdpAction, CdpActionResult } from "../cdp_action";
 import { Wallet, Amount } from "@coinbase/coinbase-sdk";
 import { z } from "zod";
 
@@ -28,6 +28,11 @@ export const TradeInput = z
   .strip()
   .describe("Instructions for trading assets");
 
+type TradeResultBody = {
+  transactionHash: string;
+  toAmount: Amount;
+};
+
 /**
  * Trades a specified amount of a from asset to a to asset for the wallet.
  *
@@ -35,7 +40,7 @@ export const TradeInput = z
  * @param args - The input arguments for the action.
  * @returns A message containing the trade details.
  */
-export async function trade(wallet: Wallet, args: z.infer<typeof TradeInput>): Promise<string> {
+export async function trade(wallet: Wallet, args: z.infer<typeof TradeInput>): Promise<CdpActionResult<TradeResultBody>> {
   try {
     const tradeResult = await wallet.createTrade({
       amount: args.amount,
@@ -45,16 +50,36 @@ export async function trade(wallet: Wallet, args: z.infer<typeof TradeInput>): P
 
     const result = await tradeResult.wait();
 
-    return `Traded ${args.amount} of ${args.fromAssetId} for ${result.getToAmount()} of ${args.toAssetId}.\nTransaction hash for the trade: ${result.getTransaction().getTransactionHash()}\nTransaction link for the trade: ${result.getTransaction().getTransactionLink()}`;
+    const transaction = result.getTransaction();
+
+    if (!transaction) {
+      throw new Error("Failed to get transaction");
+    }
+
+    const transactionHash = transaction.getTransactionHash();
+
+    if (!transactionHash) {
+      throw new Error("Failed to get transaction hash");
+    }
+
+    return {
+      message: `Traded ${args.amount} of ${args.fromAssetId} for ${result.getToAmount()} of ${args.toAssetId}.\nTransaction hash for the trade: ${transactionHash}\nTransaction link for the trade: ${transaction.getTransactionLink()}`,
+      body: {
+        transactionHash,
+        toAmount: result.getToAmount(),
+      }
+    };
   } catch (error) {
-    return `Error trading assets: ${error}`;
+    return {
+      message: `Error trading assets: ${error}`
+    };
   }
 }
 
 /**
  * Trade action.
  */
-export class TradeAction implements CdpAction<typeof TradeInput> {
+export class TradeAction implements CdpAction<typeof TradeInput, TradeResultBody> {
   public name = "trade";
   public description = TRADE_PROMPT;
   public argsSchema = TradeInput;

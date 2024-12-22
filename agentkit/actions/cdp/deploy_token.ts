@@ -1,6 +1,7 @@
-import { CdpAction } from "./cdp_action";
+import { CdpAction, CdpActionResult } from "../cdp_action";
 import { Wallet, Amount } from "@coinbase/coinbase-sdk";
 import { z } from "zod";
+import { DEPLOY_TOKEN } from "./action-names";
 
 const DEPLOY_TOKEN_PROMPT = `
 This tool will deploy an ERC20 token smart contract. It takes the token name, symbol, and total supply as input. 
@@ -19,6 +20,11 @@ export const DeployTokenInput = z
   .strip()
   .describe("Instructions for deploying a token");
 
+export type DeployTokenResultBody = {
+  transactionHash: string;
+  contractAddress: string;
+};
+
 /**
  * Deploys an ERC20 token smart contract.
  *
@@ -29,7 +35,7 @@ export const DeployTokenInput = z
 export async function deployToken(
   wallet: Wallet,
   args: z.infer<typeof DeployTokenInput>,
-): Promise<string> {
+): Promise<CdpActionResult<DeployTokenResultBody>> {
   try {
     const tokenContract = await wallet.deployToken({
       name: args.name,
@@ -39,17 +45,32 @@ export async function deployToken(
 
     const result = await tokenContract.wait();
 
-    return `Deployed ERC20 token contract ${args.name} (${args.symbol}) with total supply of ${args.totalSupply} tokens at address ${result.getContractAddress()}. Transaction link: ${result.getTransaction().getTransactionLink()}`;
+    const transaction = result.getTransaction();
+
+    const transactionHash = transaction?.getTransactionHash();
+    if (!transactionHash) {
+      throw new Error("No transaction hash found");
+    }
+
+    return {
+      message: `Deployed ERC20 token contract ${args.name} (${args.symbol}) with total supply of ${args.totalSupply} tokens at address ${result.getContractAddress()}. Transaction hash: ${transactionHash}`,
+      body: {
+        transactionHash,
+        contractAddress: result.getContractAddress()
+      }
+    };
   } catch (error) {
-    return `Error deploying token: ${error}`;
+    return {
+      message: `Error deploying token: ${error}`,
+    };
   }
 }
 
 /**
  * Deploy token action.
  */
-export class DeployTokenAction implements CdpAction<typeof DeployTokenInput> {
-  public name = "deploy_token";
+export class DeployTokenAction implements CdpAction<typeof DeployTokenInput, DeployTokenResultBody> {
+  public name = DEPLOY_TOKEN;
   public description = DEPLOY_TOKEN_PROMPT;
   public argsSchema = DeployTokenInput;
   public func = deployToken;

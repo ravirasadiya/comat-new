@@ -1,4 +1,4 @@
-import { CdpAction } from "../../../cdp_action";
+import { CdpAction, CdpActionResult } from "@/agentkit/actions/cdp_action";
 import { Wallet } from "@coinbase/coinbase-sdk";
 import { WOW_FACTORY_ABI, GENERIC_TOKEN_METADATA_URI, getFactoryAddress } from "../constants";
 import { z } from "zod";
@@ -36,6 +36,10 @@ export const WowCreateTokenInput = z
   .strip()
   .describe("Instructions for creating a WOW token");
 
+type WowCreateTokenResultBody = {
+  transactionHash: string;
+};
+
 /**
  * Creates a Zora Wow ERC20 memecoin.
  *
@@ -46,7 +50,7 @@ export const WowCreateTokenInput = z
 export async function wowCreateToken(
   wallet: Wallet,
   args: z.infer<typeof WowCreateTokenInput>,
-): Promise<string> {
+): Promise<CdpActionResult<WowCreateTokenResultBody>> {
   const factoryAddress = getFactoryAddress(wallet.getNetworkId());
 
   try {
@@ -64,16 +68,30 @@ export async function wowCreateToken(
     });
 
     const result = await invocation.wait();
-    return `Created WoW ERC20 memecoin ${args.name} with symbol ${args.symbol} on network ${wallet.getNetworkId()}.\nTransaction hash for the token creation: ${result.getTransaction().getTransactionHash()}`;
+
+    const transactionHash = result.getTransaction().getTransactionHash();
+
+    if (!transactionHash) {
+      throw new Error("Could not get transaction hash"); 
+    }
+
+    return {
+      message: `Created WoW ERC20 memecoin ${args.name} with symbol ${args.symbol} on network ${wallet.getNetworkId()}.\nTransaction hash for the token creation: ${transactionHash}`,
+      body: {
+        transactionHash,
+      },
+    };
   } catch (error) {
-    return `Error creating Zora Wow ERC20 memecoin: ${error}`;
+    return {
+      message: `Error creating Zora Wow ERC20 memecoin: ${error}`,
+    };
   }
 }
 
 /**
  * Zora Wow create token action.
  */
-export class WowCreateTokenAction implements CdpAction<typeof WowCreateTokenInput> {
+export class WowCreateTokenAction implements CdpAction<typeof WowCreateTokenInput, WowCreateTokenResultBody> {
   public name = "wow_create_token";
   public description = WOW_CREATE_TOKEN_PROMPT;
   public argsSchema = WowCreateTokenInput;

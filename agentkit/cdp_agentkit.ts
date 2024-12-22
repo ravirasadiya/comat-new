@@ -1,5 +1,5 @@
 import { Wallet, WalletData, Coinbase } from "@coinbase/coinbase-sdk";
-import { CdpAction, CdpActionSchemaAny } from "./actions/cdp/cdp_action";
+import { CdpAction, CdpActionResult, CdpActionSchemaAny } from "./actions/cdp_action";
 import { z } from "zod";
 
 /**
@@ -91,19 +91,21 @@ export class CdpAgentkit {
    * @returns Result of the action execution
    * @throws Error if action execution fails
    */
-  async run<TActionSchema extends CdpActionSchemaAny>(
-    action: CdpAction<TActionSchema>,
+  async run<TActionSchema extends CdpActionSchemaAny, TResultBody>(
+    action: CdpAction<TActionSchema, TResultBody>,
     args: TActionSchema,
-  ): Promise<string> {
+  ): Promise<CdpActionResult<TResultBody>> {
     if (action.func.length > 1) {
       if (!this.wallet) {
-        return `Unable to run CDP Action: ${action.name}. A Wallet is required. Please configure CDP Agentkit with a Wallet to run this action.`;
+        return {
+          message: `Unable to run CDP Action: ${action.name}. A Wallet is required. Please configure CDP Agentkit with a Wallet to run this action.`,
+        };
       }
 
       return await action.func(this.wallet!, args);
     }
 
-    return await (action.func as (args: z.infer<TActionSchema>) => Promise<string>)(args);
+    return await (action.func as (args: z.infer<TActionSchema>) => Promise<CdpActionResult<TResultBody>>)(args);
   }
 
   /**

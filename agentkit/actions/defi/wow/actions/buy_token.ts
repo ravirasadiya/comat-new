@@ -1,4 +1,4 @@
-import { CdpAction } from "../../../cdp_action";
+import { CdpAction, CdpActionResult } from "@/agentkit/actions/cdp_action";
 import { Wallet } from "@coinbase/coinbase-sdk";
 import { WOW_ABI } from "../constants";
 import { getHasGraduated } from "../uniswap/utils";
@@ -35,6 +35,10 @@ export const WowBuyTokenInput = z
   .strip()
   .describe("Instructions for buying WOW tokens");
 
+type WowBuyTokenResultBody = {
+  transactionHash: string;
+};
+
 /**
  * Buys a Zora Wow ERC20 memecoin with ETH.
  *
@@ -45,7 +49,7 @@ export const WowBuyTokenInput = z
 export async function wowBuyToken(
   wallet: Wallet,
   args: z.infer<typeof WowBuyTokenInput>,
-): Promise<string> {
+): Promise<CdpActionResult<WowBuyTokenResultBody>> {
   try {
     const tokenQuote = await getBuyQuote(
       wallet.getNetworkId(),
@@ -76,16 +80,30 @@ export async function wowBuyToken(
     });
 
     const result = await invocation.wait();
-    return `Purchased WoW ERC20 memecoin with transaction hash: ${result.getTransaction().getTransactionHash()}`;
+
+    const transactionHash = result.getTransaction().getTransactionHash();
+
+    if (!transactionHash) {
+      throw new Error("Failed to get transaction hash");
+    }
+
+    return {
+      message: `Purchased WoW ERC20 memecoin with transaction hash: ${transactionHash}`,
+      body: {
+        transactionHash,
+      },
+    };
   } catch (error) {
-    return `Error buying Zora Wow ERC20 memecoin: ${error}`;
+    return {
+      message: `Error buying Zora Wow ERC20 memecoin: ${error}`,
+    };
   }
 }
 
 /**
  * Zora Wow buy token action.
  */
-export class WowBuyTokenAction implements CdpAction<typeof WowBuyTokenInput> {
+export class WowBuyTokenAction implements CdpAction<typeof WowBuyTokenInput, WowBuyTokenResultBody> {
   public name = "wow_buy_token";
   public description = WOW_BUY_TOKEN_PROMPT;
   public argsSchema = WowBuyTokenInput;

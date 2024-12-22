@@ -1,4 +1,4 @@
-import { CdpAction } from "./cdp_action";
+import { CdpAction, CdpActionResult } from "../cdp_action";
 import { Wallet } from "@coinbase/coinbase-sdk";
 import { z } from "zod";
 import { REQUEST_FAUCET_FUNDS } from "./action-names";
@@ -20,6 +20,10 @@ export const RequestFaucetFundsInput = z
   .strip()
   .describe("Instructions for requesting faucet funds");
 
+type RequestFaucetFundsResultBody = {
+  transactionLink: string;
+};
+
 /**
  * Requests test tokens from the faucet for the default address in the wallet.
  *
@@ -30,10 +34,7 @@ export const RequestFaucetFundsInput = z
 export async function requestFaucetFunds(
   wallet: Wallet,
   args: z.infer<typeof RequestFaucetFundsInput>,
-): Promise<{
-  message: string;
-  transactionLink?: string;
-}> {
+): Promise<CdpActionResult<RequestFaucetFundsResultBody>> {
   try {
     // Request funds from the faucet
     const faucetTx = await wallet.faucet(args.assetId || undefined);
@@ -43,12 +44,13 @@ export async function requestFaucetFunds(
 
     return {
       message: `Received ${args.assetId || "ETH"} from the faucet. Transaction: ${result.getTransactionLink()}`,
-      transactionLink: result.getTransactionLink()
+      body: {
+        transactionLink: result.getTransactionLink()
+      }
     };
   } catch (error) {
     return {
       message: `Error requesting faucet funds: ${error}`,
-      transactionLink: undefined
     };
   }
 }
@@ -56,7 +58,7 @@ export async function requestFaucetFunds(
 /**
  * Request faucet funds action.
  */
-export class RequestFaucetFundsAction implements CdpAction<typeof RequestFaucetFundsInput> {
+export class RequestFaucetFundsAction implements CdpAction<typeof RequestFaucetFundsInput, RequestFaucetFundsResultBody> {
   public name = REQUEST_FAUCET_FUNDS;
   public description = REQUEST_FAUCET_FUNDS_PROMPT;
   public argsSchema = RequestFaucetFundsInput;

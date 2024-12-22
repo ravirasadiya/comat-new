@@ -9,9 +9,7 @@ import ChatInput from './input';
 
 import { useChat } from '../_contexts/chat';
 
-interface Props {}
-
-const Chat: React.FC<Props> = () => {
+const Chat: React.FC = () => {
 
     const { messages } = useChat();
 

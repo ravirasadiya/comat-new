@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AnimatedShinyText, Card, Markdown } from '@/components/ui';
+import ToolCard from './tool-card';
 
 import { ToolInvocation } from 'ai';
 
@@ -10,30 +10,16 @@ interface Props {
 
 const RequestFaucet: React.FC<Props> = ({ tool }) => {
 
-
     return (
-        <Card className="p-4">
-            {
-                (tool.state === "partial-call" || tool.state === "call") ? (
-                    <AnimatedShinyText>
-                        Requesting Faucet Funds...
-                    </AnimatedShinyText>
-                ) : (
-                    <div className="flex flex-col gap-1">
-                        <p className="text-sm font-bold">
-                            Faucet Funds {tool.result.transactionLink ? "Success" : "Failed"}
-                        </p>
-                        <Markdown>
-                            {
-                                tool.result.transactionLink ?
-                                    `[Transaction Link](${tool.result.transactionLink})` :
-                                    tool.result.message
-                            }
-                        </Markdown>
-                    </div>
-                )
-            }
-        </Card>
+        <ToolCard
+            tool={tool}
+            icon="Droplet"
+            loadingText="Requesting Faucet Funds..."
+            resultHeading={() => "Faucet Funds Success"}
+            resultBody={(result: ) => result.body 
+                ? `[Transaction Link](${result.body.transactionLink})` 
+                : result.message}
+        />
     )
 }
 

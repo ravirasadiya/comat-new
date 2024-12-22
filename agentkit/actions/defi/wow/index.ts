@@ -1,4 +1,4 @@
-import { CdpAction, CdpActionSchemaAny } from "../../cdp_action";
+import { CdpAction, CdpActionResult, CdpActionSchemaAny } from "@/agentkit/actions/cdp_action";
 import { WowBuyTokenAction } from "./actions/buy_token";
 import { WowSellTokenAction } from "./actions/sell_token";
 import { WowCreateTokenAction } from "./actions/create_token";
@@ -9,7 +9,7 @@ import { WowCreateTokenAction } from "./actions/create_token";
  *
  * @returns Array of WOW protocol action instances
  */
-export function getAllWowActions(): CdpAction<CdpActionSchemaAny>[] {
+export function getAllWowActions() {
   // eslint-disable-next-line prettier/prettier
   return [new WowBuyTokenAction(), new WowSellTokenAction(), new WowCreateTokenAction()];
 }
