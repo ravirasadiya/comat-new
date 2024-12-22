@@ -7,7 +7,8 @@ import {
     GetWalletAddress,
     GetDomain,
     RequestFunds,
-    GetTrendingTokens
+    GetTrendingTokens,
+    GetTokenData
 } from './solana'
 
 import { 
@@ -15,7 +16,8 @@ import {
     SOLANA_GET_WALLET_ADDRESS_NAME,
     SOLANA_GET_DOMAIN_NAME,
     SOLANA_REQUEST_FUNDS_NAME,
-    SOLANA_GET_TRENDING_TOKENS_NAME
+    SOLANA_GET_TRENDING_TOKENS_NAME,
+    SOLANA_GET_TOKEN_DATA_NAME
 } from '@/agentkit/actions/solana/names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -37,8 +39,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <RequestFunds tool={tool} />
         case SOLANA_GET_TRENDING_TOKENS_NAME:
             return <GetTrendingTokens tool={tool} />
-        // case REQUEST_FAUCET_FUNDS_NAME:
-        //     return <RequestFaucet tool={tool} />
+        case SOLANA_GET_TOKEN_DATA_NAME:
+            return <GetTokenData tool={tool} />
         // case DEPLOY_NFT_NAME:
         //     return <DeployNFT tool={tool} />
         // case DEPLOY_TOKEN_NAME:
