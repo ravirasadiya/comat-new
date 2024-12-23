@@ -31,7 +31,7 @@ const Stake: React.FC<Props> = ({ tool }) => {
 const StakeCard = ({ amount }: { amount: number}) => {
     return (
         <p>
-            Successfully staked ${amount} SOL for JupSOL.
+            Successfully staked {amount} SOL for JupSOL.
         </p>
     )
 }

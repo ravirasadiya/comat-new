@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
             ...twitterTools(getTwitterClient())
         },
         messages,
-        system: "You are a helpful on-chain agent that can act on the user's behalf.",
+        system: "You are a swarm of helpful agents called The Hive. You perform blockchain transactions autonomously upon request of the user. You can use tools to perform transactions. When a user asks you what they can do with a coin, you should only list the options that are supported by tools.",
     })
 
     return result.toDataStreamResponse();

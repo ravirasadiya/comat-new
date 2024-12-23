@@ -22,6 +22,8 @@ export async function getBalance(
       // Get SOL balance
       balance = await solanaKit.connection.getBalance(new PublicKey(solanaKit.wallet_address)) / LAMPORTS_PER_SOL;
     } else {
+
+        
       // Get token balance
 
       const token_address = getAssociatedTokenAddressSync(
@@ -30,15 +32,20 @@ export async function getBalance(
     );
 
 
+
       const token_account = await solanaKit.connection.getTokenAccountBalance(token_address);
       balance = token_account.value.uiAmount ?? 0;
     }
 
+    const tokenSymbol = args.tokenAddress ? (await solanaKit.getTokenDataByAddress(args.tokenAddress))?.symbol || "Unknown Token" : "SOL";
+
+    console.log(tokenSymbol);
+
     return {
-      message: `Balance: ${balance} ${args.tokenAddress || "SOL"}`,
+      message: `Balance: ${balance} ${tokenSymbol}`,
       body: {
         balance: balance,
-        token: args.tokenAddress || "SOL"
+        token: tokenSymbol
       }
     };
   } catch (error) {

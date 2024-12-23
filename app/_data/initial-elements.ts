@@ -3,37 +3,31 @@ import { Edge, Node } from '@xyflow/react';
 import styles from '../styles.module.css';
 
 export const initialNodes: Node[] = [
-  {
-    id: '1',
-    position: { x: 0, y: 0 },
-    data: { },
-    className: styles.node,
-    type: 'central',
-  },
+  
   // social sentiment analyzer
   {
     id: '2',
-    position: { x: 300, y: 0 },
+    position: { x: 0, y: 200 },
     data: { 
         icon: 'BotMessageSquare',
-        name: 'Social Screener'
+        name: 'Sentiment Analyzer'
      },
     className: styles.node,
     type: 'agent',
   },
   {
     id: '2.1',
-    position: { x: 500, y: 200 },
+    position: { x: 200, y: 500 },
     data: { 
         icon: 'Twitter',
-        name: 'Twitter Troll'
+        name: 'Twitter Scraper'
      },
     className: styles.node,
     type: 'agent',
   },
   {
     id: '2.2',
-    position: { x: 500, y: -200 },
+    position: { x: -200, y: 500 },
     data: { 
         icon: 'MessagesSquare',
         name: 'Telegram Bot'
@@ -47,14 +41,14 @@ export const initialNodes: Node[] = [
     position: { x: -300, y: 0 },
     data: { 
         icon: 'ChartCandlestick',
-        name: 'DEXpert'
+        name: 'Trader'
      },
     className: styles.node,
     type: 'agent',
   },
   {
     id: '3.1',
-    position: { x: -500, y: -200 },
+    position: { x: -500, y: 200 },
     data: { 
         icon: 'Landmark',
         name: 'DEX Aggretator'
@@ -64,7 +58,7 @@ export const initialNodes: Node[] = [
   },
   {
     id: '3.2',
-    position: { x: -500, y: 200 },
+    position: { x: -500, y: -200 },
     data: { 
         icon: 'Droplet',
         name: 'Liquidity Manager'
@@ -75,10 +69,10 @@ export const initialNodes: Node[] = [
   // news sentiment analyzer
   {
     id: '4',
-    position: { x: 0, y: 300 },
+    position: { x: 300, y: 0 },
     data: { 
         icon: 'Tractor',
-        name: 'Yield Aggregator'
+        name: 'Yield Farmer'
      },
     className: styles.node,
     type: 'agent',
@@ -86,7 +80,7 @@ export const initialNodes: Node[] = [
   // news sentiment analyzer
   {
     id: '4.1',
-    position: { x: 200, y: 500 },
+    position: { x: 500, y: 200 },
     data: { 
         icon: 'Beef',
         name: 'Staking Agent'
@@ -96,7 +90,7 @@ export const initialNodes: Node[] = [
   },
   {
     id: '4.2',
-    position: { x: -200, y: 500 },
+    position: { x: 500, y: -200 },
     data: { 
         icon: 'Coins',
         name: 'Borrow/Lend Agent'
@@ -110,7 +104,7 @@ export const initialNodes: Node[] = [
     position: { x: 0, y: -300 },
     data: { 
         icon: 'Vault',
-        name: ''
+        name: 'Portfolio Manager'
      },
     className: styles.node,
     type: 'agent',
@@ -119,8 +113,8 @@ export const initialNodes: Node[] = [
     id: '5.1',
     position: { x: -200, y: -500 },
     data: { 
-        icon: 'MessagesSquare',
-        name: 'Social Sentiment Analyzer'
+        icon: 'ShieldAlert',
+        name: 'Risk Analyzer'
      },
     className: styles.node,
     type: 'agent',
@@ -129,11 +123,18 @@ export const initialNodes: Node[] = [
     id: '5.2',
     position: { x: 200, y: -500 },
     data: { 
-        icon: 'MessagesSquare',
-        name: 'Social Sentiment Analyzer'
+        icon: 'ChartLine',
+        name: 'Performance Reporter'
      },
     className: styles.node,
     type: 'agent',
+  },
+  {
+    id: '1',
+    position: { x: 0, y: 0 },
+    data: { },
+    className: styles.node,
+    type: 'central',
   },
 ];
 
@@ -199,8 +200,18 @@ export const initialEdges: Edge[] = [
     target: '5.2',
   },
   {
-    id: '3.2->4',
-    source: '3.2',
-    target: '4',
+    id: '3->5',
+    source: '3',
+    target: '5',
+  },
+  {
+    id: '4->5',
+    source: '4',
+    target: '5',
+  },
+  {
+    id: '2->3',
+    source: '2',
+    target: '3',
   },
 ];

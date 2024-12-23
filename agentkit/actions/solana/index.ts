@@ -9,7 +9,7 @@ import { LendAction } from "./lend";
 import { StakeAction } from "./stake";
 import { UnstakeAction } from "./unstake";
 import { GetSolanaAdviceAction } from "./get-advice";
-
+import { AllBalancesAction } from "./all-balances";
 import { SolanaAction, SolanaActionSchemaAny } from "../solana-action";
 /**
  * Retrieves all Solana action instances.
@@ -29,7 +29,8 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new LendAction(),
     new StakeAction(),
     new UnstakeAction(),
-    new GetSolanaAdviceAction()
+    new GetSolanaAdviceAction(),
+    new AllBalancesAction()
   ];
 }
 

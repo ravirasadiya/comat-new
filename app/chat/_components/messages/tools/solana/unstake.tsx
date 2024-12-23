@@ -31,7 +31,7 @@ const Unstake: React.FC<Props> = ({ tool }) => {
 const UnstakeCard = ({ amount }: { amount: number}) => {
     return (
         <p>
-            Successfully unstaked ${amount} JupSOL.
+            Successfully unstaked {amount} JupSOL.
         </p>
     )
 }

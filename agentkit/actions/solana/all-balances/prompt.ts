@@ -1,0 +1,1 @@
+export const SOLANA_ALL_BALANCES_PROMPT = `Get all of the balances of your Solana wallet.`; 

@@ -19,7 +19,7 @@ export async function getTokenDataByAddress(
     const data = (await response.json()) as JupiterTokenData[];
 
     const token = data.find((token: JupiterTokenData) => {
-      return token.address === mintAddress;
+      return token.address.toLowerCase() === mintAddress.toLowerCase();
     });
     return token;
   } catch (error: any) {

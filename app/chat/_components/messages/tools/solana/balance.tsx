@@ -18,9 +18,9 @@ const GetBalance: React.FC<Props> = ({ tool }) => {
             agentName="Wallet Agent"
             icon="Wallet"
             loadingText={`Getting ${tool.args.tokenAddress || "SOL"} Balance...`}
-            resultHeading={() => `Fetched ${tool.args.tokenAddress || "SOL"} Balance`}
+            resultHeading={(result: BalanceResultType) => result.body?.token ? `Fetched ${result.body.token} Balance` : `Failed to fetch balance`}
             resultBody={(result: BalanceResultType) => result.body 
-                ? `${result.body.balance.toFixed(4)} ${tool.args.tokenAddress || "SOL"}` 
+                ? `${result.body.balance.toFixed(4)} ${result.body.token}` 
                 :  "No balance found"}
         />
     )

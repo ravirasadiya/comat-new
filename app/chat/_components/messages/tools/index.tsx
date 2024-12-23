@@ -19,7 +19,8 @@ import {
     SOLANA_LEND_NAME,
     SOLANA_STAKE_NAME,
     SOLANA_UNSTAKE_NAME,
-    GET_SOLANA_ADVICE_NAME
+    GET_SOLANA_ADVICE_NAME,
+    SOLANA_ALL_BALANCES_NAME
 } from '@/agentkit/actions/solana/names'
 
 import {
@@ -34,6 +35,7 @@ import Lend from './solana/lend'
 import Stake from './solana/stake'
 import Unstake from './solana/unstake'
 import GetSolanaAdvice from './solana/advice'
+import AllBalances from './solana/all-balances'
 interface Props {
     tool: ToolInvocationType
 }
@@ -63,6 +65,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <Unstake tool={tool} />
         case GET_SOLANA_ADVICE_NAME:
             return <GetSolanaAdvice tool={tool} />
+        case SOLANA_ALL_BALANCES_NAME:
+            return <AllBalances tool={tool} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">
