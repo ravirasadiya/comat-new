@@ -22,6 +22,7 @@ import {
 type UseForceLayoutOptions = {
   strength: number;
   distance: number;
+  oscillationStrength?: number;
 };
 
 type SimNodeType = SimulationNodeDatum & Node;
@@ -39,6 +40,7 @@ const elementCountSelector = (state: ReactFlowState) =>
 function useForceLayout({
   strength = -2000,
   distance = 10000,
+  oscillationStrength = 1,
 }: UseForceLayoutOptions) {
   const elementCount = useStore(elementCountSelector);
   const nodesInitialized = useNodesInitialized();
@@ -84,8 +86,8 @@ function useForceLayout({
           .strength(0.05)
           .distance(distance)
       )
-      .force('x', forceX().x(0).strength(0.08))
-      .force('y', forceY().y(0).strength(0.08))
+      .force('x', forceX().x(0).strength(0.01))
+      .force('y', forceY().y(0).strength(0.01))
       .on('tick', () => {
         setNodes((nodes) =>
           nodes.map((node, i) => {
@@ -115,8 +117,49 @@ function useForceLayout({
         );
       });
 
+    // Add a smooth oscillating force that changes periodically
+    let timer: NodeJS.Timeout;
+    let startTime = Date.now();
+    
+    const addOscillation = () => {
+      const elapsed = (Date.now() - startTime) / 1000; // Convert to seconds
+      
+      simulationNodes.forEach((node) => {
+        if (!node.fx && !node.fy) { // Don't apply to dragged nodes
+          // Create pseudo-random motion by combining multiple sine waves
+          // Use node.id to create consistent but varying frequencies
+          const seed = parseInt(node.id) % 100;
+          
+          // Combine three sine waves with different frequencies and phases
+          const vx = (
+            Math.sin(elapsed * 0.3 + seed) +
+            Math.sin(elapsed * 0.7 + seed * 2) * 0.5 +
+            Math.sin(elapsed * 1.1 + seed * 3) * 0.3
+          ) * (oscillationStrength / 1.8); // Normalize the combined amplitude
+          
+          const vy = (
+            Math.cos(elapsed * 0.4 + seed * 1.5) +
+            Math.cos(elapsed * 0.8 + seed * 2.5) * 0.5 +
+            Math.cos(elapsed * 1.2 + seed * 3.5) * 0.3
+          ) * (oscillationStrength / 1.8);
+
+          node.vx = vx;
+          node.vy = vy;
+        }
+      });
+      
+      simulation.alpha(0.1);
+      simulation.restart();
+      
+      timer = setTimeout(addOscillation, 1000 / 60);
+    };
+
+    // Start the oscillation
+    addOscillation();
+
     return () => {
       simulation.stop();
+      clearTimeout(timer);
     };
   }, [
     elementCount,
@@ -126,6 +169,7 @@ function useForceLayout({
     strength,
     distance,
     nodesInitialized,
+    oscillationStrength,
   ]);
 
   return dragEvents;

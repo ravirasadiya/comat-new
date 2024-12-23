@@ -6,7 +6,7 @@ import Message from './message';
 
 import LoadingMessage from './loading-message';
 
-import { useScrollAnchor } from '@/app/_hooks';
+import { useScrollAnchor } from '@/app/chat/_hooks';
 
 import { useChat } from '../../_contexts/chat';
 

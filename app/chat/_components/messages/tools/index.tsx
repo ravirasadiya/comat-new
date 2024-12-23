@@ -16,6 +16,9 @@ import {
     SOLANA_GET_TRENDING_TOKENS_NAME,
     SOLANA_GET_TOKEN_DATA_NAME,
     SOLANA_TRADE_NAME,
+    SOLANA_LEND_NAME,
+    SOLANA_STAKE_NAME,
+    SOLANA_UNSTAKE_NAME
 } from '@/agentkit/actions/solana/names'
 
 import {
@@ -26,6 +29,9 @@ import {
 import type { ToolInvocation as ToolInvocationType } from 'ai'
 import { SearchRecentTweets } from './twitter'
 import SentimentAnalysis from './twitter/sentiment'
+import Lend from './solana/lend'
+import Stake from './solana/stake'
+import Unstake from './solana/unstake'
 
 interface Props {
     tool: ToolInvocationType
@@ -48,6 +54,12 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <SearchRecentTweets tool={tool} />
         case TWITTER_SENTIMENT_ANALYSIS_NAME:
             return <SentimentAnalysis tool={tool} />
+        case SOLANA_LEND_NAME:
+            return <Lend tool={tool} />
+        case SOLANA_STAKE_NAME:
+            return <Stake tool={tool} />
+        case SOLANA_UNSTAKE_NAME:
+            return <Unstake tool={tool} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

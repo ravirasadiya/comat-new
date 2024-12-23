@@ -5,10 +5,12 @@ import { TradeAction } from "./trade";
 import { GetWalletAddressAction } from "./get-wallet-address";
 import { GetTrendingTokensAction } from "./get-trending-tokens";
 import { GetTokenDataAction } from "./get-token-data";
+import { LendAction } from "./lend";
+import { StakeAction } from "./stake";
+import { UnstakeAction } from "./unstake";
 
 
 import { SolanaAction, SolanaActionSchemaAny } from "../solana-action";
-
 /**
  * Retrieves all Solana action instances.
  * WARNING: All new SolanaAction classes must be instantiated here to be discovered.
@@ -23,7 +25,10 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new TradeAction(),
     new GetWalletAddressAction(),
     new GetTrendingTokensAction(),
-    new GetTokenDataAction()
+    new GetTokenDataAction(),
+    new LendAction(),
+    new StakeAction(),
+    new UnstakeAction()
   ];
 }
 
@@ -36,5 +41,8 @@ export {
   TradeAction,
   GetWalletAddressAction,
   GetTrendingTokensAction,
-  GetTokenDataAction
+  GetTokenDataAction,
+  LendAction,
+  StakeAction,
+  UnstakeAction
 };

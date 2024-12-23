@@ -9,16 +9,28 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-neutral-900 text-neutral-50 shadow hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90",
+        default: "bg-neutral-100 text-black hover:bg-neutral-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700",
+        brand: "bg-brand-600 dark:bg-brand-600 text-neutral-50 hover:bg-brand-600/90 dark:hover:bg-brand-600/90",
         destructive:
-          "bg-red-500 text-neutral-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90",
+          "bg-red-500 text-neutral-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90",
+        destructiveOutline:
+          "border border-red-500 hover:bg-red-500/10 text-red-500 dark:border-red-900 dark:hover:bg-red-900/50",
+        destructiveGhost:
+          "hover:bg-red-500/10 text-red-500 dark:hover:bg-red-900/50",
+        warning:
+          "bg-yellow-500 text-neutral-50 hover:bg-yellow-500/90 dark:bg-yellow-900 dark:text-neutral-50 dark:hover:bg-yellow-900/90",
+        warningOutline:
+          "border border-yellow-500 hover:bg-yellow-500/10 text-yellow-500 dark:border-yellow-900 dark:hover:bg-yellow-900/50",
+        warningGhost:
+          "hover:bg-yellow-500/10 text-yellow-500 dark:hover:bg-yellow-900/50",
         outline:
-          "border border-neutral-200 shadow-sm hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
+          "border border-neutral-200 hover:bg-neutral-200/50 hover:text-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-700/50 dark:hover:text-neutral-50",
         secondary:
-          "bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80",
-        ghost: "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
+          "bg-neutral-100 text-neutral-900 hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80",
+        ghost: "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 text-black dark:text-white",
+        brandGhost: "hover:bg-brand-500/10 text-brand-500 dark:hover:bg-brand-900/50 text-brand-500",
         link: "text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50",
+        brandOutline: "border border-brand-500 hover:bg-brand-500/10 text-brand-500 dark:border-brand-900 dark:hover:bg-brand-900/50"
       },
       size: {
         default: "h-9 px-4 py-2",

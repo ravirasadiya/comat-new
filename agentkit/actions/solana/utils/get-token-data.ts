@@ -79,7 +79,7 @@ export async function getTokenDataByTicker(
         const data = (await response.json()) as JupiterTokenData[];
     
         const token = data.find((token: JupiterTokenData) => {
-          return token.symbol === ticker;
+          return token.symbol.toLowerCase() === ticker.toLowerCase();
         });
         return token;
       } catch (error: any) {

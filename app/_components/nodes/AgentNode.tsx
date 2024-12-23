@@ -11,7 +11,7 @@ interface AgentNodeProps {
 
 const AgentNode = ({ data }: AgentNodeProps) => {
   return (
-    <div className="p-2 h-32 w-32 shadow-lg rounded-full bg-neutral-800 border-1 border-brand-500/20">
+    <div className="p-2 h-32 w-32 shadow-lg rounded-full bg-neutral-800 border border-brand-600 dark:border-brand-600">
       <Handle type="source" position={Position.Right} className="" />
       <div className="flex flex-col items-center justify-center h-full w-full">
         <Icon name={data.icon} className="w-10 h-10" />

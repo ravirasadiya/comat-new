@@ -1,13 +1,35 @@
-import Chat from "./_components/chat";
+import React from 'react'
 
-import { ChatProvider } from "./_contexts/chat";
+import Link from 'next/link';
 
-export default function Home() {
-  return (
-    <ChatProvider>
-      <div className="h-screen w-screen p-4">
-        <Chat />
-      </div>
-    </ChatProvider>
-  );
+import { Button } from '@/components/ui';
+
+import GraphComponent from './_components'
+
+
+const Graph = () => {
+    return (
+        <div className="flex flex-col items-center justify-center h-screen">
+            <div className="w-full h-full flex flex-col items-center justify-center py-16">
+                <div className="flex flex-col items-center justify-center gap-2">
+                    <h1 className="text-4xl font-bold text-brand-600">
+                        Meet The Hive
+                    </h1>
+                    <p>
+                        A modular network of interoperable DeFi agents
+                    </p>
+                    <Link href={"/chat"}>
+                        <Button
+                            variant={'brand'}
+                        >
+                            Get Started
+                        </Button>
+                    </Link>
+                </div>
+                <GraphComponent />
+            </div>
+        </div>
+    )
 }
+
+export default Graph;
