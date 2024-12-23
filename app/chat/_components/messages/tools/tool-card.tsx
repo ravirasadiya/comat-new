@@ -30,7 +30,10 @@ const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeadin
                     : "border-red-500 dark:border-red-400")
                 : "border-neutral-500 dark:border-neutral-400"
         )}>
-            <p className="text-sm text-muted-foreground">{agentName}</p>
+            <div className="flex items-center gap-2">
+                <Icon name={icon} className="w-4 h-4" />
+                <p className="text-lg font-bold">{agentName}</p>
+            </div>
             {
                 tool.state === "partial-call" || tool.state === "call" ? (
                     <AnimatedShinyText>
@@ -39,8 +42,7 @@ const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeadin
                 ) : (
                     <Collapsible defaultOpen={defaultOpen}>
                         <CollapsibleTrigger className="flex items-center gap-2">
-                            <Icon name={icon} className="w-4 h-4" />
-                            <p className="font-bold">{resultHeading(tool.result)}</p>
+                            <p className="">{resultHeading(tool.result)}</p>
                         </CollapsibleTrigger>
                         <CollapsibleContent className="text-sm">
                             {resultBody(tool.result)}

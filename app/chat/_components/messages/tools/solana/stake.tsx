@@ -17,7 +17,9 @@ const Stake: React.FC<Props> = ({ tool }) => {
             icon="Beef"
             agentName="Staking Agent"
             loadingText={`Staking SOL...`}
-            resultHeading={() => `Staking SOL`}
+            resultHeading={(result: StakeResultType) => result.body 
+                ? `Staked SOL for JupSOL`
+                :  "Failed to stake SOL"}
             resultBody={(result: StakeResultType) => result.body 
                 ? <StakeCard amount={tool.args.amount} />
                 :  "No token data found"}

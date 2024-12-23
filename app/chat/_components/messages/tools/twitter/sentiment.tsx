@@ -16,10 +16,12 @@ const SentimentAnalysis: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            icon="Wallet"
+            icon="Twitter"
             agentName="Twitter Agent"
             loadingText={`Analyzing Sentiment...`}
-            resultHeading={() => `Sentiment Analysis`}
+            resultHeading={(result: TwitterSentimentAnalysisResultType) => result.body 
+                ? `Sentiment Analysis`
+                :  "Failed to analyze sentiment"}
             resultBody={(result: TwitterSentimentAnalysisResultType) => result.body 
                 ? (
                     <div className="flex flex-col gap-2">

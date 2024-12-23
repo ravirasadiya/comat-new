@@ -16,10 +16,12 @@ const GetTokenData: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            icon="ChartCandlestick"
+            icon="ArrowLeftRight"
             agentName="Trading Agent"
             loadingText={`Completing Trade...`}
-            resultHeading={() => `Trade Complete`}
+            resultHeading={(result: TradeResultType) => result.body 
+                ? `Trade Complete`
+                :  "Failed to complete trade"}
             resultBody={(result: TradeResultType) => result.body 
                 ? <SwapCard tradeResult={result.body} />
                 :  "No trade data found"}

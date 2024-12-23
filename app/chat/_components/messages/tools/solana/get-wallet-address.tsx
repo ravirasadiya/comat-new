@@ -17,8 +17,8 @@ const GetWalletAddress: React.FC<Props> = ({ tool }) => {
             tool={tool}
             icon="Wallet"
             agentName="Wallet Agent"
-            loadingText={`Getting Wallet Address...`}
-            resultHeading={() => `Read Wallet Address`}
+            loadingText={`Getting Wallet Address...`}   
+            resultHeading={() => `Fetched Wallet Address`}
             resultBody={(result: GetWalletAddressResultType) => result.body 
                 ? `${result.body.address}` 
                 :  "No wallet address found"}

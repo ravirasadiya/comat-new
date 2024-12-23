@@ -17,7 +17,9 @@ const Lend: React.FC<Props> = ({ tool }) => {
             icon="Coins"
             agentName="Lending Agent"
             loadingText={`Lending USDC...`}
-            resultHeading={() => `Lending USDC`}
+            resultHeading={(result: LendResultType) => result.body 
+                ? `Lent USDC on Lulo`
+                :  "Failed to lend USDC"}
             resultBody={(result: LendResultType) => result.body 
                 ? <LendCard amount={tool.args.amount} />
                 :  "No token data found"}

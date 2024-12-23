@@ -17,10 +17,10 @@ const GetTrendingTokens: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            icon="Wallet"
+            icon="ChartCandlestick"
             agentName="Market Agent"
             loadingText={`Getting Trending Tokens...`}
-            resultHeading={() => `Trending Tokens`}
+            resultHeading={() => `Fetched Trending Tokens`}
             resultBody={(result: GetTrendingTokensResultType) => result.body 
                 ? <TrendingTokens tokens={result.body.tokens} prices={result.body.prices} />
                 :  "No trending tokens found"}

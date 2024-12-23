@@ -17,7 +17,9 @@ const Unstake: React.FC<Props> = ({ tool }) => {
             icon="Beef"
             agentName="Staking Agent"
             loadingText={`Unstaking JupSOL...`}
-            resultHeading={() => `Unstaking JupSOL`}
+            resultHeading={(result: UnstakeResultType) => result.body 
+                ? `Unstaking JupSOL`
+                :  "Failed to unstake JupSOL"}
             resultBody={(result: UnstakeResultType) => result.body 
                 ? <UnstakeCard amount={tool.args.amount} />
                 :  "No token data found"}
