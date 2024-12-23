@@ -14,9 +14,14 @@ export async function searchRecent(
   twitterApi: TwitterApi,
   args: TwitterSearchRecentArgumentsType
 ): Promise<TwitterActionResult<TwitterSearchRecentResultBodyType>> {
+
+  const query = `${args.keyword} is:verified lang:en`;
+
+  console.log(query);
+
   try {
     const tweets = await twitterApi.v2.search({
-      query: args.keyword,
+      query: query,
       max_results: 10,
       expansions: ['author_id']
     });
@@ -43,6 +48,7 @@ export async function searchRecent(
       }
     };
   } catch (error) {
+    console.log(error);
     return {
       message: `Error getting tweets: ${error}`,
     };

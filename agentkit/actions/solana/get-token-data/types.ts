@@ -10,6 +10,7 @@ export type GetTokenDataArgumentsType = z.infer<GetTokenDataSchemaType>;
 
 export type GetTokenDataResultBodyType = {
     token: JupiterTokenData;
+    prices: [number, number][];
 }; 
 
 export type GetTokenDataResultType = SolanaActionResult<GetTokenDataResultBodyType>;

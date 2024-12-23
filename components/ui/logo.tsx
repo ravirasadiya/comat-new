@@ -9,13 +9,22 @@ interface Props {
 
 const Logo: React.FC<Props> = ({ className }) => {
     return (
-        <Image 
-            src="/logo.png" 
-            alt="Logo" 
-            width={100} 
-            height={100} 
-            className={cn("w-10 h-10", className)} 
-        />
+        <>
+            <Image 
+                src="/logo-dark.png" 
+                alt="Logo" 
+                width={100} 
+                height={100} 
+                className={cn("w-10 h-10 hidden dark:block", className)} 
+            />
+            <Image 
+                src="/logo-light.png" 
+                alt="Logo" 
+                width={100} 
+                height={100} 
+                className={cn("w-10 h-10 block dark:hidden", className)} 
+            />
+        </>
     )
 }
 

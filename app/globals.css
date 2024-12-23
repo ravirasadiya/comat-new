@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-dm-sans), sans-serif;
 }
 
-p, span, a, input, textarea, button, body {
+p, a, input, textarea, button, body {
   font-family: var(--font-dm-mono), monospace;
 }
 

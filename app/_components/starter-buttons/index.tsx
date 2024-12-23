@@ -4,16 +4,16 @@ import StarterButton from './starter-button';
 
 const starterButtons = [
     {
-        title: "Trending Tokens",
+        title: "What's Trending",
         description: "Search the trending tokens",
         icon: "Coins" as const,
         prompt: "Search the trending tokens"
     }, 
     {
-        title: "Balance",
-        description: "Check your balance",
+        title: "What's Hot",
+        description: "Search the hottest tokens",
         icon: "Coins" as const,
-        prompt: "Check your balance"
+        prompt: "Search the hottest tokens"
     },
     {
         title: "Trade",

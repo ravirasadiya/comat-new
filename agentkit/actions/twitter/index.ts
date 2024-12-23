@@ -1,3 +1,4 @@
+import { TwitterSentimentAnalysisAction } from "./analyze-sentiment";
 import { TwitterSearchRecentAction } from "./search-recent";
 
 import { TwitterAction, TwitterActionSchemaAny } from "./twitter-action";
@@ -11,6 +12,7 @@ import { TwitterAction, TwitterActionSchemaAny } from "./twitter-action";
 export function getAllTwitterActions(): TwitterAction<TwitterActionSchemaAny, any>[] {
   return [
     new TwitterSearchRecentAction(),
+    new TwitterSentimentAnalysisAction(),
   ];
 }
 

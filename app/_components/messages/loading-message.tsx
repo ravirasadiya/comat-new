@@ -2,9 +2,9 @@
 
 import React from 'react'
 
-import { Bot } from 'lucide-react';
-
 import { AnimatedShinyText } from '@/components/ui';
+
+import Logo from '@/components/ui/logo';
 
 import { cn } from '@/lib/utils';
 
@@ -20,7 +20,7 @@ const LoadingMessage: React.FC = () => {
             "md:flex-row md:gap-4 md:px-4",
         )}>
             <div className="flex items-center md:items-start gap-2">
-                <Bot 
+                <Logo 
                     className={cn(
                         "w-6 h-6 md:w-10 md:h-10 rounded-full",
                     )}

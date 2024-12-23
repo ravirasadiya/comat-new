@@ -31,7 +31,7 @@ const SearchRecentTweets: React.FC<Props> = ({ tool }) => {
 const Tweets = ({ tweets }: { tweets: { tweet: TweetV2; user: UserV2 }[] }) => {
     return (
         <div className="grid grid-cols-1 gap-4">
-            {tweets.map((tweet: { tweet: TweetV2; user: UserV2 }) => (
+            {tweets.slice(0, 5).map((tweet: { tweet: TweetV2; user: UserV2 }) => (
                 <TweetCard
                     key={tweet.tweet.id} 
                     tweet={tweet.tweet} 

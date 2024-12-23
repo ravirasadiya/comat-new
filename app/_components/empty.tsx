@@ -20,7 +20,7 @@ const EmptyChat: React.FC = () => {
                     <Logo className="w-20 h-20" />
                     <div className="flex flex-col gap-1">
                         <h1 className="font-semibold text-center text-2xl">
-                            How can We help you?
+                            How can <span className="text-brand-500 font-bold inline">We</span> help you?
                         </h1>
                         <p className="text-center text-sm text-neutral-600 dark:text-neutral-400">
                             Orchestrate a hive mind of DeFi Agents to act on Solana
