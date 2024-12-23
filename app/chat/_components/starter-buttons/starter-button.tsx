@@ -38,7 +38,7 @@ const StarterButton: React.FC<Props> = ({ icon, title, description, prompt, clas
                         {title}
                     </p>
                 </div>
-                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400 hidden md:block">
                     {description}
                 </p>
             </div>

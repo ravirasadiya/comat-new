@@ -39,7 +39,10 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
             className,
 
         )}>
-            <div className="flex items-center md:items-start gap-4">
+            <div className={cn(
+                "flex items-center md:items-start gap-4",
+                previousMessageSameRole && "hidden md:block"
+            )}>
                 <div className={cn(
                     "flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full",
                     isUser && "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700",
