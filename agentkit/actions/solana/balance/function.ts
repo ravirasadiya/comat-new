@@ -1,4 +1,5 @@
-import { PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { BalanceArgumentsType, BalanceResultBodyType } from "./types";
 import { SolanaActionResult } from "../../solana-action";
@@ -15,17 +16,33 @@ export async function getBalance(
   args: BalanceArgumentsType
 ): Promise<SolanaActionResult<BalanceResultBodyType>> {
   try {
-    const tokenAddress = args.tokenAddress ? new PublicKey(args.tokenAddress) : undefined;
-    const balance = await solanaKit.getBalance(tokenAddress);
+    let balance: number;
+    
+    if (!args.tokenAddress) {
+      // Get SOL balance
+      balance = await solanaKit.connection.getBalance(new PublicKey(solanaKit.wallet_address)) / LAMPORTS_PER_SOL;
+    } else {
+      // Get token balance
+
+      const token_address = getAssociatedTokenAddressSync(
+        new PublicKey(args.tokenAddress), 
+        new PublicKey(solanaKit.wallet_address)
+    );
+
+
+      const token_account = await solanaKit.connection.getTokenAccountBalance(token_address);
+      balance = token_account.value.uiAmount ?? 0;
+    }
 
     return {
       message: `Balance: ${balance} ${args.tokenAddress || "SOL"}`,
       body: {
-        balance: balance ?? 0,
+        balance: balance,
         token: args.tokenAddress || "SOL"
       }
     };
   } catch (error) {
+    console.error(error);
     return {
       message: `Error getting balance: ${error}`,
       body: {

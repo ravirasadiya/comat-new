@@ -2,10 +2,10 @@ import { PublicKey } from "@solana/web3.js";
 import { JupiterTokenData } from "solana-agent-kit";
 
 export async function getTokenDataByAddress(
-  mintAddresses: string[],
+  mintAddress: string,
 ): Promise<JupiterTokenData | undefined> {
   try {
-    if (!mintAddresses) {
+    if (!mintAddress) {
       throw new Error("Mint address is required");
     }
 
@@ -19,10 +19,11 @@ export async function getTokenDataByAddress(
     const data = (await response.json()) as JupiterTokenData[];
 
     const token = data.find((token: JupiterTokenData) => {
-      return mintAddresses.includes(token.address);
+      return token.address === mintAddress;
     });
     return token;
   } catch (error: any) {
+    console.log(error);
     throw new Error(`Error fetching token data: ${error.message}`);
   }
 }
@@ -31,8 +32,9 @@ export async function getTokenAddressFromTicker(
   ticker: string
 ): Promise<string[] | null> {
   try {
+
     const response = await fetch(
-      `https://api.dexscreener.com/latest/dex/search?q=${ticker}`
+      `https://api.dexscreener.com/latest/dex/search?q=${ticker.toLowerCase()}`
     );
     const data = await response.json();
 
@@ -49,6 +51,8 @@ export async function getTokenAddressFromTicker(
       (pair: any) =>
         pair.baseToken.symbol.toLowerCase() === ticker.toLowerCase()
     );
+
+    console.log(solanaPairs);
     
     // Return the address of the highest FDV Solana pair
     return Array.from(new Set(solanaPairs.map((pair: any) => pair.baseToken.address)));
@@ -60,9 +64,26 @@ export async function getTokenAddressFromTicker(
 export async function getTokenDataByTicker(
   ticker: string
 ): Promise<JupiterTokenData | undefined> {
-  const addresses = await getTokenAddressFromTicker(ticker);
-  if (!addresses) {
-    throw new Error(`Token address not found for ticker: ${ticker}`);
-  }
-  return getTokenDataByAddress(addresses);
+    try {
+        if (!ticker) {
+          throw new Error("Ticker is required");
+        }
+    
+        const response = await fetch("https://tokens.jup.ag/tokens?tags=verified", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        const data = (await response.json()) as JupiterTokenData[];
+    
+        const token = data.find((token: JupiterTokenData) => {
+          return token.symbol === ticker;
+        });
+        return token;
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(`Error fetching token data: ${error.message}`);
+    }
 }

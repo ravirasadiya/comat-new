@@ -15,7 +15,7 @@ const CollapsibleTrigger = React.forwardRef<
   <CollapsiblePrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex w-fit items-center justify-between py-2 font-medium transition-all hover:underline group",
+      "flex w-fit items-center justify-between font-medium transition-all hover:underline group",
       className
     )}
     {...props}

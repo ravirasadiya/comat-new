@@ -9,6 +9,7 @@ import ToolInvocation from './tools';
 import { cn } from '@/lib/utils';
 
 import type { Message } from 'ai';
+import Logo from '@/components/ui/logo';
 
 interface Props {
     message: Message,
@@ -40,19 +41,26 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
         )}>
             <div className="flex items-center md:items-start gap-4">
                 <div className={cn(
-                    "flex items-center justify-center w-6 h-6 md:w-10 md:h-10 bg-neutral-100 dark:bg-neutral-800 shadow-md rounded-full",
+                    "flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full",
+                    isUser && "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700",
                     previousMessageSameRole && "opacity-0"
                 )}>
-                    <Icon
-                        name={isUser ? "User" : "Bot"}
-                        className="w-4 h-4 md:w-6 md:h-6"
-                    />
+                    {
+                        isUser ? (
+                            <Icon
+                                name="User"
+                                className="w-4 h-4 md:w-6 md:h-6"
+                            />
+                        ) : (
+                            <Logo className="w-6 h-6 md:w-10 md:h-10" />
+                        )
+                    }
                 </div>
                 <p className={cn(
                     "text-sm font-semibold md:hidden",
                     isUser ? "text-neutral-900 dark:text-neutral-100" : "text-brand-500 dark:text-brand-500"
                 )}>
-                    {message.role === 'user' ? 'You' : 'ChatEDU'}
+                    {message.role === 'user' ? 'You' : 'The Hive'}
                 </p>
             </div>
             <div className="md:pt-2 w-full max-w-full md:flex-1 md:w-0 overflow-hidden flex flex-col gap-2">

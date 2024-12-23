@@ -8,7 +8,8 @@ import {
     GetDomain,
     RequestFunds,
     GetTrendingTokens,
-    GetTokenData
+    GetTokenData,
+    Trade
 } from './solana'
 
 import { 
@@ -17,7 +18,8 @@ import {
     SOLANA_GET_DOMAIN_NAME,
     SOLANA_REQUEST_FUNDS_NAME,
     SOLANA_GET_TRENDING_TOKENS_NAME,
-    SOLANA_GET_TOKEN_DATA_NAME
+    SOLANA_GET_TOKEN_DATA_NAME,
+    SOLANA_TRADE_NAME,
 } from '@/agentkit/actions/solana/names'
 
 import {
@@ -46,6 +48,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <GetTrendingTokens tool={tool} />
         case SOLANA_GET_TOKEN_DATA_NAME:
             return <GetTokenData tool={tool} />
+        case SOLANA_TRADE_NAME:
+            return <Trade tool={tool} />
         case TWITTER_SEARCH_RECENT_NAME:
             return <SearchRecentTweets tool={tool} />
         default:

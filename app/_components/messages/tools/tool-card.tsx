@@ -33,7 +33,7 @@ const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeadin
                     name={icon} 
                     className="w-4 h-4"
                 />
-                <p className="text-sm font-bold">
+                <p className="font-bold">
                     {resultHeading(tool.result)}
                 </p>
             </CollapsibleTrigger>

@@ -23,12 +23,13 @@ export async function getTokenData(
     }
 
     return {
-      message: `Found token data for ${args.ticker}`,
+      message: `Found token data for ${args.ticker}. The user is shown the token data in the UI, do not reiterate the token data. Ask the user what they want to do next.`,
       body: {
         token
       }
     };
   } catch (error) {
+    console.log(error);
     return {
       message: `Error getting token data: ${error}`,
     };
