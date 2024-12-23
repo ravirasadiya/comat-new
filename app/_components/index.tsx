@@ -1,17 +1,14 @@
 'use client'
 
-import { useCallback, MouseEvent } from 'react';
+import { useCallback } from 'react';
 
 import {
   ReactFlow,
-  Panel,
   ProOptions,
   ReactFlowProvider,
   useNodesState,
   useEdgesState,
-  useReactFlow,
   NodeOrigin,
-  NodeMouseHandler,
   addEdge,
   OnConnect,
 } from '@xyflow/react';
@@ -41,7 +38,7 @@ const nodeTypes = {
 };
 
 function ReactFlowPro({ strength = -200, distance = 300 }: ExampleProps = {}) {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const useNodesResult = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const dragEvents = useForceLayout({ strength, distance });
@@ -53,10 +50,10 @@ function ReactFlowPro({ strength = -200, distance = 300 }: ExampleProps = {}) {
 
   return (
     <ReactFlow
-      nodes={nodes}
+      nodes={useNodesResult[0]}
       edges={edges}
       nodeTypes={nodeTypes}
-      onNodesChange={onNodesChange}
+      onNodesChange={useNodesResult[2]}
       onEdgesChange={onEdgesChange}
       proOptions={proOptions}
       onConnect={onConnect}

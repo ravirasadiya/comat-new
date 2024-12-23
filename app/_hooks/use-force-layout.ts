@@ -119,7 +119,7 @@ function useForceLayout({
 
     // Add a smooth oscillating force that changes periodically
     let timer: NodeJS.Timeout;
-    let startTime = Date.now();
+    const startTime = Date.now();
     
     const addOscillation = () => {
       const elapsed = (Date.now() - startTime) / 1000; // Convert to seconds

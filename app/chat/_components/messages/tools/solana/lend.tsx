@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Card } from '@/components/ui';
-
 import ToolCard from '../tool-card';
 
 import { ToolInvocation } from 'ai';

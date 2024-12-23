@@ -7,7 +7,6 @@ import Messages from './messages';
 import ChatInput from './input';
 
 import { useChat } from '../_contexts/chat';
-import Logo from '@/components/ui/logo';
 
 const Chat: React.FC = () => {
 
