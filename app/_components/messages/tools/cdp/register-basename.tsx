@@ -15,6 +15,7 @@ const RegisterBasename: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard
             tool={tool}
+            agentName="Basename Agent"
             icon="Globe"
             loadingText="Registering Basename..."
             resultHeading={() => "Basename Registered"}

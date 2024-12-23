@@ -15,6 +15,7 @@ const GetBalance: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
+            agentName="Wallet Agent"
             icon="HandCoins"
             loadingText={`Getting ${tool.args.tokenAddress || "SOL"} Balance...`}
             resultHeading={() => `Read ${tool.args.tokenAddress || "SOL"} Balance`}

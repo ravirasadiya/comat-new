@@ -17,6 +17,7 @@ const GetTokenData: React.FC<Props> = ({ tool }) => {
         <ToolCard 
             tool={tool}
             icon="ChartCandlestick"
+            agentName="Trading Agent"
             loadingText={`Completing Trade...`}
             resultHeading={() => `Trade Complete`}
             resultBody={(result: TradeResultType) => result.body 

@@ -16,6 +16,7 @@ const GetWalletAddress: React.FC<Props> = ({ tool }) => {
         <ToolCard 
             tool={tool}
             icon="Wallet"
+            agentName="Wallet Agent"
             loadingText={`Getting Wallet Address...`}
             resultHeading={() => `Read Wallet Address`}
             resultBody={(result: GetWalletAddressResultType) => result.body 

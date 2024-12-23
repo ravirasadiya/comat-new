@@ -14,6 +14,7 @@ const RequestFaucet: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard
             tool={tool}
+            agentName="Faucet Agent"
             icon="Droplet"
             loadingText="Requesting Faucet Funds..."
             resultHeading={() => "Received Faucet Funds"}

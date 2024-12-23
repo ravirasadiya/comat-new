@@ -22,6 +22,7 @@ const DeployNFT: React.FC<Props> = ({ tool }) => {
         <ToolCard 
             tool={tool}
             icon="GalleryHorizontalEnd"
+            agentName="NFT Agent"
             loadingText={`Deploying NFT...`}
             resultHeading={(result: DeployNftActionResultType) => result.body ? `NFT Deployed` : `NFT Deployment Failed`}
             resultBody={(result: DeployNftActionResultType) => result.body 

@@ -1,1 +1,0 @@
-export const SOLANA_DEPLOY_COLLECTION_NAME = "solana_deploy_collection"; 

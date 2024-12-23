@@ -21,6 +21,7 @@ const Transfer: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
+            agentName="Token Agent"
             icon="GalleryHorizontalEnd"
             loadingText={`Transferring...`}
             resultHeading={(result: TransferActionResultType) => result.body ? `Transfer Complete` : `Transfer Failed`}

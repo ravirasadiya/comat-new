@@ -1,1 +1,0 @@
-export const SOLANA_RESOLVE_DOMAIN_NAME = "solana_resolve_domain"; 

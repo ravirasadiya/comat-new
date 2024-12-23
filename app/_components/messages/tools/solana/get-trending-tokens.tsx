@@ -18,6 +18,7 @@ const GetTrendingTokens: React.FC<Props> = ({ tool }) => {
         <ToolCard 
             tool={tool}
             icon="Wallet"
+            agentName="Market Agent"
             loadingText={`Getting Trending Tokens...`}
             resultHeading={() => `Trending Tokens`}
             resultBody={(result: GetTrendingTokensResultType) => result.body 

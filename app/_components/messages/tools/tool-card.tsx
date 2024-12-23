@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { AnimatedShinyText } from '@/components/ui'
+import { AnimatedShinyText, Card } from '@/components/ui'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
 
 import { ToolInvocation } from 'ai'
 import { IconName } from '@/types'
 import { Icon } from '@/components/ui/icon'
 import { CdpActionResult } from '@/agentkit'
+import { cn } from '@/lib/utils'
 
 interface Props<ActionResultBodyType> {
     tool: ToolInvocation,
@@ -14,33 +15,40 @@ interface Props<ActionResultBodyType> {
     loadingText: string,
     resultHeading: (result: CdpActionResult<ActionResultBodyType>) => string,
     resultBody: (result: CdpActionResult<ActionResultBodyType>) => React.ReactNode,
+    agentName: string,
     defaultOpen?: boolean,
 }
 
-const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody, defaultOpen = false }: Props<ActionResultBodyType>) => {
+const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody, agentName, defaultOpen = false }: Props<ActionResultBodyType>) => {
 
-    if (tool.state === "partial-call" || tool.state === "call") {
-        return (
-            <AnimatedShinyText>
-                {loadingText}
-            </AnimatedShinyText>
-        )
-    }
     return (
-        <Collapsible defaultOpen={defaultOpen}>
-            <CollapsibleTrigger className="flex items-center gap-2">
-                <Icon 
-                    name={icon} 
-                    className="w-4 h-4"
-                />
-                <p className="font-bold">
-                    {resultHeading(tool.result)}
-                </p>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="text-sm">
-                {resultBody(tool.result)}
-            </CollapsibleContent>
-        </Collapsible>
+        <Card className={cn(
+            "flex flex-col gap-2 p-2",
+            tool.state === "result"
+                ? (tool.result.body 
+                    ? "border-brand-600/50 dark:border-brand-400/50"
+                    : "border-red-500 dark:border-red-400")
+                : "border-neutral-500 dark:border-neutral-400"
+        )}>
+            <p className="text-sm text-muted-foreground">{agentName}</p>
+            {
+                tool.state === "partial-call" || tool.state === "call" ? (
+                    <AnimatedShinyText>
+                        {loadingText}
+                    </AnimatedShinyText>
+                ) : (
+                    <Collapsible defaultOpen={defaultOpen}>
+                        <CollapsibleTrigger className="flex items-center gap-2">
+                            <Icon name={icon} className="w-4 h-4" />
+                            <p className="font-bold">{resultHeading(tool.result)}</p>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent className="text-sm">
+                            {resultBody(tool.result)}
+                        </CollapsibleContent>
+                    </Collapsible>
+                )
+            }
+        </Card>
     )
 }
 

@@ -5,8 +5,6 @@ import React from 'react'
 import {
     Balance,
     GetWalletAddress,
-    GetDomain,
-    RequestFunds,
     GetTrendingTokens,
     GetTokenData,
     Trade
@@ -15,8 +13,6 @@ import {
 import { 
     SOLANA_BALANCE_NAME,
     SOLANA_GET_WALLET_ADDRESS_NAME,
-    SOLANA_GET_DOMAIN_NAME,
-    SOLANA_REQUEST_FUNDS_NAME,
     SOLANA_GET_TRENDING_TOKENS_NAME,
     SOLANA_GET_TOKEN_DATA_NAME,
     SOLANA_TRADE_NAME,
@@ -40,10 +36,6 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <Balance tool={tool} />
         case SOLANA_GET_WALLET_ADDRESS_NAME:
             return <GetWalletAddress tool={tool} />
-        case SOLANA_GET_DOMAIN_NAME:
-            return <GetDomain tool={tool} />
-        case SOLANA_REQUEST_FUNDS_NAME:
-            return <RequestFunds tool={tool} />
         case SOLANA_GET_TRENDING_TOKENS_NAME:
             return <GetTrendingTokens tool={tool} />
         case SOLANA_GET_TOKEN_DATA_NAME:
