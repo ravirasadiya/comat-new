@@ -19,7 +19,7 @@ interface Props<ActionResultBodyType> {
     defaultOpen?: boolean,
 }
 
-const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody, agentName, defaultOpen = false }: Props<ActionResultBodyType>) => {
+const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody, agentName, defaultOpen = true }: Props<ActionResultBodyType>) => {
 
     return (
         <Card className={cn(

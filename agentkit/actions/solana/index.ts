@@ -8,7 +8,7 @@ import { GetTokenDataAction } from "./get-token-data";
 import { LendAction } from "./lend";
 import { StakeAction } from "./stake";
 import { UnstakeAction } from "./unstake";
-
+import { GetSolanaAdviceAction } from "./get-advice";
 
 import { SolanaAction, SolanaActionSchemaAny } from "../solana-action";
 /**
@@ -28,7 +28,8 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new GetTokenDataAction(),
     new LendAction(),
     new StakeAction(),
-    new UnstakeAction()
+    new UnstakeAction(),
+    new GetSolanaAdviceAction()
   ];
 }
 
@@ -44,5 +45,6 @@ export {
   GetTokenDataAction,
   LendAction,
   StakeAction,
-  UnstakeAction
+  UnstakeAction,
+  GetSolanaAdviceAction
 };

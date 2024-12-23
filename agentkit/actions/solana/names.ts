@@ -8,3 +8,4 @@ export * from "./get-token-data/name";
 export * from "./lend/name";
 export * from "./stake/name";
 export * from "./unstake/name";
+export * from "./get-advice/name";

@@ -18,7 +18,8 @@ import {
     SOLANA_TRADE_NAME,
     SOLANA_LEND_NAME,
     SOLANA_STAKE_NAME,
-    SOLANA_UNSTAKE_NAME
+    SOLANA_UNSTAKE_NAME,
+    GET_SOLANA_ADVICE_NAME
 } from '@/agentkit/actions/solana/names'
 
 import {
@@ -32,7 +33,7 @@ import SentimentAnalysis from './twitter/sentiment'
 import Lend from './solana/lend'
 import Stake from './solana/stake'
 import Unstake from './solana/unstake'
-
+import GetSolanaAdvice from './solana/advice'
 interface Props {
     tool: ToolInvocationType
 }
@@ -60,6 +61,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <Stake tool={tool} />
         case SOLANA_UNSTAKE_NAME:
             return <Unstake tool={tool} />
+        case GET_SOLANA_ADVICE_NAME:
+            return <GetSolanaAdvice tool={tool} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

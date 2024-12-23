@@ -6,3 +6,4 @@ export * from './get-trending-tokens/types';
 export * from './get-token-data/types';
 export * from './lend/types';
 export * from './stake/types';
+export * from './get-advice/types';
