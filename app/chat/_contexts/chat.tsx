@@ -17,6 +17,8 @@ interface ChatContextType {
     isLoading: boolean;
     sendMessage: (message: string) => void;
     isResponseLoading: boolean;
+    solanaPrivateKey: string | null;
+    setSolanaPrivateKey: (key: string | null) => void;
 }
 
 const ChatContext = createContext<ChatContextType>({
@@ -27,6 +29,8 @@ const ChatContext = createContext<ChatContextType>({
     isLoading: false,
     sendMessage: () => {},
     isResponseLoading: false,
+    solanaPrivateKey: null,
+    setSolanaPrivateKey: () => {},
 });
 
 interface ChatProviderProps {
@@ -39,6 +43,23 @@ const initialMessage =
 export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
     const [isResponseLoading, setIsResponseLoading] = useState(false);
+    const [solanaPrivateKey, setSolanaPrivateKey] = useState<string | null>(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('solanaPrivateKey');
+        }
+        return null;
+    });
+
+    const handleSetSolanaPrivateKey = (key: string | null) => {
+        setSolanaPrivateKey(key);
+        if (typeof window !== 'undefined') {
+            if (key) {
+                localStorage.setItem('solanaPrivateKey', key);
+            } else {
+                localStorage.removeItem('solanaPrivateKey');
+            }
+        }
+    };
 
     const { messages, input, setInput, append, isLoading } = useAiChat({
         maxSteps: 5,
@@ -53,6 +74,9 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             setIsResponseLoading(false);
         },
         api: '/api/chat/solana',
+        body: {
+            solanaPrivateKey,
+        },
     });
 
     const onSubmit = async () => {
@@ -82,6 +106,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             isLoading,
             sendMessage,
             isResponseLoading,
+            solanaPrivateKey,
+            setSolanaPrivateKey: handleSetSolanaPrivateKey,
         }}>
             {children}
         </ChatContext.Provider>

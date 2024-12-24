@@ -8,3 +8,4 @@ export * from "./icon";
 export * from "./collapsible";
 export * from "./progress";
 export * from "./chart";
+export * from "./alert-dialog";

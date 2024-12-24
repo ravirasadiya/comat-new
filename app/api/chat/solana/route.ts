@@ -5,19 +5,21 @@ import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 import { solanaTools, twitterTools } from "@/agentkit/ai-sdk";
-import { SolanaAgentKit } from "@/agentkit";
 
 import { getTwitterClient } from "@/agentkit/actions/twitter/client";
+import { SolanaAgentKit } from "solana-agent-kit";
 
 
 export const POST = async (req: NextRequest) => {
 
-    const { messages } = await req.json();
+    const { messages, solanaPrivateKey } = await req.json();
+
+    console.log(solanaPrivateKey);
 
     const result = streamText({
         model: openai("gpt-4o-mini"),
         tools: {
-            ...solanaTools(SolanaAgentKit),
+            ...solanaTools(new SolanaAgentKit(solanaPrivateKey, undefined, process.env.OPENAI_API_KEY!)),
             ...twitterTools(getTwitterClient())
         },
         messages,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import { CornerDownRight } from 'lucide-react';
 
@@ -16,11 +16,17 @@ import { cn } from '@/lib/utils';
 
 const ChatInput: React.FC = () => {
 
-    const { input, setInput, onSubmit, isLoading } = useChat();
+    const { input, setInput, onSubmit, isLoading, solanaPrivateKey } = useChat();
 
     const { onKeyDown } = useEnterSubmit({ onSubmit: onSubmit })
 
     const inputRef = useRef<HTMLTextAreaElement>(null)
+
+    useEffect(() => {
+        if (solanaPrivateKey && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [solanaPrivateKey]);
 
     return (
         <div className="flex flex-col w-full">
@@ -53,7 +59,6 @@ const ChatInput: React.FC = () => {
                     onChange={e => {
                         setInput(e.target.value);
                     }}
-                    autoFocus
                     disabled={isLoading}
                 />
                 <div className="flex items-center justify-end px-2 pb-2">
