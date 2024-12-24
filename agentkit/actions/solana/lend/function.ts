@@ -18,7 +18,7 @@ export async function lend(
     const tx = await lendAsset(solanaKit, args.amount);
 
     return {
-      message: `Lending ${args.amount} USDC`,
+      message: `Lending ${args.amount} USDC with transaction hash ${tx}`,
       body: {
         tx
       }

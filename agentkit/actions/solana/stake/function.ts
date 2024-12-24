@@ -18,7 +18,7 @@ export async function stake(
     const tx = await stakeWithJup(solanaKit, args.amount);
 
     return {
-      message: `Staked ${args.amount} SOL for JupSOL. Now get the balance of your JupSOL with the appropriate tools.`,
+      message: `Staked ${args.amount} SOL for JupSOL with transaction hash ${tx}`,
       body: {
         tx
       }

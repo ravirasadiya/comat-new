@@ -34,7 +34,7 @@ export async function trade(
     
 
     return {
-      message: `Successfully swapped ${args.inputAmount} ${args.inputMint || "SOL"} for ${args.outputMint}. Now call the solana_balance tool with ${args.outputMint} and show the user their new balance.`,
+      message: `Successfully swapped ${args.inputAmount} ${args.inputMint || "SOL"} for ${args.outputMint}.`,
       body: {
         transaction: tx,
         inputAmount: args.inputAmount,
