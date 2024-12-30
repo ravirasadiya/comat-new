@@ -8,7 +8,7 @@ interface Props {
     showText?: boolean
 }
 
-const Logo: React.FC<Props> = ({ className, showText = false }) => {
+export const Logo: React.FC<Props> = ({ className, showText = false }) => {
     return (
         <div className="flex items-center gap-2">
             <Image 

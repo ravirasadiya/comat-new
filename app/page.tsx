@@ -1,32 +1,29 @@
 import React from 'react'
 
-import Link from 'next/link';
-
-import { Button } from '@/components/ui';
-
 import GraphComponent from './_components'
+import LoginButton from './_components/login-button';
+import { BorderBeam, Card } from '@/components/ui';
 
 
 const Graph = () => {
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <div className="w-full h-full flex flex-col items-center justify-center pt-16">
-                <div className="flex flex-col items-center justify-center gap-2">
-                    <h1 className="text-4xl font-bold text-brand-600">
-                        Meet The Hive
-                    </h1>
-                    <p>
-                        A modular network of interoperable DeFi agents
-                    </p>
-                    <Link href={"/chat"}>
-                        <Button
-                            variant={'brand'}
-                        >
-                            Get Started
-                        </Button>
-                    </Link>
+        <div>
+            <div className="flex flex-col items-center justify-center h-screen pt-16 pb-4">
+                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                        <h1 className="text-4xl font-bold text-brand-600">
+                            Meet The Hive
+                        </h1>
+                        <p>
+                            A modular network of interoperable DeFi agents
+                        </p>
+                        <LoginButton />
+                    </div>
+                    <div className="w-full flex-1 max-w-2xl rounded-md border border-neutral-200 dark:border-neutral-700 relative">
+                        <GraphComponent />
+                        <BorderBeam />
+                    </div>
                 </div>
-                <GraphComponent />
             </div>
         </div>
     )

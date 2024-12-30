@@ -10,3 +10,8 @@ export * from "./progress";
 export * from "./chart";
 export * from "./alert-dialog";
 export * from "./sidebar";
+export * from "./avatar";
+export * from "./dropdown-menu";
+export * from "./logo";
+export * from "./border-beam";
+export * from "./hyper-text";

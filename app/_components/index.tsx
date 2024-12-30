@@ -11,6 +11,7 @@ import {
   NodeOrigin,
   addEdge,
   OnConnect,
+  Background,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -41,7 +42,7 @@ function ReactFlowPro({ strength = -500, distance = 150 }: ExampleProps = {}) {
   const useNodesResult = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const dragEvents = useForceLayout({ strength, distance });
+  useForceLayout({ strength, distance });
 
   const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -57,13 +58,18 @@ function ReactFlowPro({ strength = -500, distance = 150 }: ExampleProps = {}) {
       onEdgesChange={onEdgesChange}
       proOptions={proOptions}
       onConnect={onConnect}
+      onNodeDragStart={() => {}}
+      onNodeDrag={() => {}}
+      onNodeDragStop={() => {}}
       nodeOrigin={nodeOrigin}
-      onNodeDragStart={dragEvents.start}
-      onNodeDrag={dragEvents.drag}
-      onNodeDragStop={dragEvents.stop}
       defaultEdgeOptions={defaultEdgeOptions}
+      panOnDrag={false}
+      zoomOnDoubleClick={false}
+      zoomOnScroll={false}
       fitView
-    />
+    >
+      <Background />
+    </ReactFlow>
   );
 }
 
