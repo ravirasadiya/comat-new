@@ -23,9 +23,7 @@ import {
 
 import { truncateAddress } from '@/lib/wallet';
 
-interface Props {}
-
-const AuthButton: React.FC<Props> = () => {
+const AuthButton: React.FC = () => {
 
     const { user, login, logout, ready } = usePrivy();
 

@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { BorderBeam } from '@/components/ui';
+
 import GraphComponent from './_components'
 import LoginButton from './_components/login-button';
-import { BorderBeam, Card } from '@/components/ui';
 
 
 const Graph = () => {

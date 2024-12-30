@@ -7,9 +7,7 @@ import { Button } from '@/components/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-interface Props {}
-
-const LoginButton: React.FC<Props> = () => {
+const LoginButton: React.FC = () => {
 
     const router = useRouter();
 

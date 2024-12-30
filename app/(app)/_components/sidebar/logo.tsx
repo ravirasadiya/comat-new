@@ -6,9 +6,7 @@ import Link from 'next/link';
 
 import { Logo as LogoBase, useSidebar } from '@/components/ui';
 
-interface Props {}
-
-const Logo: React.FC<Props> = ({  }) => {
+const Logo: React.FC = () => {
 
     const { open } = useSidebar();
 

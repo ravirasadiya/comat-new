@@ -4,7 +4,6 @@ import {
     Sidebar as SidebarUI, 
     SidebarHeader, 
     SidebarContent, 
-    SidebarFooter, 
     SidebarInset,
     SidebarTrigger,
     Separator,

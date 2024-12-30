@@ -4,9 +4,7 @@ import AgentPage from '../_components';
 
 import { marketAgent } from './_data';
 
-interface Props {}
-
-const MarketAgentPage: React.FC<Props> = () => {
+const MarketAgentPage: React.FC = () => {
     return (
         <AgentPage
             agent={marketAgent}

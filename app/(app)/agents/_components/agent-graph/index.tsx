@@ -41,7 +41,7 @@ interface Props {
 }
 
 const AgentGraphComponent: React.FC<Props> = ({ strength = -500, distance = 150, nodes: initialNodes, edges: initialEdges }) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const useNodesResult = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect: OnConnect = useCallback(
@@ -50,17 +50,17 @@ const AgentGraphComponent: React.FC<Props> = ({ strength = -500, distance = 150,
   );
 
   const dragEvents = useForceLayout({ 
-    strength: -500,
-    distance: 150,
+    strength,
+    distance,
     oscillationStrength: 0.1
   });
 
   return (
     <ReactFlow
-      nodes={nodes}
+      nodes={useNodesResult[0]}
       edges={edges}
       nodeTypes={nodeTypes}
-      onNodesChange={onNodesChange}
+      onNodesChange={useNodesResult[2]}
       onEdgesChange={onEdgesChange}
       proOptions={proOptions}
       onConnect={onConnect}
