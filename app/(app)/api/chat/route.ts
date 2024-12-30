@@ -26,5 +26,7 @@ export const POST = async (req: NextRequest) => {
         messages,
     })
 
+    result.toDataStream()
+
     return result.toDataStreamResponse();
 }

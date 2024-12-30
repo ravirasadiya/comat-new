@@ -14,20 +14,30 @@ export default {
   			foreground: 'var(--foreground)',
   			brand: {
   				'50': '#ffffe7',
-				'100': '#ffffc1',
-				'200': '#fffb86',
-				'300': '#fff041',
-				'400': '#ffe00d',
-				'500': '#ffd100',
-				'600': '#d19900',
-				'700': '#a66d02',
-				'800': '#89550a',
-				'900': '#74450f',
-				'950': '#442404',
+  				'100': '#ffffc1',
+  				'200': '#fffb86',
+  				'300': '#fff041',
+  				'400': '#ffe00d',
+  				'500': '#ffd100',
+  				'600': '#d19900',
+  				'700': '#a66d02',
+  				'800': '#89550a',
+  				'900': '#74450f',
+  				'950': '#442404'
   			},
   			text: {
   				light: '#000000',
   				dark: '#ffffff'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
   		borderRadius: {
