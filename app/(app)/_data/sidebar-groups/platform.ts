@@ -13,6 +13,12 @@ export const platformGroup: SidebarGroup = {
             label: 'Docs',
             href: 'https://docs.askthehive.ai',
             external: true
+        },
+        {
+            icon: 'Twitter',
+            label: 'Follow Us',
+            href: 'https://x.com/askthehive_ai',
+            external: true
         }
     ]
 }
