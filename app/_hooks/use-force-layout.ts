@@ -45,11 +45,7 @@ function useForceLayout({
   const elementCount = useStore(elementCountSelector);
   const nodesInitialized = useNodesInitialized();
   const { setNodes, getNodes, getEdges } = useReactFlow();
-
-  // You can use these events if you want the flow to remain interactive while
-  // the simulation is running. The simulation is typically responsible for setting
-  // the position of nodes, but if we have a reference to the node being dragged,
-  // we want to use that position instead.
+  
   const draggingNodeRef = useRef<null | Node>(null);
   const dragEvents = useMemo<DragEvents>(
     () => ({
@@ -70,11 +66,15 @@ function useForceLayout({
 
     const simulationNodes: SimNodeType[] = nodes.map((node) => ({
       ...node,
-      x: node.position.x,
-      y: node.position.y,
+      x: node.position.x ?? 0,
+      y: node.position.y ?? 0,
     }));
 
-    const simulationLinks: SimEdgeType[] = edges.map((edge) => edge);
+    const simulationLinks: SimEdgeType[] = edges.map((edge) => ({
+      ...edge,
+      source: edge.source,
+      target: edge.target
+    }));
 
     const simulation = forceSimulation<SimNodeType>()
       .nodes(simulationNodes)
@@ -92,16 +92,12 @@ function useForceLayout({
         setNodes((nodes) =>
           nodes.map((node, i) => {
             if (simulationNodes[i]) {
-              const { x, y } = simulationNodes[i];
+              console.log(simulationNodes[i]);
+              const x = simulationNodes[i].x ?? node.position.x ?? 0;
+              const y = simulationNodes[i].y ?? node.position.y ?? 0;
               const dragging = draggingNodeRef.current?.id === node.id;
 
               if (dragging) {
-                // Setting the fx/fy properties of a node tells the simulation to
-                // "fix" the node at that position and ignore any forces that would
-                // normally cause it to move.
-                //
-                // The node is still part of the simulation, though, and will push
-                // other nodes around while the simulation runs.
                 simulationNodes[i].fx = node.position.x;
                 simulationNodes[i].fy = node.position.y;
               } else {
@@ -109,9 +105,8 @@ function useForceLayout({
                 delete simulationNodes[i].fy;
               }
 
-              return { ...node, position: { x: x ?? 0, y: y ?? 0 } };
+              return { ...node, position: { x, y } };
             }
-
             return node;
           })
         );
@@ -125,27 +120,24 @@ function useForceLayout({
       const elapsed = (Date.now() - startTime) / 1000; // Convert to seconds
       
       simulationNodes.forEach((node) => {
-        if (!node.fx && !node.fy) { // Don't apply to dragged nodes
-          // Create pseudo-random motion by combining multiple sine waves
-          // Use node.id to create consistent but varying frequencies
-          const seed = parseInt(node.id) % 100;
-          
-          // Combine three sine waves with different frequencies and phases
-          const vx = (
-            Math.sin(elapsed * 0.3 + seed) +
-            Math.sin(elapsed * 0.7 + seed * 2) * 0.5 +
-            Math.sin(elapsed * 1.1 + seed * 3) * 0.3
-          ) * (oscillationStrength / 1.8); // Normalize the combined amplitude
-          
-          const vy = (
-            Math.cos(elapsed * 0.4 + seed * 1.5) +
-            Math.cos(elapsed * 0.8 + seed * 2.5) * 0.5 +
-            Math.cos(elapsed * 1.2 + seed * 3.5) * 0.3
-          ) * (oscillationStrength / 1.8);
+        // Use node.id to create consistent but varying frequencies
+        const seed = Array.from(node.id).reduce((acc, char) => acc + char.charCodeAt(0), 0) % 100;
+        
+        // Combine three sine waves with different frequencies and phases
+        const vx = (
+          Math.sin(elapsed * 0.3 + seed) +
+          Math.sin(elapsed * 0.7 + seed * 2) * 0.5 +
+          Math.sin(elapsed * 1.1 + seed * 3) * 0.3
+        ) * (oscillationStrength / 1.8); // Normalize the combined amplitude
+        
+        const vy = (
+          Math.cos(elapsed * 0.4 + seed * 1.5) +
+          Math.cos(elapsed * 0.8 + seed * 2.5) * 0.5 +
+          Math.cos(elapsed * 1.2 + seed * 3.5) * 0.3
+        ) * (oscillationStrength / 1.8);
 
-          node.vx = vx;
-          node.vy = vy;
-        }
+        node.vx = vx;
+        node.vy = vy;
       });
       
       simulation.alpha(0.1);

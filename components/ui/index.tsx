@@ -15,3 +15,6 @@ export * from "./dropdown-menu";
 export * from "./logo";
 export * from "./border-beam";
 export * from "./hyper-text";
+export * from "./separator";
+export * from "./skeleton";
+export * from "./sheet";

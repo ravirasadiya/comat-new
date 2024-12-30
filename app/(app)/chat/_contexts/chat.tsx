@@ -62,7 +62,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     };
 
     const { messages, input, setInput, append, isLoading } = useAiChat({
-        maxSteps: 5,
+        maxSteps: 15,
         initialMessages: [
             {
                 id: 'initial-message',

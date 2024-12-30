@@ -1,14 +1,13 @@
 import React from 'react'
 
-import Link from 'next/link';
-
 import {
     Sidebar as SidebarUI, 
     SidebarHeader, 
     SidebarContent, 
     SidebarFooter, 
     SidebarInset,
-    Logo
+    SidebarTrigger,
+    Separator,
 } from '@/components/ui'
 
 import SidebarGroup from './group';
@@ -16,6 +15,8 @@ import SidebarGroup from './group';
 import { platformGroup, agentsGroup } from '../../_data';
 
 import AuthButton from './auth-button';
+import ColorModeToggle from './color-mode-toggle';
+import Logo from './logo';
 
 interface Props {
     children: React.ReactNode;
@@ -24,14 +25,9 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ children }) => {
     return (
         <>
-            <SidebarUI variant="inset">
+            <SidebarUI variant="inset" collapsible='icon'>
                 <SidebarHeader>
-                    <Link href="/">
-                        <Logo 
-                            showText 
-                            className="w-8 h-8"
-                        />
-                    </Link>
+                    <Logo />
                 </SidebarHeader>
                 <SidebarContent>
                     <SidebarGroup group={platformGroup} />
@@ -42,7 +38,16 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                 </SidebarFooter>
             </SidebarUI>
             <SidebarInset>
-                {children}
+                <header className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
+                    <div className="flex items-center gap-2">
+                        <SidebarTrigger />
+                        <Separator orientation="vertical" className="h-4" />    
+                    </div>
+                    <ColorModeToggle />
+                </header>
+                <div className="p-4 flex-1 h-0 overflow-y-hidden">
+                    {children}
+                </div>
             </SidebarInset>
         </>
     )

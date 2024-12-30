@@ -1,10 +1,13 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 
 import ToolCard from '../tool-card';
 
 import { ToolInvocation } from 'ai';
 import { TwitterSearchRecentResultType } from '@/agentkit/actions/twitter/types';
 import { TweetV2, UserV2 } from 'twitter-api-v2';
+import { Button } from '@/components/ui';
 
 interface Props {
     tool: ToolInvocation
@@ -31,15 +34,25 @@ const SearchRecentTweets: React.FC<Props> = ({ tool }) => {
 }
 
 const Tweets = ({ tweets }: { tweets: { tweet: TweetV2; user: UserV2 }[] }) => {
+
+    const [tweetsToShow, setTweetsToShow] = useState(3);
+
+    const handleShowMore = () => {
+        setTweetsToShow(tweetsToShow + 3);
+    }
+
     return (
         <div className="grid grid-cols-1 gap-4">
-            {tweets.slice(0, 5).map((tweet: { tweet: TweetV2; user: UserV2 }) => (
+            {tweets.slice(0, tweetsToShow).map((tweet: { tweet: TweetV2; user: UserV2 }) => (
                 <TweetCard
                     key={tweet.tweet.id} 
                     tweet={tweet.tweet} 
                     user={tweet.user}
                 />
             ))}
+            {tweetsToShow < tweets.length && (
+                <Button onClick={handleShowMore} className="text-sm text-muted-foreground">Show More</Button>
+            )}
         </div>
     )
 }
