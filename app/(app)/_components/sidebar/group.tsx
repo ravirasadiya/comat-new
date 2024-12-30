@@ -1,6 +1,10 @@
+'use client'
+
 import React from 'react'
 
 import Link from 'next/link';
+
+import { usePathname } from 'next/navigation';
 
 import { 
     Icon,
@@ -14,11 +18,15 @@ import {
 
 import { SidebarGroup as SidebarGroupType } from '../../_types';
 
+
 interface Props {
     group: SidebarGroupType;
 }
 
 const SidebarGroup: React.FC<Props> = ({ group }) => {
+
+    const pathname = usePathname();
+
     return (
         <SidebarGroupUI>
             <SidebarGroupLabel>
@@ -31,7 +39,10 @@ const SidebarGroup: React.FC<Props> = ({ group }) => {
                             <SidebarMenuItem
                                 key={item.label}
                             >
-                                <SidebarMenuButton asChild>
+                                <SidebarMenuButton 
+                                    asChild 
+                                    isActive={pathname === item.href}
+                                >
                                     <Link 
                                         href={item.href} 
                                         target={item.external ? '_blank' : undefined}

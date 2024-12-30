@@ -21,7 +21,7 @@ p, a, input, textarea, button, body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 0, 0%, 90%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --sidebar-active: 123, 41%, 45%;
+    --sidebar-active: 44, 100%, 41%;
   }
 
   body {
@@ -36,7 +36,7 @@ p, a, input, textarea, button, body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 0, 0%, 25%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --sidebar-active: 123, 38%, 57%;
+    --sidebar-active: 44, 100%, 41%;
   }
 }
 

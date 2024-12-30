@@ -23,7 +23,6 @@ export async function getTokenDataByAddress(
     });
     return token;
   } catch (error: any) {
-    console.log(error);
     throw new Error(`Error fetching token data: ${error.message}`);
   }
 }
@@ -52,7 +51,6 @@ export async function getTokenAddressFromTicker(
         pair.baseToken.symbol.toLowerCase() === ticker.toLowerCase()
     );
 
-    console.log(solanaPairs);
     
     // Return the address of the highest FDV Solana pair
     return Array.from(new Set(solanaPairs.map((pair: any) => pair.baseToken.address)));
@@ -83,7 +81,6 @@ export async function getTokenDataByTicker(
         });
         return token;
       } catch (error: any) {
-        console.log(error);
         throw new Error(`Error fetching token data: ${error.message}`);
     }
 }

@@ -28,14 +28,12 @@ const Sidebar: React.FC<Props> = ({ children }) => {
             <SidebarUI variant="inset" collapsible='icon'>
                 <SidebarHeader>
                     <Logo />
+                    <AuthButton />
                 </SidebarHeader>
                 <SidebarContent>
                     <SidebarGroup group={platformGroup} />
                     <SidebarGroup group={agentsGroup} />
                 </SidebarContent>
-                <SidebarFooter>
-                    <AuthButton />
-                </SidebarFooter>
             </SidebarUI>
             <SidebarInset>
                 <header className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">

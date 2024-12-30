@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { ChevronsUpDown, LogOut, Sparkles, Wallet } from 'lucide-react';
+import { ChevronsUpDown, LogIn, LogOut, Sparkles, Wallet } from 'lucide-react';
 
 import { usePrivy } from '@privy-io/react-auth';
 import { useFundWallet } from '@privy-io/react-auth/solana';
@@ -27,7 +27,7 @@ interface Props {}
 
 const AuthButton: React.FC<Props> = () => {
 
-    const { user, logout, ready } = usePrivy();
+    const { user, login, logout, ready } = usePrivy();
 
     const { fundWallet } = useFundWallet();
 
@@ -35,7 +35,22 @@ const AuthButton: React.FC<Props> = () => {
 
     if (!ready) return null;
 
-    if (!user || !user.wallet) return null;
+    if (!user || !user.wallet) return (
+        <SidebarMenu>
+            <SidebarMenuItem>
+                <SidebarMenuButton 
+                    variant="brandOutline"
+                    onClick={() => login()}
+                    className="w-full justify-center gap-0"
+                >
+                    <LogIn className="size-8" />
+                    <span className="ml-2">
+                        Log in
+                    </span>
+                </SidebarMenuButton>
+            </SidebarMenuItem>
+        </SidebarMenu>
+    )
 
     return (
         <SidebarMenu>
@@ -45,7 +60,7 @@ const AuthButton: React.FC<Props> = () => {
                         <SidebarMenuButton
                             size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                            variant="outline"
+                            variant="brandOutline"
                         >
                             <Wallet className="size-8" />
                             <span className="ml-2">

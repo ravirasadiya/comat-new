@@ -14,8 +14,6 @@ export const POST = async (req: NextRequest) => {
 
     const { messages, solanaPrivateKey } = await req.json();
 
-    console.log(solanaPrivateKey);
-
     const result = streamText({
         model: openai("gpt-4o-mini"),
         tools: {

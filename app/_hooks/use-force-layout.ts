@@ -92,7 +92,6 @@ function useForceLayout({
         setNodes((nodes) =>
           nodes.map((node, i) => {
             if (simulationNodes[i]) {
-              console.log(simulationNodes[i]);
               const x = simulationNodes[i].x ?? node.position.x ?? 0;
               const y = simulationNodes[i].y ?? node.position.y ?? 0;
               const dragging = draggingNodeRef.current?.id === node.id;

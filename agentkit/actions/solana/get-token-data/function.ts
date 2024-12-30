@@ -33,7 +33,6 @@ export async function getTokenData(
       }
     };
   } catch (error) {
-    console.log(error);
     return {
       message: `Error getting token data: ${error}`,
     };

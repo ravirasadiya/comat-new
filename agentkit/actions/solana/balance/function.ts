@@ -39,8 +39,6 @@ export async function getBalance(
 
     const tokenSymbol = args.tokenAddress ? (await solanaKit.getTokenDataByAddress(args.tokenAddress))?.symbol || "Unknown Token" : "SOL";
 
-    console.log(tokenSymbol);
-
     return {
       message: `Balance: ${balance} ${tokenSymbol}`,
       body: {
