@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getTokenDataByAddress } from "@/agentkit/actions/solana/utils/get-token-data";
+import { getTokenDataByAddress } from "@/lib/solana/get-token-data";
 
 import { NextRequest } from "next/server";
 

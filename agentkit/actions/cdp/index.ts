@@ -33,6 +33,7 @@ export function getAllCdpActions(): CdpAction<CdpActionSchemaAny, any>[] {
 export const CDP_ACTIONS = getAllCdpActions();
 
 export * from './types';
+export * from './cdp-agentkit';
 
 export {
   GetWalletDetailsAction,

@@ -1,4 +1,4 @@
-import { CdpAction, CdpActionResult } from "../cdp_action";
+import { CdpAction, CdpActionResult } from "./cdp-action";
 import { Wallet, Amount } from "@coinbase/coinbase-sdk";
 import { z } from "zod";
 

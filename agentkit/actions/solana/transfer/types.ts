@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { TransferInputSchema } from "./input-schema";
 
-export type TransferSchemaType = typeof TransferInputSchema;
+export type SolanaTransferSchemaType = typeof TransferInputSchema;
 
-export type TransferArgumentsType = z.infer<TransferSchemaType>;
+export type SolanaTransferArgumentsType = z.infer<SolanaTransferSchemaType>;
 
-export type TransferResultBodyType = {
+export type SolanaTransferResultBodyType = {
     amount: number;
     recipient: string;
     token: string;

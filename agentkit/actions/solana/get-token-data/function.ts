@@ -1,19 +1,17 @@
-import { JupiterTokenData, SolanaAgentKit } from "solana-agent-kit";
-import { GetTokenDataArgumentsType, GetTokenDataResultBodyType } from "./types";
-import { SolanaActionResult } from "../../solana-action";
-import { getTokenDataByTicker } from "../utils/get-token-data";
+import { getTokenDataByTicker } from "@/lib/solana";
+
+import type { JupiterTokenData } from "@/types";
+import type { SolanaActionResult } from "../solana-action";
+import type { GetTokenDataArgumentsType, GetTokenDataResultBodyType } from "./types";
 
 /**
  * Gets the token data for a given ticker.
  *
- * @param solanaKit - The Solana agent kit instance
+ * @param connection - The Solana connection instance
  * @param args - The input arguments for the action
  * @returns A message containing the token data
  */
-export async function getTokenData(
-  solanaKit: SolanaAgentKit,
-  args: GetTokenDataArgumentsType
-): Promise<SolanaActionResult<GetTokenDataResultBodyType>> {
+export async function getTokenData(args: GetTokenDataArgumentsType): Promise<SolanaActionResult<GetTokenDataResultBodyType>> {
   try {
 
     const token = await getTokenDataByTicker(args.ticker);

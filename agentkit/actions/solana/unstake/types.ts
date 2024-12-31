@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { UnstakeInputSchema } from "./input-schema";
-import { SolanaActionResult } from "../../solana-action";
+import { SolanaActionResult } from "../solana-action";
 
 export type UnstakeSchemaType = typeof UnstakeInputSchema;
 

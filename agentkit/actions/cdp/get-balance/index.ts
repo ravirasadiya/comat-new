@@ -1,4 +1,4 @@
-import { CdpAction } from "../../cdp_action";
+import { CdpAction } from "../cdp-action";
 import { GET_BALANCE_NAME } from "./name";
 import { GET_BALANCE_PROMPT } from "./prompt";
 import { GetBalanceInputSchema } from "./input-schema";

@@ -1,15 +1,16 @@
-import { BalanceAction } from "./balance";
-import { TransferAction } from "./transfer"; 
-import { TradeAction } from "./trade";
-import { GetWalletAddressAction } from "./get-wallet-address";
-import { GetTrendingTokensAction } from "./get-trending-tokens";
-import { GetTokenDataAction } from "./get-token-data";
-import { LendAction } from "./lend";
-import { StakeAction } from "./stake";
-import { UnstakeAction } from "./unstake";
-import { GetSolanaAdviceAction } from "./get-advice";
-import { AllBalancesAction } from "./all-balances";
-import { SolanaAction, SolanaActionSchemaAny } from "../solana-action";
+import { SolanaBalanceAction } from "./balance";
+import { SolanaTransferAction } from "./transfer"; 
+import { SolanaTradeAction } from "./trade";
+import { SolanaGetWalletAddressAction } from "./get-wallet-address";
+import { SolanaGetTrendingTokensAction } from "./get-trending-tokens";
+import { SolanaGetTokenDataAction } from "./get-token-data";
+import { SolanaLendAction } from "./lend";
+import { SolanaStakeAction } from "./stake";
+import { SolanaUnstakeAction } from "./unstake";
+import { SolanaGetAdviceAction } from "./get-advice";
+import { SolanaAllBalancesAction } from "./all-balances";
+
+import type { SolanaAction, SolanaActionSchemaAny } from "./solana-action";
 /**
  * Retrieves all Solana action instances.
  * WARNING: All new SolanaAction classes must be instantiated here to be discovered.
@@ -18,30 +19,31 @@ import { SolanaAction, SolanaActionSchemaAny } from "../solana-action";
  */
 export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[] {
   return [
-    new BalanceAction(),
-    new TransferAction(),
-    new TradeAction(),
-    new GetWalletAddressAction(),
-    new GetTrendingTokensAction(),
-    new GetTokenDataAction(),
-    new StakeAction(),
-    new UnstakeAction(),
-    new GetSolanaAdviceAction(),
-    new AllBalancesAction()
+    new SolanaBalanceAction(),
+    new SolanaTransferAction(),
+    new SolanaTradeAction(),
+    new SolanaGetWalletAddressAction(),
+    new SolanaGetTrendingTokensAction(),
+    new SolanaGetTokenDataAction(),
+    new SolanaStakeAction(),
+    new SolanaUnstakeAction(),
+    new SolanaGetAdviceAction(),
+    new SolanaAllBalancesAction()
   ];
 }
 
 export const SOLANA_ACTIONS = getAllSolanaActions();
 
 export {
-  BalanceAction,
-  TransferAction,
-  TradeAction,
-  GetWalletAddressAction,
-  GetTrendingTokensAction,
-  GetTokenDataAction,
-  LendAction,
-  StakeAction,
-  UnstakeAction,
-  GetSolanaAdviceAction
+  SolanaBalanceAction,
+  SolanaTransferAction,
+  SolanaTradeAction,
+  SolanaGetWalletAddressAction,
+  SolanaGetTrendingTokensAction,
+  SolanaGetTokenDataAction,
+  SolanaLendAction,
+  SolanaStakeAction,
+  SolanaUnstakeAction,
+  SolanaGetAdviceAction,
+  SolanaAllBalancesAction
 };

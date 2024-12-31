@@ -1,4 +1,4 @@
-import { CdpAction } from "../../cdp_action";
+import { CdpAction } from "../cdp-action";
 import { GET_WALLET_DETAILS_NAME } from "./name";
 import { GET_WALLET_DETAILS_PROMPT } from "./prompt";
 import { GetWalletDetailsInputSchema } from "./input-schema";

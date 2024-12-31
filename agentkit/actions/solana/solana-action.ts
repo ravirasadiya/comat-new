@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-import { Wallet } from "@coinbase/coinbase-sdk";
-import { SolanaAgentKit } from "solana-agent-kit";
+import { Connection } from "@solana/web3.js";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SolanaActionSchemaAny = z.ZodObject<any, any, any, any>;
@@ -34,6 +33,6 @@ export interface SolanaAction<TActionSchema extends SolanaActionSchemaAny, TBody
    * The function to execute for this action
    */
   func?:
-    | ((solanaAgentKit: SolanaAgentKit, args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
+    | ((connection: Connection, args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
     | ((args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
 }

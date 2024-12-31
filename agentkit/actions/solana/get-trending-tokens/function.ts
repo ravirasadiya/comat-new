@@ -1,8 +1,8 @@
-import { SolanaAgentKit } from "solana-agent-kit";
-import { GetTrendingTokensArgumentsType, GetTrendingTokensResultBodyType } from "./types";
-import { SolanaActionResult } from "../../solana-action";
-import { SolanaToken } from "@/types/solana-token";
-import { getPrice } from "../utils/get-price";
+import { getPrice } from "@/lib/solana";
+
+import type { GetTrendingTokensArgumentsType, GetTrendingTokensResultBodyType } from "./types";
+import type { SolanaActionResult } from "../solana-action";
+import type { SolanaToken } from "@/types";
 
 /**
  * Gets the trending tokens from Jupiter API using the birdeye-trending tag.
@@ -12,7 +12,6 @@ import { getPrice } from "../utils/get-price";
  * @returns A message containing the trending tokens information
  */
 export async function getTrendingTokens(
-  solanaKit: SolanaAgentKit,
   args: GetTrendingTokensArgumentsType
 ): Promise<SolanaActionResult<GetTrendingTokensResultBodyType>> {
   try {

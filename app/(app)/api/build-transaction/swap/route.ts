@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 
-import { getTokenDataByAddress } from "@/agentkit/actions/solana/utils/get-token-data";
+import { getTokenDataByAddress } from "@/lib/solana/get-token-data";
 
 import { NextRequest, NextResponse } from "next/server";
 import { JUP_API } from "@/agentkit/actions/solana/trade/utils";

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { BalanceInputSchema } from "./input-schema";
-import { SolanaActionResult } from "../../solana-action";
+import { SolanaActionResult } from "../solana-action";
 
 export type BalanceSchemaType = typeof BalanceInputSchema;
 

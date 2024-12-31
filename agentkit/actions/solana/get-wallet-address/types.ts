@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { GetWalletAddressInputSchema } from "./input-schema";
-import { SolanaActionResult } from "../../solana-action";
+import { SolanaActionResult } from "../solana-action";
 
 export type GetWalletAddressSchemaType = typeof GetWalletAddressInputSchema;
 

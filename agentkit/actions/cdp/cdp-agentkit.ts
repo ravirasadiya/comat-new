@@ -1,6 +1,8 @@
 import { Wallet, WalletData, Coinbase } from "@coinbase/coinbase-sdk";
-import { CdpAction, CdpActionResult, CdpActionSchemaAny } from "./actions/cdp_action";
+
 import { z } from "zod";
+
+import { CdpAction, CdpActionResult, CdpActionSchemaAny } from "./cdp-action";
 
 /**
  * Configuration options for the CDP Agentkit

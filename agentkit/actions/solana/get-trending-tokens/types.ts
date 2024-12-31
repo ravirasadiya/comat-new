@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 import { GetTrendingTokensInputSchema } from "./input-schema";
-import { SolanaActionResult } from "../../solana-action";
-import { SolanaToken } from "@/types/solana-token";
+import { SolanaActionResult } from "../solana-action";
+import { SolanaToken } from "@/types/solana/solana-token";
 
 export type GetTrendingTokensSchemaType = typeof GetTrendingTokensInputSchema;
 

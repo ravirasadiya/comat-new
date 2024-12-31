@@ -4,7 +4,7 @@ import ToolCard from '../tool-card';
 
 import { ToolInvocation } from 'ai';
 import { GetTrendingTokensResultType } from '@/agentkit/actions/solana/types';
-import { SolanaToken } from '@/types/solana-token';
+import { SolanaToken } from '@/types/solana/solana-token';
 import { Card } from '@/components/ui';
 
 interface Props {
