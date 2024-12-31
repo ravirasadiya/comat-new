@@ -15,13 +15,13 @@ interface ColorModeContextType {
 }
 
 const ColorModeContext = createContext<ColorModeContextType>({
-    mode: ColorMode.LIGHT,
+    mode: ColorMode.DARK,
     setMode: () => {},
 });
 
 export const ColorModeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
-    const [mode, setMode] = useState<ColorMode>(ColorMode.LIGHT);
+    const [mode, setMode] = useState<ColorMode>(ColorMode.DARK);
 
     useEffect(() => {
 		const theme = getCookie('theme');
