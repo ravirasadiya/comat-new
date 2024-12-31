@@ -2,10 +2,11 @@
 
 import React from 'react'
 
-import { ChevronsUpDown, LogIn, LogOut, Sparkles, Wallet } from 'lucide-react';
+import Link from 'next/link';
 
-import { usePrivy } from '@privy-io/react-auth';
-import { useFundWallet } from '@privy-io/react-auth/solana';
+import { ChevronsUpDown, Coins, LogIn, LogOut, User, Wallet } from 'lucide-react';
+
+import { useLogin } from '@/hooks';
 
 import {
     SidebarMenu,
@@ -19,29 +20,28 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     useSidebar,
+    Skeleton,
 } from '@/components/ui';
 
 import { truncateAddress } from '@/lib/wallet';
 
 const AuthButton: React.FC = () => {
 
-    const { user, login, logout, ready } = usePrivy();
-
-    const { fundWallet } = useFundWallet();
+    const { user, ready, logout, wallets, fundWallet } = useLogin();
 
     const { isMobile } = useSidebar();
 
-    if (!ready) return null;
+    if (!ready) return <Skeleton className="w-full h-8" />;
 
     if (!user || !user.wallet) return (
         <SidebarMenu>
             <SidebarMenuItem>
                 <SidebarMenuButton 
                     variant="brandOutline"
-                    onClick={() => login()}
+                    onClick={() => wallets[0].loginOrLink()}
                     className="w-full justify-center gap-0"
                 >
-                    <LogIn className="size-8" />
+                    <LogIn className="h-4 w-4" />
                     <span className="ml-2">
                         Log in
                     </span>
@@ -56,7 +56,6 @@ const AuthButton: React.FC = () => {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
-                            size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                             variant="brandOutline"
                         >
@@ -84,8 +83,14 @@ const AuthButton: React.FC = () => {
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuItem onClick={() => fundWallet(user.wallet!.address)}>
-                                <Sparkles />
+                                <Coins className="size-4" />
                                 Fund Wallet
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href="/account">
+                                    <User className="size-4" />
+                                    Account
+                                </Link>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />

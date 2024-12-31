@@ -26,14 +26,22 @@ export const cdpTools = (agentkit: CdpAgentkit) => getAllCdpActions().reduce((ac
     return acc;
 }, {} as Record<string, CoreTool>);
 
-export const solanaTool = <TActionSchema extends SolanaActionSchemaAny, TResultBody>(action: SolanaAction<TActionSchema, TResultBody>, agentkit: SolanaAgentKit) => tool({
-    description: action.description,
-    parameters: action.argsSchema,
-    execute: async (args) => {
-        const result = await action.func(agentkit, args);
-        return result;
+export const solanaTool = <TActionSchema extends SolanaActionSchemaAny, TResultBody>(action: SolanaAction<TActionSchema, TResultBody>, agentkit: SolanaAgentKit) => {
+    if (!action.func) {
+        return tool({
+            description: action.description,
+            parameters: action.argsSchema,
+        });
     }
-})
+    return tool({
+        description: action.description,
+        parameters: action.argsSchema,
+        execute: async (args) => {
+            const result = await action.func!(agentkit, args);
+            return result;
+        }
+    });
+}
 
 export const solanaTools = (agentkit: SolanaAgentKit) => getAllSolanaActions().reduce((acc, action) => {
     acc[action.name] = solanaTool(action, agentkit);

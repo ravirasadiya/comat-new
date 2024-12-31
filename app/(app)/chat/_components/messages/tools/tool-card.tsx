@@ -9,18 +9,19 @@ import { Icon } from '@/components/ui/icon'
 import { CdpActionResult } from '@/agentkit'
 import { cn } from '@/lib/utils'
 
-interface Props<ActionResultBodyType> {
+interface Props<ActionResultBodyType, ActionArgsType> {
     tool: ToolInvocation,
     icon: IconName,
     loadingText: string,
     resultHeading: (result: CdpActionResult<ActionResultBodyType>) => string,
     resultBody: (result: CdpActionResult<ActionResultBodyType>) => React.ReactNode,
     agentName: string,
+    callBody?: (toolCallId: string, args: ActionArgsType) => React.ReactNode,
     defaultOpen?: boolean,
 }
 
-const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeading, resultBody, agentName, defaultOpen = true }: Props<ActionResultBodyType>) => {
-
+const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, icon, loadingText, resultHeading, resultBody, agentName, callBody, defaultOpen = true }: Props<ActionResultBodyType, ActionArgsType>) => {
+    
     return (
         <Card className={cn(
             "flex flex-col gap-2 p-2",
@@ -35,19 +36,27 @@ const ToolCard = <ActionResultBodyType,>({ tool, icon, loadingText, resultHeadin
                 <p className="text-lg font-bold">{agentName}</p>
             </div>
             {
-                tool.state === "partial-call" || tool.state === "call" ? (
+                tool.state === "partial-call" ? (
                     <AnimatedShinyText>
                         {loadingText}
                     </AnimatedShinyText>
                 ) : (
-                    <Collapsible defaultOpen={defaultOpen}>
-                        <CollapsibleTrigger className="flex items-center gap-2">
-                            <p className="">{resultHeading(tool.result)}</p>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="text-sm">
-                            {resultBody(tool.result)}
-                        </CollapsibleContent>
-                    </Collapsible>
+                    tool.state === "call" ? (
+                        callBody ? callBody(tool.toolCallId, tool.args) : (
+                            <AnimatedShinyText>
+                            {loadingText}
+                        </AnimatedShinyText>
+                        )
+                    ) : (
+                        <Collapsible defaultOpen={defaultOpen}>
+                            <CollapsibleTrigger className="flex items-center gap-2">
+                                    <p className="">{resultHeading(tool.result)}</p>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent className="text-sm">
+                                {resultBody(tool.result)}
+                            </CollapsibleContent>
+                        </Collapsible>
+                    )
                 )
             }
         </Card>

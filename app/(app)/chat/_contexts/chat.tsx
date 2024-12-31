@@ -9,6 +9,12 @@ export enum ColorMode {
     DARK = 'dark',
 }
 
+// Define a type for tool results
+type ToolResult = {
+    message: string;
+    body?: Record<string, unknown>;
+}
+
 interface ChatContextType {
     messages: Message[];
     input: string;
@@ -16,6 +22,7 @@ interface ChatContextType {
     onSubmit: () => Promise<void>;
     isLoading: boolean;
     sendMessage: (message: string) => void;
+    addToolResult: (toolCallId: string, result: ToolResult) => void;
     isResponseLoading: boolean;
     solanaPrivateKey: string | null;
     setSolanaPrivateKey: (key: string | null) => void;
@@ -31,6 +38,7 @@ const ChatContext = createContext<ChatContextType>({
     isResponseLoading: false,
     solanaPrivateKey: null,
     setSolanaPrivateKey: () => {},
+    addToolResult: () => {},
 });
 
 interface ChatProviderProps {
@@ -61,7 +69,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         }
     };
 
-    const { messages, input, setInput, append, isLoading } = useAiChat({
+    const { messages, input, setInput, append, isLoading, addToolResult } = useAiChat({
         maxSteps: 15,
         initialMessages: [
             {
@@ -108,6 +116,10 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             isResponseLoading,
             solanaPrivateKey,
             setSolanaPrivateKey: handleSetSolanaPrivateKey,
+            addToolResult: (toolCallId: string, result: ToolResult) => addToolResult({
+                toolCallId,
+                result,
+            }),
         }}>
             {children}
         </ChatContext.Provider>
