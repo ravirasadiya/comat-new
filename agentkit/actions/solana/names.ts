@@ -1,5 +1,4 @@
 export * from "./transfer/name";
-export * from "./deploy-token/name";
 export * from "./balance/name";
 export * from "./trade/name";
 export * from "./get-wallet-address/name";
@@ -10,3 +9,4 @@ export * from "./stake/name";
 export * from "./unstake/name";
 export * from "./get-advice/name";
 export * from "./all-balances/name";
+export * from "./unstake/name";

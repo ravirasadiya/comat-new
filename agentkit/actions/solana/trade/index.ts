@@ -9,5 +9,5 @@ export class TradeAction implements SolanaAction<typeof TradeInputSchema, TradeR
   public name = SOLANA_TRADE_NAME;
   public description = SOLANA_TRADE_PROMPT;
   public argsSchema = TradeInputSchema;
-  public func = trade;
+  // public func = trade;
 } 

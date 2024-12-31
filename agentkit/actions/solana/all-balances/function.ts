@@ -1,6 +1,6 @@
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "solana-agent-kit";
-import { AllBalancesResultBodyType } from "./types";
+import { AllBalancesArgumentsType, AllBalancesResultBodyType } from "./types";
 import { SolanaActionResult } from "../../solana-action";
 import { getTokenDataByAddress } from "../utils/get-token-data";
 import { getAccount } from "@solana/spl-token";
@@ -14,23 +14,28 @@ import { getAccount } from "@solana/spl-token";
  */
 export async function getAllBalances(
   solanaKit: SolanaAgentKit,
+  args: AllBalancesArgumentsType
 ): Promise<SolanaActionResult<AllBalancesResultBodyType>> {
   try {
     let balances: {
         balance: number;
         token: string;
+        name: string;
+        logoURI: string;
     }[] = [];
 
     // Get SOL balance
-    const solBalance = await solanaKit.connection.getBalance(new PublicKey(solanaKit.wallet_address)) / LAMPORTS_PER_SOL;
+    const solBalance = await solanaKit.connection.getBalance(new PublicKey(args.walletAddress)) / LAMPORTS_PER_SOL;
     balances.push({
       balance: solBalance,
-      token: "SOL"
+      token: "SOL",
+      name: "Solana",
+      logoURI: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX6PYmAiDpUliZWnmCHKPc3VI7QESDKhLndQ&s"
     });
 
     // Get all token accounts
     const tokenAccounts = await solanaKit.connection.getTokenAccountsByOwner(
-      new PublicKey(solanaKit.wallet_address),
+      new PublicKey(args.walletAddress),
       { programId: new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") }
     );
 
@@ -45,7 +50,9 @@ export async function getAllBalances(
         if (token) {
           balances.push({
             balance: tokenAccount.value.uiAmount,
-            token: token.symbol
+            token: token.symbol,
+            name: token.name,
+            logoURI: token.logoURI
           });
         }
       }

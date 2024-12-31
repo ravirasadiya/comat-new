@@ -33,7 +33,7 @@ export interface SolanaAction<TActionSchema extends SolanaActionSchemaAny, TBody
   /**
    * The function to execute for this action
    */
-  func:
+  func?:
     | ((solanaAgentKit: SolanaAgentKit, args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
     | ((args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
 }
