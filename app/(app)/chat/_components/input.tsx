@@ -41,7 +41,7 @@ const ChatInput: React.FC = () => {
                     // Light mode styles
                     "bg-neutral-100 focus-within:border-brand-600",
                     // Dark mode styles
-                    "dark:bg-neutral-800/50 dark:focus-within:border-brand-400",
+                    "dark:bg-neutral-800/50 dark:focus-within:border-brand-600",
                     isLoading && "opacity-50 cursor-not-allowed"
                 )}
             >

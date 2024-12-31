@@ -17,15 +17,15 @@ const SwapCallBody = ({ toolCallId, args }: SwapCallBodyProps) => {
                 wallets.length ? (
                     <SwapDisplay toolCallId={toolCallId} args={args} userPublicKey={wallets[0].address} />
                 ) : (
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col items-center gap-2">
+                        <p className="text-sm text-muted-foreground">Connect your wallet to swap tokens</p>
                         <Button 
                             variant="brand"
                             onClick={() => connectWallet()}
-                            className="w-fit"
+                            className="w-full"
                         >
                             Connect Wallet
                         </Button>
-                        <p className="text-sm text-muted-foreground">Connect your wallet to swap tokens</p>
                     </div>
                 )
             }

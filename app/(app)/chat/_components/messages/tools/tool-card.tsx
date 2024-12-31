@@ -18,18 +18,20 @@ interface Props<ActionResultBodyType, ActionArgsType> {
     agentName: string,
     callBody?: (toolCallId: string, args: ActionArgsType) => React.ReactNode,
     defaultOpen?: boolean,
+    className?: string,
 }
 
-const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, icon, loadingText, resultHeading, resultBody, agentName, callBody, defaultOpen = true }: Props<ActionResultBodyType, ActionArgsType>) => {
+const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, icon, loadingText, resultHeading, resultBody, agentName, callBody, defaultOpen = true, className }: Props<ActionResultBodyType, ActionArgsType>) => {
     
     return (
         <Card className={cn(
-            "flex flex-col gap-2 p-2",
+            "flex flex-col gap-2 p-2 w-fit",
             tool.state === "result"
                 ? (tool.result.body 
                     ? "border-brand-600/50 dark:border-brand-400/50"
                     : "border-red-500 dark:border-red-400")
-                : "border-neutral-500 dark:border-neutral-400"
+                : "border-neutral-500 dark:border-neutral-400",
+            className
         )}>
             <div className="flex items-center gap-2">
                 <Icon name={icon} className="w-4 h-4" />

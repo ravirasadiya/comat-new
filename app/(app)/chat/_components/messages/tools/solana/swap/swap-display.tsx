@@ -18,19 +18,12 @@ const SwapDisplay = ({ toolCallId, args, userPublicKey }: SwapDisplayProps) => {
         inputTokenData, 
         outputTokenData, 
         inputTokenDataLoading, 
-        outputTokenDataLoading 
+        outputTokenDataLoading,
+        onCancel
     } = useSwap(toolCallId, args, userPublicKey);
 
     return (
-        <div className="flex gap-4">
-            <Button 
-                variant="brand"
-                onClick={onSwap} 
-                disabled={isSwapping}
-                className="w-fit"
-            >
-                Swap
-            </Button>
+        <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 w-full">
                     <TokenDisplay 
@@ -47,7 +40,26 @@ const SwapDisplay = ({ toolCallId, args, userPublicKey }: SwapDisplayProps) => {
                     />
                 </div>
             </div>
-            
+            <div className="flex flex-col items-center gap-1">
+                <Button 
+                    variant="brand"
+                    onClick={onSwap} 
+                    disabled={isSwapping || !swapData?.outAmount}
+                    className="w-full"
+                >
+                    Swap
+                </Button>
+                <p className="text-sm text-muted-foreground">
+                    or
+                </p>
+                <Button 
+                    variant="ghost"
+                    onClick={onCancel} 
+                    className="w-full"
+                >
+                    Cancel
+                </Button>
+            </div>
         </div>
     );
 };

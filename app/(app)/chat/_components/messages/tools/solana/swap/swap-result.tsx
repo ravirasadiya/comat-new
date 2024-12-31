@@ -2,11 +2,11 @@ import React from 'react';
 
 import { TradeResultBodyType } from '@/agentkit/actions/solana/types';
 
-interface SwapCardProps {
+interface Props {
     tradeResult: TradeResultBodyType;
 }
 
-const SwapCard: React.FC<SwapCardProps> = ({ tradeResult }) => {
+const SwapResult: React.FC<Props> = ({ tradeResult }) => {
 
     return (
         <p className="text-xs text-muted-foreground">
@@ -15,4 +15,4 @@ const SwapCard: React.FC<SwapCardProps> = ({ tradeResult }) => {
     );
 };
 
-export default SwapCard; 
+export default SwapResult; 

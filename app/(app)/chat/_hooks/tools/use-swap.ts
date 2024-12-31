@@ -70,6 +70,12 @@ export const useSwap = (toolCallId: string, args: TradeArgumentsType, userPublic
         setIsSwapping(false);
     }
 
+    const onCancel = () => {
+        addToolResult(toolCallId, {
+            message: `Cancelled swap`,
+        });
+    }
+
     return {
         onSwap,
         isSwapping,
@@ -79,5 +85,6 @@ export const useSwap = (toolCallId: string, args: TradeArgumentsType, userPublic
         inputTokenDataLoading,
         outputTokenDataLoading,
         swapDataLoading,
+        onCancel,
     }
 }

@@ -4,7 +4,7 @@ import { TradeResultType, TradeArgumentsType } from '@/agentkit/actions/solana/t
 
 import ToolCard from '../../tool-card';
 
-import SwapCard from './swap-card';
+import SwapCard from './swap-result';
 import SwapCallBody from './swap-call-body';
 
 import { ToolInvocation } from 'ai';

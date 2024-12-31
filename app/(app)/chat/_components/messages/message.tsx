@@ -28,7 +28,7 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
     return (
         <div className={cn(
             // base styles
-            "flex w-full px-2 py-4 max-w-full last:border-b-0",
+            "flex w-full px-2 py-4 max-w-full last:border-b-0 first:pt-0",
             // mobile styles
             "flex-col gap-2",
             // desktop styles
