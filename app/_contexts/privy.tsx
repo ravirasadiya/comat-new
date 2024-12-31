@@ -22,14 +22,17 @@ export const PrivyProvider: React.FC<Props> = ({ children }) => {
                     logo: 'https://www.askthehive.ai/logo-dark.png',
                     walletChainType: 'solana-only',
                 },
-                embeddedWallets: {
-                    createOnLogin: 'users-without-wallets',
-                },
                 externalWallets: {
                     solana: {
                         connectors: solanaConnectors
                     }
-                }
+                },
+                solanaClusters: [
+                    {
+                        name: 'mainnet-beta',
+                        rpcUrl: process.env.NEXT_PUBLIC_SOLANA_RPC_URL!,
+                    }
+                ]
             }}
         >
             {children}

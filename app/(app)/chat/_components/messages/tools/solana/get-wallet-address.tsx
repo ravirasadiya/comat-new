@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { useConnectWallet } from '@privy-io/react-auth';
+import { useConnectWallet, useSolanaWallets } from '@privy-io/react-auth';
 
 import { Button } from '@/components/ui';
 
@@ -36,6 +36,19 @@ const GetWalletAddress: React.FC<Props> = ({ tool }) => {
 const GetWalletAddressAction = ({ toolCallId }: { toolCallId: string }) => {
 
     const { addToolResult } = useChat();
+
+    const { wallets } = useSolanaWallets();
+
+    useEffect(() => {
+        if(wallets.length) {
+            addToolResult(toolCallId, {
+                message: "Wallet connected",
+                body: {
+                    address: wallets[0].address
+                }
+            });
+        }
+    }, [wallets]);
 
     const { connectWallet } = useConnectWallet({
         onSuccess: (wallet) => {
