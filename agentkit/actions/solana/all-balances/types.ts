@@ -11,6 +11,8 @@ export type AllBalancesResultBodyType = {
     balances: {
         balance: number;
         token: string;
+        name: string;
+        logoURI: string;
     }[];
 }; 
 

@@ -1,24 +1,18 @@
 import useSWR from "swr";
 
-export const useSwapData = ({ 
-    inputMint, 
-    outputMint, 
+export const useStakeData = ({ 
     inputAmount, 
     slippageBps,
     userPublicKey,
 }: { 
-    inputMint: string, 
-    outputMint: string, 
     inputAmount: number, 
     slippageBps: number,
     userPublicKey: string,
 }) => {
 
-    const { data, isLoading, error } = useSWR(`/api/build-transaction/swap`, (url: string) => fetch(url, {
+    const { data, isLoading, error } = useSWR(`/api/build-transaction/stake`, (url: string) => fetch(url, {
         method: "POST",
         body: JSON.stringify({
-            inputMint,
-            outputMint,
             inputAmount,
             slippageBps,
             userPublicKey,

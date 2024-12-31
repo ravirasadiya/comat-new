@@ -8,3 +8,4 @@ export * from './lend/types';
 export * from './stake/types';
 export * from './get-advice/types';
 export * from './all-balances/types';
+export * from './unstake/types';

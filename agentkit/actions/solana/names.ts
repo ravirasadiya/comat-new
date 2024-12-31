@@ -9,3 +9,4 @@ export * from "./stake/name";
 export * from "./unstake/name";
 export * from "./get-advice/name";
 export * from "./all-balances/name";
+export * from "./unstake/name";

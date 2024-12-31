@@ -7,8 +7,16 @@ import {
     GetWalletAddress,
     GetTrendingTokens,
     GetTokenData,
-    Trade
+    Trade,
+    Stake,
+    Unstake,
+    AllBalances
 } from './solana'
+
+import Lend from './solana/lend'
+import GetSolanaAdvice from './solana/advice'
+
+import { SearchRecentTweets, SentimentAnalysis } from './twitter'
 
 import { 
     SOLANA_BALANCE_NAME,
@@ -29,13 +37,7 @@ import {
 } from '@/agentkit/actions/twitter/names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
-import { SearchRecentTweets } from './twitter'
-import SentimentAnalysis from './twitter/sentiment'
-import Lend from './solana/lend'
-import Stake from './solana/stake'
-import Unstake from './solana/unstake'
-import GetSolanaAdvice from './solana/advice'
-import AllBalances from './solana/all-balances'
+
 interface Props {
     tool: ToolInvocationType
 }

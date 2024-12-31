@@ -24,7 +24,6 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new GetWalletAddressAction(),
     new GetTrendingTokensAction(),
     new GetTokenDataAction(),
-    new LendAction(),
     new StakeAction(),
     new UnstakeAction(),
     new GetSolanaAdviceAction(),

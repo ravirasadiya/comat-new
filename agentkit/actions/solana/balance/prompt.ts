@@ -1,6 +1,5 @@
-export const SOLANA_BALANCE_PROMPT = `Get the balance of a Solana wallet or token account.
+export const SOLANA_BALANCE_PROMPT = `Get the balance of a Solana wallet for a given token.
 
-If you want to get the balance of your wallet, you don't need to provide the tokenAddress.
 If no tokenAddress is provided, the balance will be in SOL.
 
-If there is not a tokenAddress, first use the tokenData tool to get the tokenAddress.`; 
+If the user provides a symbol, first use the tokenData tool to get the tokenAddress.`; 

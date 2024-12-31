@@ -20,7 +20,12 @@ const GetBalance: React.FC<Props> = ({ tool }) => {
             loadingText={`Getting ${tool.args.tokenAddress || "SOL"} Balance...`}
             resultHeading={(result: BalanceResultType) => result.body?.token ? `Fetched ${result.body.token} Balance` : `Failed to fetch balance`}
             resultBody={(result: BalanceResultType) => result.body 
-                ? `${result.body.balance.toFixed(4)} ${result.body.token}` 
+                ? (
+                    <div className="flex flex-row items-center gap-2">
+                        <img src={result.body.logoURI} alt={result.body.name} className="w-8 h-8 rounded-full" />
+                        <p>{result.body.balance.toFixed(4)} {result.body.name} ({result.body.token})</p>
+                    </div>
+                )
                 :  "No balance found"}
         />
     )
