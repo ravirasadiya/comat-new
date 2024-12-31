@@ -11,11 +11,11 @@ const Graph = () => {
         <div>
             <div className="flex flex-col items-center justify-center h-screen pt-16 pb-4">
                 <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                    <div className="flex flex-col items-center justify-center gap-2">
+                    <div className="flex flex-col items-center justify-center gap-2 text-center">
                         <h1 className="text-4xl font-bold text-brand-600">
                             Meet The Hive
                         </h1>
-                        <p>
+                        <p className="">
                             A modular network of interoperable DeFi agents
                         </p>
                         <LoginButton />
