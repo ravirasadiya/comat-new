@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
     const result = streamText({
         model: openai("gpt-4o-mini"),
         tools: {
-            ...solanaTools(new Connection(process.env.SOLANA_RPC_URL!)),
+            ...solanaTools(new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!)),
             ...twitterTools(new TwitterApi(process.env.TWITTER_BEARER_TOKEN!))
         },
         messages,
