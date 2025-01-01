@@ -1,5 +1,4 @@
-import { PublicKey } from "@solana/web3.js";
-import { JupiterTokenData } from "solana-agent-kit";
+import { JupiterTokenData } from "@/types";
 
 export async function getTokenDataByAddress(
   mintAddress: string,
@@ -55,6 +54,7 @@ export async function getTokenAddressFromTicker(
     // Return the address of the highest FDV Solana pair
     return Array.from(new Set(solanaPairs.map((pair: any) => pair.baseToken.address)));
   } catch (error) {
+    console.error(error);
     return null;
   }
 }

@@ -1,6 +1,11 @@
+import React from 'react';
+
 import { Button } from '@/components/ui';
-import { StakeArgumentsType } from '@/agentkit/actions/solana/types';
+
 import { useLogin } from '@/hooks';
+
+import type { StakeArgumentsType } from '@/ai';
+
 import StakeDisplay from './stake-display';
 
 interface StakeCallBodyProps {

@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 
-import { StakeArgumentsType } from "@/agentkit/actions/solana/types";
-import { useChat } from "../../_contexts/chat";
+import { Connection, VersionedTransaction } from "@solana/web3.js";
+
 import { useSolanaWallets } from "@privy-io/react-auth/solana";
-import { VersionedTransaction } from "@solana/web3.js";
-import { useTokenDataByAddress } from "@/hooks/queries/token-data/use-token-data-by-address";
-import { useStakeData } from "@/hooks";
-import { useSendTransaction } from "@/hooks/privy";
+
+import { useChat } from "../../_contexts/chat";
+
+import { useStakeData, useTokenDataByAddress } from "@/hooks";
+
+import type { StakeArgumentsType } from "@/ai";
 
 export const useStake = (toolCallId: string, args: StakeArgumentsType, userPublicKey: string) => {
 
     const { addToolResult } = useChat();
-    const { sendTransaction } = useSendTransaction();
 
     const { wallets } = useSolanaWallets();
 
@@ -39,7 +40,13 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
             const swapTransactionBuf = Buffer.from(stakeData.swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
 
-            const tx = await sendTransaction(transaction);
+            const tx = await wallets[0].sendTransaction(
+              transaction, 
+              new Connection("https://api.mainnet-beta.solana.com"), 
+              {
+                skipPreflight: true,
+              }
+            );
             
         
             addToolResult(toolCallId, {

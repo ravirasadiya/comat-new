@@ -28,13 +28,10 @@ import {
     SOLANA_STAKE_NAME,
     SOLANA_UNSTAKE_NAME,
     GET_SOLANA_ADVICE_NAME,
-    SOLANA_ALL_BALANCES_NAME
-} from '@/agentkit/actions/solana/names'
-
-import {
+    SOLANA_ALL_BALANCES_NAME,
     TWITTER_SEARCH_RECENT_NAME,
     TWITTER_SENTIMENT_ANALYSIS_NAME
-} from '@/agentkit/actions/twitter/names'
+} from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
 

@@ -2,8 +2,8 @@ import React from 'react'
 
 import ToolCard from '../tool-card';
 
-import { ToolInvocation } from 'ai';
-import { LendResultType } from '@/agentkit/actions/solana/types';
+import type { ToolInvocation } from 'ai';
+import type { LendResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

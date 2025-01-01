@@ -8,8 +8,8 @@ import ToolCard from '../tool-card';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
-import type { GetWalletAddressResultType } from '@/agentkit/actions/solana/types';
 import type { ToolInvocation } from 'ai';
+import type { GetWalletAddressResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

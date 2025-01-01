@@ -2,8 +2,8 @@ import React from 'react'
 
 import ToolCard from '../tool-card';
 
-import { ToolInvocation } from 'ai';
-import { GetBalanceActionResultType } from '@/agentkit';
+import type { ToolInvocation } from 'ai';
+import type { GetBalanceActionResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

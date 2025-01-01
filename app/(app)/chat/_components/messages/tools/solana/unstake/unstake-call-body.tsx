@@ -6,7 +6,7 @@ import UnstakeDisplay from './unstake-display';
 
 import { useLogin } from '@/hooks';
 
-import { UnstakeArgumentsType } from '@/agentkit/actions/solana/types';
+import type { UnstakeArgumentsType } from '@/ai';
 
 interface UnstakeCallBodyProps {
     toolCallId: string;

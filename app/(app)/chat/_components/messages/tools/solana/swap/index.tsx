@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { TradeResultType, TradeArgumentsType } from '@/agentkit/actions/solana/types';
-
 import ToolCard from '../../tool-card';
 
 import SwapCard from './swap-result';
 import SwapCallBody from './swap-call-body';
 
-import { ToolInvocation } from 'ai';
+import type { ToolInvocation } from 'ai';
+import type { SolanaTradeResultType, SolanaTradeArgumentsType } from '@/ai';
 
 interface SwapProps {
     tool: ToolInvocation;
@@ -20,13 +19,13 @@ const Swap: React.FC<SwapProps> = ({ tool }) => {
             icon="ArrowLeftRight"
             agentName="Trading Agent"
             loadingText="Completing Trade..."
-            resultHeading={(result: TradeResultType) => result.body 
+            resultHeading={(result: SolanaTradeResultType) => result.body 
                 ? "Trade Complete"
                 : "Failed to complete trade"}
-            resultBody={(result: TradeResultType) => result.body 
+            resultBody={(result: SolanaTradeResultType) => result.body 
                 ? <SwapCard tradeResult={result.body} />
                 : result.message}
-            callBody={(toolCallId: string, args: TradeArgumentsType) => (
+            callBody={(toolCallId: string, args: SolanaTradeArgumentsType) => (
                 <SwapCallBody toolCallId={toolCallId} args={args} />
             )}
             defaultOpen={true}

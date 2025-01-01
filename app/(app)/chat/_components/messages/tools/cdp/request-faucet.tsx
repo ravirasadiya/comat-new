@@ -3,7 +3,7 @@ import React from 'react'
 import ToolCard from '../tool-card';
 
 import type { ToolInvocation } from 'ai';
-import type { RequestFaucetFundsActionResultType } from '@/agentkit';
+import type { RequestFaucetFundsActionResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

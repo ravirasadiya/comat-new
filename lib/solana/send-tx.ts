@@ -13,9 +13,8 @@ export async function sendTx(
   tx: VersionedTransaction,
   otherKeypairs?: Keypair[]
 ) {
-
   tx.sign([keypair, ...(otherKeypairs ?? [])]);
-  let txid = await connection.sendRawTransaction(tx.serialize(), {
+  const txid = await connection.sendRawTransaction(tx.serialize(), {
     maxRetries: 5,
   });
   await connection.confirmTransaction(txid);

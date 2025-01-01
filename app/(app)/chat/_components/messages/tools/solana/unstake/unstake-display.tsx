@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
 import { ChevronRight } from 'lucide-react';
+
+import { Button } from '@/components/ui';
+
 import TokenDisplay from './token-display';
-import { UnstakeArgumentsType } from '@/agentkit/actions/solana/types';
 
 import { useUnstake } from '@/app/(app)/chat/_hooks';
+
+import type { UnstakeArgumentsType } from '@/ai';
 
 interface UnstakeDisplayProps {
     toolCallId: string;

@@ -9,7 +9,7 @@ import ToolCard from '../tool-card';
 import { getExplorerTransactionUrl } from '@/lib/explorers';
 
 import type { ToolInvocation } from 'ai';
-import type { TransferActionResultType, TransferArgumentsType, TransferResultBodyType } from '@/agentkit';
+import type { TransferActionResultType, TransferArgumentsType, TransferResultBodyType } from '@/ai';
 
 
 interface Props {

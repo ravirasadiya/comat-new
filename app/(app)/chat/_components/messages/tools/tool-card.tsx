@@ -1,13 +1,19 @@
 import React from 'react'
 
-import { AnimatedShinyText, Card } from '@/components/ui'
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
+import { 
+    AnimatedShinyText, 
+    Card, 
+    Collapsible, 
+    CollapsibleTrigger, 
+    CollapsibleContent, 
+    Icon 
+} from '@/components/ui'
 
-import { ToolInvocation } from 'ai'
-import { IconName } from '@/types'
-import { Icon } from '@/components/ui/icon'
-import { CdpActionResult } from '@/agentkit'
 import { cn } from '@/lib/utils'
+
+import type { ToolInvocation } from 'ai'
+import type { IconName } from '@/types'
+import type { CdpActionResult } from '@/ai'
 
 interface Props<ActionResultBodyType, ActionArgsType> {
     tool: ToolInvocation,

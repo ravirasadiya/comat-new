@@ -1,11 +1,16 @@
+import React from 'react';
+
 import { Button } from '@/components/ui';
-import { TradeArgumentsType } from '@/agentkit/actions/solana/types';
-import { useLogin } from '@/hooks';
+
 import SwapDisplay from './swap-display';
+
+import { useLogin } from '@/hooks';
+
+import type { SolanaTradeArgumentsType } from '@/ai';
 
 interface SwapCallBodyProps {
     toolCallId: string;
-    args: TradeArgumentsType;
+    args: SolanaTradeArgumentsType;
 }
 
 const SwapCallBody = ({ toolCallId, args }: SwapCallBodyProps) => {

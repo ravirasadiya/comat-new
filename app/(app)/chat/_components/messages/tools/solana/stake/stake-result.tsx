@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { StakeResultBodyType } from '@/agentkit/actions/solana/types';
+    
+import type { StakeResultBodyType } from '@/ai';
 
 interface Props {
     stakeResult: StakeResultBodyType;

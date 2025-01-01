@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         const fromPubkey = new PublicKey(from);
         const toPubkey = new PublicKey(to);
 
-        let transaction = new Transaction();
+        const transaction = new Transaction();
 
         if (!mint) {
             // Transfer native SOL

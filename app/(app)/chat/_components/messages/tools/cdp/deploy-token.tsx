@@ -9,7 +9,7 @@ import ToolCard from '../tool-card';
 import { getExplorerAddressUrl, getExplorerTransactionUrl } from '@/lib/explorers';
 
 import type { ToolInvocation } from 'ai';
-import type { DeployTokenArgumentsType, DeployTokenActionResultType, DeployTokenResultBodyType } from '@/agentkit';
+import type { DeployTokenArgumentsType, DeployTokenActionResultType, DeployTokenResultBodyType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

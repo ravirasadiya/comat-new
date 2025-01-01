@@ -1,10 +1,11 @@
 import React from 'react'
 
+import { Progress } from '@/components/ui';
+
 import ToolCard from '../tool-card';
 
-import { ToolInvocation } from 'ai';
-import { TwitterSentimentAnalysisResultType } from '@/agentkit/actions/twitter/types';
-import { Progress } from '@/components/ui';
+import type { ToolInvocation } from 'ai';
+import type { TwitterSentimentAnalysisResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

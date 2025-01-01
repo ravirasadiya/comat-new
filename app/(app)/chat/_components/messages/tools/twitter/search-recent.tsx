@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react'
 
+import { Button } from '@/components/ui';
+
 import ToolCard from '../tool-card';
 
-import { ToolInvocation } from 'ai';
-import { TwitterSearchRecentResultType } from '@/agentkit/actions/twitter/types';
-import { TweetV2, UserV2 } from 'twitter-api-v2';
-import { Button } from '@/components/ui';
+import type { ToolInvocation } from 'ai';
+import type { TweetV2, UserV2 } from 'twitter-api-v2';
+import type { TwitterSearchRecentResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation
