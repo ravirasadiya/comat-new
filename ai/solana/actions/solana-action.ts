@@ -1,38 +1,10 @@
-import { z } from "zod";
-
 import { Connection } from "@solana/web3.js";
+import { BaseAction, BaseActionResult, BaseActionSchemaAny } from "../../base-action";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type SolanaActionSchemaAny = z.ZodObject<any, any, any, any>;
-
-export type SolanaActionResult<TBody> = {
-    message: string;
-    body?: TBody;
-}
+export type SolanaActionSchemaAny = BaseActionSchemaAny;
+export type SolanaActionResult<TBody> = BaseActionResult<TBody>;
 
 /**
- * Represents the base structure for CDP Actions.
+ * Represents the structure for Solana Actions.
  */
-export interface SolanaAction<TActionSchema extends SolanaActionSchemaAny, TBody> {
-  /**
-   * The name of the action
-   */
-  name: string;
-
-  /**
-   * A description of what the action does
-   */
-  description: string;
-
-  /**
-   * Schema for validating action arguments
-   */
-  argsSchema: TActionSchema;
-
-  /**
-   * The function to execute for this action
-   */
-  func?:
-    | ((connection: Connection, args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
-    | ((args: z.infer<TActionSchema>) => Promise<SolanaActionResult<TBody>>)
-}
+export interface SolanaAction<TActionSchema extends SolanaActionSchemaAny, TBody> extends BaseAction<TActionSchema, TBody, Connection> {}

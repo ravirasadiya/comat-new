@@ -97,6 +97,9 @@ export class CdpAgentkit {
     action: CdpAction<TActionSchema, TResultBody>,
     args: TActionSchema,
   ): Promise<CdpActionResult<TResultBody>> {
+    if (!action.func) {
+      throw new Error(`Action ${action.name} does not have a function defined`);
+    }
     if (action.func.length > 1) {
       if (!this.wallet) {
         return {

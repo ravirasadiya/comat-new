@@ -1,38 +1,19 @@
 import { z } from "zod";
-
 import { Wallet } from "@coinbase/coinbase-sdk";
+import { BaseAction, BaseActionResult, BaseActionSchemaAny } from "../../base-action";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type CdpActionSchemaAny = z.ZodObject<any, any, any, any>;
-
-export type CdpActionResult<TBody> = {
-    message: string;
-    body?: TBody;
-}
+export type CdpActionSchemaAny = BaseActionSchemaAny;
+export type CdpActionResult<TBody> = BaseActionResult<TBody>;
 
 /**
- * Represents the base structure for CDP Actions.
+ * Represents the structure for CDP Actions.
  */
-export interface CdpAction<TActionSchema extends CdpActionSchemaAny, TBody> {
-  /**
-   * The name of the action
-   */
-  name: string;
-
-  /**
-   * A description of what the action does
-   */
-  description: string;
-
-  /**
-   * Schema for validating action arguments
-   */
-  argsSchema: TActionSchema;
-
+export interface CdpAction<TActionSchema extends CdpActionSchemaAny, TBody> extends BaseAction<TActionSchema, TBody, Wallet> {
   /**
    * The function to execute for this action
    */
-  func:
+  func?:
     | ((wallet: Wallet, args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>)
     | ((args: z.infer<TActionSchema>) => Promise<CdpActionResult<TBody>>)
 }

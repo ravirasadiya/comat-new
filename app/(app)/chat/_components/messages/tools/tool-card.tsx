@@ -13,14 +13,14 @@ import { cn } from '@/lib/utils'
 
 import type { ToolInvocation } from 'ai'
 import type { IconName } from '@/types'
-import type { CdpActionResult } from '@/ai'
+import type { BaseActionResult } from '@/ai'
 
 interface Props<ActionResultBodyType, ActionArgsType> {
     tool: ToolInvocation,
     icon: IconName,
     loadingText: string,
-    resultHeading: (result: CdpActionResult<ActionResultBodyType>) => string,
-    resultBody: (result: CdpActionResult<ActionResultBodyType>) => React.ReactNode,
+    resultHeading: (result: BaseActionResult<ActionResultBodyType>) => string,
+    resultBody: (result: BaseActionResult<ActionResultBodyType>) => React.ReactNode,
     agentName: string,
     callBody?: (toolCallId: string, args: ActionArgsType) => React.ReactNode,
     defaultOpen?: boolean,
