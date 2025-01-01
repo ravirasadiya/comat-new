@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
+import LoginButton from '@/app/(app)/_components/log-in-button';
+
+import StakeDisplay from './stake-display';
 
 import { useLogin } from '@/hooks';
 
 import type { StakeArgumentsType } from '@/ai';
 
-import StakeDisplay from './stake-display';
 
 interface StakeCallBodyProps {
     toolCallId: string;
@@ -24,13 +25,7 @@ const StakeCallBody = ({ toolCallId, args }: StakeCallBodyProps) => {
                 ) : (
                     <div className="flex flex-col items-center gap-2">
                         <p className="text-sm text-muted-foreground">Connect your wallet to stake tokens</p>
-                        <Button 
-                            variant="brand"
-                            onClick={() => connectWallet()}
-                            className="w-full"
-                        >
-                            Connect Wallet
-                        </Button>
+                        <LoginButton />
                     </div>
                 )
             }

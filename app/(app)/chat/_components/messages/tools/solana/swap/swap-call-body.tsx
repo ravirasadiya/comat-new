@@ -7,6 +7,7 @@ import SwapDisplay from './swap-display';
 import { useLogin } from '@/hooks';
 
 import type { SolanaTradeArgumentsType } from '@/ai';
+import LogInButton from '@/app/(app)/_components/log-in-button';
 
 interface SwapCallBodyProps {
     toolCallId: string;
@@ -24,13 +25,7 @@ const SwapCallBody = ({ toolCallId, args }: SwapCallBodyProps) => {
                 ) : (
                     <div className="flex flex-col items-center gap-2">
                         <p className="text-sm text-muted-foreground">Connect your wallet to swap tokens</p>
-                        <Button 
-                            variant="brand"
-                            onClick={() => connectWallet()}
-                            className="w-full"
-                        >
-                            Connect Wallet
-                        </Button>
+                        <LogInButton />
                     </div>
                 )
             }

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 
-import { useConnectWallet, useSolanaWallets } from '@privy-io/react-auth';
-
-import { Button } from '@/components/ui';
+import LoginButton from '@/app/(app)/_components/log-in-button';
 
 import ToolCard from '../tool-card';
+
+import { useConnectWallet, useSolanaWallets } from '@privy-io/react-auth';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
@@ -16,7 +16,6 @@ interface Props {
 }
 
 const GetWalletAddress: React.FC<Props> = ({ tool }) => {
-    
 
     return (
         <ToolCard 
@@ -64,13 +63,7 @@ const GetWalletAddressAction = ({ toolCallId }: { toolCallId: string }) => {
     return (
         <div className="flex flex-col items-center gap-2">
             <p className="text-sm text-muted-foreground">Connect your wallet to proceed</p>
-            <Button 
-                variant="brand"
-                onClick={() => connectWallet()}
-                className="w-full"
-            >
-                Connect Wallet
-            </Button>
+            <LoginButton />
         </div>
     )
 }

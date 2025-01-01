@@ -47,7 +47,7 @@ export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, user
 
             const tx = await wallets[0].sendTransaction(
               transaction, 
-              new Connection("https://api.mainnet-beta.solana.com"), 
+              new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!), 
               {
                 skipPreflight: true,
               }

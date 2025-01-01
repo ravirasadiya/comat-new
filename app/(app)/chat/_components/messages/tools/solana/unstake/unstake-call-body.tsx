@@ -7,6 +7,7 @@ import UnstakeDisplay from './unstake-display';
 import { useLogin } from '@/hooks';
 
 import type { UnstakeArgumentsType } from '@/ai';
+import LogInButton from '@/app/(app)/_components/log-in-button';
 
 interface UnstakeCallBodyProps {
     toolCallId: string;
@@ -24,13 +25,7 @@ const UnstakeCallBody = ({ toolCallId, args }: UnstakeCallBodyProps) => {
                 ) : (
                     <div className="flex flex-col items-center gap-2">
                         <p className="text-sm text-muted-foreground">Connect your wallet to unstake</p>
-                        <Button 
-                            variant="brand"
-                            onClick={() => connectWallet()}
-                            className="w-full"
-                        >
-                            Connect Wallet
-                        </Button>
+                        <LogInButton />
                     </div>
                 )
             }
