@@ -15,7 +15,8 @@ interface StakeCallBodyProps {
 }
 
 const StakeCallBody = ({ toolCallId, args }: StakeCallBodyProps) => {
-    const { wallets, connectWallet } = useLogin();
+    
+    const { wallets } = useLogin();
 
     return (
         <div>

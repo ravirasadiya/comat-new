@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Connection, VersionedTransaction } from "@solana/web3.js";
+import { VersionedTransaction } from "@solana/web3.js";
 
 import { useSolanaWallets } from "@privy-io/react-auth/solana";
 
@@ -11,6 +11,7 @@ import { useChat } from "../../_contexts/chat";
 import { useStakeData, useTokenDataByAddress } from "@/hooks";
 
 import type { StakeArgumentsType } from "@/ai";
+import { useSendTransaction } from "@/hooks/privy";
 
 export const useStake = (toolCallId: string, args: StakeArgumentsType, userPublicKey: string) => {
 
@@ -19,6 +20,8 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
     const { wallets } = useSolanaWallets();
 
     const [isStaking, setIsStaking] = useState(false);
+
+    const { sendTransaction } = useSendTransaction();
 
     const { data: stakeData, isLoading: stakeDataLoading } = useStakeData({
       inputAmount: args.amount,
@@ -40,14 +43,7 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
             const swapTransactionBuf = Buffer.from(stakeData.swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
 
-            const tx = await wallets[0].sendTransaction(
-              transaction, 
-              new Connection("https://api.mainnet-beta.solana.com"), 
-              {
-                skipPreflight: true,
-              }
-            );
-            
+            const tx = await sendTransaction(transaction);
         
             addToolResult(toolCallId, {
                 message: `Successfully staked ${args.amount} SOL for jupSOL.`,

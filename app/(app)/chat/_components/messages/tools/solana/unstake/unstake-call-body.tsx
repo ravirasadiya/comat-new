@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
+import LogInButton from '@/app/(app)/_components/log-in-button';
 
 import UnstakeDisplay from './unstake-display';
 
 import { useLogin } from '@/hooks';
 
 import type { UnstakeArgumentsType } from '@/ai';
-import LogInButton from '@/app/(app)/_components/log-in-button';
 
 interface UnstakeCallBodyProps {
     toolCallId: string;
@@ -15,7 +14,7 @@ interface UnstakeCallBodyProps {
 }
 
 const UnstakeCallBody = ({ toolCallId, args }: UnstakeCallBodyProps) => {
-    const { wallets, connectWallet } = useLogin();
+    const { wallets } = useLogin();
 
     return (
         <div>

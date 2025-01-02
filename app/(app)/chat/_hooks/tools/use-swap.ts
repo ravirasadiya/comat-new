@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { Connection } from "@solana/web3.js";
 import { VersionedTransaction } from "@solana/web3.js";
 
 import { useSolanaWallets } from "@privy-io/react-auth/solana";
@@ -12,12 +11,15 @@ import { useChat } from "../../_contexts/chat";
 import { useTokenDataByAddress, useSwapData } from "@/hooks";
 
 import type { SolanaTradeArgumentsType } from "@/ai";
+import { useSendTransaction } from "@/hooks/privy";
 
 export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, userPublicKey: string) => {
 
     const { addToolResult } = useChat();
 
     const { wallets } = useSolanaWallets();
+
+    const { sendTransaction } = useSendTransaction();
 
     const [isSwapping, setIsSwapping] = useState(false);
 
@@ -45,14 +47,7 @@ export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, user
             const swapTransactionBuf = Buffer.from(swapData.swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
 
-            const tx = await wallets[0].sendTransaction(
-              transaction, 
-              new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!), 
-              {
-                skipPreflight: true,
-              }
-            );
-            
+            const tx = await sendTransaction(transaction);
         
             addToolResult(toolCallId, {
               message: `Successfully swapped ${args.inputAmount} ${args.inputMint || "SOL"} for ${args.outputMint}.`,

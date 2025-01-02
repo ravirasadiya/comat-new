@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
-
 import SwapDisplay from './swap-display';
 
 import { useLogin } from '@/hooks';
@@ -15,7 +13,8 @@ interface SwapCallBodyProps {
 }
 
 const SwapCallBody = ({ toolCallId, args }: SwapCallBodyProps) => {
-    const { wallets, connectWallet } = useLogin();
+    
+    const { wallets } = useLogin();
 
     return (
         <div>

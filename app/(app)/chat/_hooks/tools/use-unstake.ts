@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { Connection } from "@solana/web3.js";
 import { VersionedTransaction } from "@solana/web3.js";
 
 import { useSolanaWallets } from "@privy-io/react-auth/solana";
@@ -12,12 +11,15 @@ import { useChat } from "../../_contexts/chat";
 import { useTokenDataByAddress, useUnstakeData } from "@/hooks";
 
 import type { UnstakeArgumentsType } from "@/ai";
+import { useSendTransaction } from "@/hooks/privy";
 
 export const useUnstake = (toolCallId: string, args: UnstakeArgumentsType, userPublicKey: string) => {
 
     const { addToolResult } = useChat();
 
     const { wallets } = useSolanaWallets();
+
+    const { sendTransaction } = useSendTransaction();
 
     const [isUnstaking, setIsUnstaking] = useState(false);
 
@@ -42,14 +44,7 @@ export const useUnstake = (toolCallId: string, args: UnstakeArgumentsType, userP
             const unstakeTransactionBuf = Buffer.from(unstakeData.swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(unstakeTransactionBuf);
 
-            const tx = await wallets[0].sendTransaction(
-              transaction, 
-              new Connection("https://api.mainnet-beta.solana.com"), 
-              {
-                skipPreflight: true,
-              }
-            );
-            
+            const tx = await sendTransaction(transaction);
         
             addToolResult(toolCallId, {
                 message: `Successfully unstaked ${args.amount} jupSOL for SOL.`,
