@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { StakeResultType, UnstakeResultType, UnstakeArgumentsType } from '@/agentkit/actions/solana/types';
-
 import ToolCard from '../../tool-card';
 
 import UnstakeCallBody from './unstake-call-body';
 import UnstakeResult from './unstake-result';
 
-import { ToolInvocation } from 'ai';
+import type { ToolInvocation } from 'ai';
+import type { StakeResultType, UnstakeResultType, UnstakeArgumentsType } from '@/ai';
+
 
 interface Props {
     tool: ToolInvocation;

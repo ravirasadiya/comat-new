@@ -1,12 +1,14 @@
 import React from 'react'
 
+import { Card } from '@/components/ui';
+
 import ToolCard from '../tool-card';
 
-import { ToolInvocation } from 'ai';
-import { GetTokenDataResultType } from '@/agentkit/actions/solana/types';
-import { JupiterTokenData } from 'solana-agent-kit';
-import { Card } from '@/components/ui';
 import { PriceChart } from './line-chart';
+
+import type { ToolInvocation } from 'ai';
+import type { GetTokenDataResultType } from '@/ai';
+import type { JupiterTokenData } from 'solana-agent-kit';
 
 interface Props {
     tool: ToolInvocation

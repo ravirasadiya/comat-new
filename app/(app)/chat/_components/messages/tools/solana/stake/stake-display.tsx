@@ -1,7 +1,12 @@
+import React from 'react';
+
 import { Button } from '@/components/ui';
-import { StakeArgumentsType } from '@/agentkit/actions/solana/types';
 import { ChevronRight } from 'lucide-react';
+
 import { useStake } from '@/app/(app)/chat/_hooks/tools/use-stake';
+
+import type { StakeArgumentsType } from '@/ai';
+
 import TokenDisplay from './token-display';
 
 interface StakeDisplayProps {

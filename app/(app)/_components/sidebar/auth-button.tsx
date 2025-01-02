@@ -82,7 +82,7 @@ const AuthButton: React.FC = () => {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem onClick={() => fundWallet(user.wallet!.address)}>
+                            <DropdownMenuItem onClick={() => fundWallet(user.wallet!.address, { amount: "0.01" })}>
                                 <Coins className="size-4" />
                                 Fund Wallet
                             </DropdownMenuItem>

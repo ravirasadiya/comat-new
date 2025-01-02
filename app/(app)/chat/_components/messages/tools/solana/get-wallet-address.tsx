@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react'
 
-import { useConnectWallet, useSolanaWallets } from '@privy-io/react-auth';
-
-import { Button } from '@/components/ui';
+import LoginButton from '@/app/(app)/_components/log-in-button';
 
 import ToolCard from '../tool-card';
 
+import { useSolanaWallets, Wallet } from '@privy-io/react-auth';
+
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
-import type { GetWalletAddressResultType } from '@/agentkit/actions/solana/types';
 import type { ToolInvocation } from 'ai';
+import type { GetWalletAddressResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation
 }
 
 const GetWalletAddress: React.FC<Props> = ({ tool }) => {
-    
 
     return (
         <ToolCard 
@@ -50,27 +49,19 @@ const GetWalletAddressAction = ({ toolCallId }: { toolCallId: string }) => {
         }
     }, [wallets]);
 
-    const { connectWallet } = useConnectWallet({
-        onSuccess: (wallet) => {
-            addToolResult(toolCallId, {
-                message: "Wallet connected",
-                body: {
-                    address: wallet.address
-                }
-            });
-        }
-    });
+    const onComplete = (wallet: Wallet) => {
+        addToolResult(toolCallId, {
+            message: "Wallet connected",
+            body: {
+                address: wallet.address
+            }
+        });
+    }
 
     return (
         <div className="flex flex-col items-center gap-2">
             <p className="text-sm text-muted-foreground">Connect your wallet to proceed</p>
-            <Button 
-                variant="brand"
-                onClick={() => connectWallet()}
-                className="w-full"
-            >
-                Connect Wallet
-            </Button>
+            <LoginButton onComplete={onComplete} />
         </div>
     )
 }

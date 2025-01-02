@@ -1,7 +1,9 @@
 import React from 'react'
+
 import ToolCard from '../tool-card';
-import { ToolInvocation } from 'ai';
-import { GetWalletDetailsActionResultType } from '@/agentkit/actions/cdp/get-wallet-details/types';
+
+import type { ToolInvocation } from 'ai';
+import type { GetWalletDetailsActionResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation

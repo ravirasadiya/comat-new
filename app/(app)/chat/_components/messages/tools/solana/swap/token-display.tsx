@@ -1,5 +1,8 @@
+import React from 'react';
+
 import { Skeleton } from '@/components/ui';
-import { JupiterTokenData } from 'solana-agent-kit';
+
+import type { JupiterTokenData } from '@/types';
 
 interface TokenDisplayProps {
     tokenData: JupiterTokenData | null;

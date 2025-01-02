@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
+import LogInButton from '@/app/(app)/_components/log-in-button';
 
 import UnstakeDisplay from './unstake-display';
 
 import { useLogin } from '@/hooks';
 
-import { UnstakeArgumentsType } from '@/agentkit/actions/solana/types';
+import type { UnstakeArgumentsType } from '@/ai';
 
 interface UnstakeCallBodyProps {
     toolCallId: string;
@@ -14,7 +14,7 @@ interface UnstakeCallBodyProps {
 }
 
 const UnstakeCallBody = ({ toolCallId, args }: UnstakeCallBodyProps) => {
-    const { wallets, connectWallet } = useLogin();
+    const { wallets } = useLogin();
 
     return (
         <div>
@@ -24,13 +24,7 @@ const UnstakeCallBody = ({ toolCallId, args }: UnstakeCallBodyProps) => {
                 ) : (
                     <div className="flex flex-col items-center gap-2">
                         <p className="text-sm text-muted-foreground">Connect your wallet to unstake</p>
-                        <Button 
-                            variant="brand"
-                            onClick={() => connectWallet()}
-                            className="w-full"
-                        >
-                            Connect Wallet
-                        </Button>
+                        <LogInButton />
                     </div>
                 )
             }

@@ -6,10 +6,7 @@ import { Coinbase } from "@coinbase/coinbase-sdk";
 
 import { openai } from "@ai-sdk/openai";
 
-import { CdpAgentkit } from "@/agentkit";
-
-import { cdpTools } from "@/agentkit/ai-sdk";
-
+import { CdpAgentkit, cdpTools } from "@/ai";
 
 export const POST = async (req: NextRequest) => {
 

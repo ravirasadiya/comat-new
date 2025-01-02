@@ -1,11 +1,12 @@
 import React from 'react'
 
+import { Card } from '@/components/ui';
+
 import ToolCard from '../tool-card';
 
-import { ToolInvocation } from 'ai';
-import { GetTrendingTokensResultType } from '@/agentkit/actions/solana/types';
-import { SolanaToken } from '@/types/solana-token';
-import { Card } from '@/components/ui';
+import type { ToolInvocation } from 'ai';
+import type { GetTrendingTokensResultType } from '@/ai';
+import type { SolanaToken } from '@/types';
 
 interface Props {
     tool: ToolInvocation

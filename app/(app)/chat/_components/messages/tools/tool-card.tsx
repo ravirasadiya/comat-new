@@ -1,20 +1,26 @@
 import React from 'react'
 
-import { AnimatedShinyText, Card } from '@/components/ui'
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
+import { 
+    AnimatedShinyText, 
+    Card, 
+    Collapsible, 
+    CollapsibleTrigger, 
+    CollapsibleContent, 
+    Icon 
+} from '@/components/ui'
 
-import { ToolInvocation } from 'ai'
-import { IconName } from '@/types'
-import { Icon } from '@/components/ui/icon'
-import { CdpActionResult } from '@/agentkit'
 import { cn } from '@/lib/utils'
+
+import type { ToolInvocation } from 'ai'
+import type { IconName } from '@/types'
+import type { BaseActionResult } from '@/ai'
 
 interface Props<ActionResultBodyType, ActionArgsType> {
     tool: ToolInvocation,
     icon: IconName,
     loadingText: string,
-    resultHeading: (result: CdpActionResult<ActionResultBodyType>) => string,
-    resultBody: (result: CdpActionResult<ActionResultBodyType>) => React.ReactNode,
+    resultHeading: (result: BaseActionResult<ActionResultBodyType>) => string,
+    resultBody: (result: BaseActionResult<ActionResultBodyType>) => React.ReactNode,
     agentName: string,
     callBody?: (toolCallId: string, args: ActionArgsType) => React.ReactNode,
     defaultOpen?: boolean,

@@ -1,7 +1,13 @@
-import { Button } from '@/components/ui';
-import { StakeArgumentsType } from '@/agentkit/actions/solana/types';
-import { useLogin } from '@/hooks';
+import React from 'react';
+
+import LoginButton from '@/app/(app)/_components/log-in-button';
+
 import StakeDisplay from './stake-display';
+
+import { useLogin } from '@/hooks';
+
+import type { StakeArgumentsType } from '@/ai';
+
 
 interface StakeCallBodyProps {
     toolCallId: string;
@@ -9,7 +15,8 @@ interface StakeCallBodyProps {
 }
 
 const StakeCallBody = ({ toolCallId, args }: StakeCallBodyProps) => {
-    const { wallets, connectWallet } = useLogin();
+    
+    const { wallets } = useLogin();
 
     return (
         <div>
@@ -19,13 +26,7 @@ const StakeCallBody = ({ toolCallId, args }: StakeCallBodyProps) => {
                 ) : (
                     <div className="flex flex-col items-center gap-2">
                         <p className="text-sm text-muted-foreground">Connect your wallet to stake tokens</p>
-                        <Button 
-                            variant="brand"
-                            onClick={() => connectWallet()}
-                            className="w-full"
-                        >
-                            Connect Wallet
-                        </Button>
+                        <LoginButton />
                     </div>
                 )
             }

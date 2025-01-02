@@ -1,12 +1,17 @@
+import React from 'react';
+
 import { Button } from '@/components/ui';
-import { TradeArgumentsType } from '@/agentkit/actions/solana/types';
 import { ChevronRight } from 'lucide-react';
+
 import { useSwap } from '@/app/(app)/chat/_hooks/tools/use-swap';
+
 import TokenDisplay from './token-display';
+
+import type { SolanaTradeArgumentsType } from '@/ai';
 
 interface SwapDisplayProps {
     toolCallId: string;
-    args: TradeArgumentsType;
+    args: SolanaTradeArgumentsType;
     userPublicKey: string;
 }
 

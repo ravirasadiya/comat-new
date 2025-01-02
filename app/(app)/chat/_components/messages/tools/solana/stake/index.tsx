@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { StakeResultType, StakeArgumentsType } from '@/agentkit/actions/solana/types';
 
 import ToolCard from '../../tool-card';
 
 import StakeCallBody from './stake-call-body';
 import StakeResult from './stake-result';
 
-import { ToolInvocation } from 'ai';
+import type { StakeResultType, StakeArgumentsType } from '@/ai';
+import type { ToolInvocation } from 'ai';
 
 interface Props {
     tool: ToolInvocation;

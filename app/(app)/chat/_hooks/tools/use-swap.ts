@@ -2,16 +2,22 @@
 
 import { useState } from "react";
 
-import { TradeArgumentsType } from "@/agentkit/actions/solana/types";
-import { useChat } from "../../_contexts/chat";
 import { VersionedTransaction } from "@solana/web3.js";
-import { useTokenDataByAddress } from "@/hooks/queries/token-data/use-token-data-by-address";
-import { useSwapData } from "@/hooks/queries/swap/use-swap-data";
+
+import { useSolanaWallets } from "@privy-io/react-auth/solana";
+
+import { useChat } from "../../_contexts/chat";
+
+import { useTokenDataByAddress, useSwapData } from "@/hooks";
+
+import type { SolanaTradeArgumentsType } from "@/ai";
 import { useSendTransaction } from "@/hooks/privy";
 
-export const useSwap = (toolCallId: string, args: TradeArgumentsType, userPublicKey: string) => {
+export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, userPublicKey: string) => {
 
     const { addToolResult } = useChat();
+
+    const { wallets } = useSolanaWallets();
 
     const { sendTransaction } = useSendTransaction();
 
@@ -30,15 +36,18 @@ export const useSwap = (toolCallId: string, args: TradeArgumentsType, userPublic
 
     const onSwap = async () => {
 
+        if (!wallets.length) return;
+
         setIsSwapping(true);
 
         try {
+          
+
             // Deserialize the transaction
             const swapTransactionBuf = Buffer.from(swapData.swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
 
             const tx = await sendTransaction(transaction);
-            
         
             addToolResult(toolCallId, {
               message: `Successfully swapped ${args.inputAmount} ${args.inputMint || "SOL"} for ${args.outputMint}.`,

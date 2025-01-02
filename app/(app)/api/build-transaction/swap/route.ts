@@ -1,9 +1,8 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { PublicKey } from "@solana/web3.js";
 
-import { getTokenDataByAddress } from "@/agentkit/actions/solana/utils/get-token-data";
-
-import { NextRequest, NextResponse } from "next/server";
-import { JUP_API } from "@/agentkit/actions/solana/trade/utils";
+import { JUP_API, getTokenDataByAddress } from "@/lib/solana";
 
 export const POST = async (req: NextRequest) => {
     const { outputMint, inputMint, inputAmount, slippageBps, userPublicKey } = await req.json();

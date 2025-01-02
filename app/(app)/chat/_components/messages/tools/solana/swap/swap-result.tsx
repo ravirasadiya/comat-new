@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TradeResultBodyType } from '@/agentkit/actions/solana/types';
+import type { SolanaTradeResultBodyType } from '@/ai';
 
 interface Props {
-    tradeResult: TradeResultBodyType;
+    tradeResult: SolanaTradeResultBodyType;
 }
 
 const SwapResult: React.FC<Props> = ({ tradeResult }) => {

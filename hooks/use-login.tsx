@@ -2,10 +2,14 @@
 
 import { useEffect } from "react";
 
-import { useConnectWallet, usePrivy, useLogin as usePrivyLogin } from "@privy-io/react-auth";
+import { useConnectWallet, usePrivy, useLogin as usePrivyLogin, Wallet } from "@privy-io/react-auth";
 import { useFundWallet, useSolanaWallets } from "@privy-io/react-auth/solana";
 
-export const useLogin = () => {
+export const useLogin = ({
+    onComplete
+}: {
+    onComplete?: (wallet: Wallet) => void
+} = {}) => {
     const { user, ready, logout } = usePrivy();
 
     const { wallets, createWallet } = useSolanaWallets();
@@ -13,7 +17,10 @@ export const useLogin = () => {
     const { login } = usePrivyLogin({
         onComplete: async (user, isNewUser, _) => {
             if(isNewUser && !user.wallet) {
-                await createWallet();
+                const wallet = await createWallet();
+                onComplete?.(wallet);
+            } else {
+                onComplete?.(user.wallet!);
             }
         }
     });

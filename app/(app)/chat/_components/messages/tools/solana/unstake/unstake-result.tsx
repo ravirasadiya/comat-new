@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UnstakeResultBodyType } from '@/agentkit/actions/solana/types';
+import type { UnstakeResultBodyType } from '@/ai';
 
 interface Props {
     unstakeResult: UnstakeResultBodyType;
