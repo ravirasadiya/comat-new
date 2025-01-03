@@ -21,7 +21,6 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new SolanaGetTokenDataAction(),
     new SolanaStakeAction(),
     new SolanaUnstakeAction(),
-    new SolanaGetAdviceAction(),
     new SolanaAllBalancesAction()
   ];
 }
