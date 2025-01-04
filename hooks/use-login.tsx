@@ -27,14 +27,7 @@ export const useLogin = ({
 
     const { connectWallet } = useConnectWallet();
 
-
     const { fundWallet } = useFundWallet();
-
-    useEffect(() => {
-        if (wallets.length && !user) {
-            wallets[0].loginOrLink();
-        }
-    }, [wallets]);
 
     return {
         user,
