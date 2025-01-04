@@ -22,7 +22,7 @@ const LoadingMessage: React.FC = () => {
             <div className="flex items-center md:items-start gap-2">
                 <Logo 
                     className={cn(
-                        "w-6 h-6 md:w-10 md:h-10 rounded-full",
+                        "w-6 h-6 md:w-10 md:h-10",
                     )}
                 />
             </div>
