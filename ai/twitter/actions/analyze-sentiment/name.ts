@@ -1,1 +1,0 @@
-export const TWITTER_SENTIMENT_ANALYSIS_NAME = "twitter_sentiment_analysis"; 

@@ -1,1 +1,0 @@
-export const GET_SOLANA_ADVICE_NAME = "get_solana_advice"; 

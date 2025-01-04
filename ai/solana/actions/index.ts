@@ -6,7 +6,6 @@ import { SolanaGetTrendingTokensAction } from "./get-trending-tokens";
 import { SolanaGetTokenDataAction } from "./get-token-data";
 import { SolanaStakeAction } from "./stake";
 import { SolanaUnstakeAction } from "./unstake";
-import { SolanaGetAdviceAction } from "./get-advice";
 import { SolanaAllBalancesAction } from "./all-balances";
 
 import type { SolanaAction, SolanaActionSchemaAny } from "./solana-action";
