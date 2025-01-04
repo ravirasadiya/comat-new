@@ -6,3 +6,4 @@ export { default as Trade } from './swap';
 export { default as Stake } from './stake';
 export { default as Unstake } from './unstake';
 export { default as AllBalances } from './all-balances';
+export { default as Lend } from './lend';
