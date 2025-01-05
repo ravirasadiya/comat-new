@@ -68,19 +68,19 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
             </div>
             <div className="md:pt-2 w-full max-w-full md:flex-1 md:w-0 overflow-hidden flex flex-col gap-2">
                 {
+                    message.content && (
+                        <Markdown>
+                            {message.content}
+                        </Markdown>
+                    )
+                }
+                {
                     message.toolInvocations && message.toolInvocations.length > 0 && (
                         <div className="flex flex-col gap-2">
                             {message.toolInvocations.map((tool) => (
                                 <ToolInvocation key={tool.toolCallId} tool={tool} />
                             ))}
                         </div>
-                    )
-                }
-                {
-                    message.content && (
-                        <Markdown>
-                            {message.content}
-                        </Markdown>
                     )
                 }
             </div>

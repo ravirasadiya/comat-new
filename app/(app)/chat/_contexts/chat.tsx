@@ -3,6 +3,7 @@
 import React, { createContext, useContext, ReactNode, useState } from 'react';
 
 import { Message, useChat as useAiChat } from 'ai/react';
+import { Models } from '@/types/models';
 
 export enum ColorMode {
     LIGHT = 'light',
@@ -24,8 +25,8 @@ interface ChatContextType {
     sendMessage: (message: string) => void;
     addToolResult: (toolCallId: string, result: ToolResult) => void;
     isResponseLoading: boolean;
-    solanaPrivateKey: string | null;
-    setSolanaPrivateKey: (key: string | null) => void;
+    model: Models;
+    setModel: (model: Models) => void;
 }
 
 const ChatContext = createContext<ChatContextType>({
@@ -36,9 +37,9 @@ const ChatContext = createContext<ChatContextType>({
     isLoading: false,
     sendMessage: () => {},
     isResponseLoading: false,
-    solanaPrivateKey: null,
-    setSolanaPrivateKey: () => {},
     addToolResult: () => {},
+    model: Models.OpenAI,
+    setModel: () => {},
 });
 
 interface ChatProviderProps {
@@ -51,23 +52,7 @@ const initialMessage =
 export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
     const [isResponseLoading, setIsResponseLoading] = useState(false);
-    const [solanaPrivateKey, setSolanaPrivateKey] = useState<string | null>(() => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('solanaPrivateKey');
-        }
-        return null;
-    });
-
-    const handleSetSolanaPrivateKey = (key: string | null) => {
-        setSolanaPrivateKey(key);
-        if (typeof window !== 'undefined') {
-            if (key) {
-                localStorage.setItem('solanaPrivateKey', key);
-            } else {
-                localStorage.removeItem('solanaPrivateKey');
-            }
-        }
-    };
+    const [model, setModel] = useState<Models>(Models.OpenAI);
 
     const { messages, input, setInput, append, isLoading, addToolResult } = useAiChat({
         maxSteps: 15,
@@ -83,7 +68,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         },
         api: '/api/chat/solana',
         body: {
-            solanaPrivateKey,
+            model,
+            modelName: model,
         },
     });
 
@@ -114,12 +100,12 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             isLoading,
             sendMessage,
             isResponseLoading,
-            solanaPrivateKey,
-            setSolanaPrivateKey: handleSetSolanaPrivateKey,
             addToolResult: (toolCallId: string, result: ToolResult) => addToolResult({
                 toolCallId,
                 result,
             }),
+            model,
+            setModel,
         }}>
             {children}
         </ChatContext.Provider>

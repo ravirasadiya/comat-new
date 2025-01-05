@@ -64,6 +64,7 @@ export async function getTokenPairsFromTicker(
     const response = await fetch(
       `https://api.dexscreener.com/latest/dex/search?q=${ticker.toLowerCase()}`
     );
+
     const data: DexScreenerResponse = await response.json();
 
     if (!data.pairs || data.pairs.length === 0) {
@@ -101,15 +102,19 @@ export async function getTokenDataAndPairByTicker(
     
         const pairs = await getTokenPairsFromTicker(ticker);
 
-
         if (!pairs) {
             throw new Error("Token not found");
         }
     
         for (const pair of pairs) {
             const token = await getTokenDataByAddress(pair.baseToken.address);
-            if (token) return {
+            if (token?.symbol.toLowerCase() === ticker.toLowerCase()) return {
                 token: token,
+                pair: pair
+            };
+            const token2 = await getTokenDataByAddress(pair.quoteToken.address);
+            if (token2?.symbol.toLowerCase() === ticker.toLowerCase()) return {
+                token: token2,
                 pair: pair
             };
         }
