@@ -11,6 +11,7 @@ import { xai } from '@ai-sdk/xai';
 import { google } from '@ai-sdk/google';
 
 import { solanaTools, twitterTools } from "@/ai";
+
 import { Models } from "@/types/models";
 
 export const POST = async (req: NextRequest) => {
@@ -39,7 +40,7 @@ export const POST = async (req: NextRequest) => {
         throw new Error("Invalid model");
     }
 
-    const result = streamText({
+    const stream = streamText({
         model,
         tools: {
             ...solanaTools(new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!)),
@@ -49,5 +50,5 @@ export const POST = async (req: NextRequest) => {
         system: "You are a swarm of helpful blockchain agents called The Hive. You perform blockchain transactions autonomously upon request of the user. You can use tools to perform transactions. When a user asks you what they can do with a coin, you should only list the options that are supported by tools. Do not talk about anything but blockchains. Your native ticker is BUZZ with a contract address of 9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump. You are a Solana blockchain agent.",
     });
 
-    return result.toDataStreamResponse();
+    return stream.toDataStreamResponse();
 }

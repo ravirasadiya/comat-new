@@ -2,9 +2,7 @@
 
 import React from 'react'
 
-import Link from 'next/link';
-
-import { ChevronsUpDown, Coins, LogIn, LogOut, User, Wallet } from 'lucide-react';
+import { ChevronsUpDown, Coins, LogIn, LogOut, Wallet } from 'lucide-react';
 
 import { useLogin } from '@/hooks';
 
@@ -86,12 +84,12 @@ const AuthButton: React.FC = () => {
                                 <Coins className="size-4" />
                                 Fund Wallet
                             </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
+                            {/* <DropdownMenuItem asChild>
                                 <Link href="/account">
                                     <User className="size-4" />
                                     Account
                                 </Link>
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> */}
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => logout()}>
