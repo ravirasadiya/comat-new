@@ -15,8 +15,11 @@ import { useChat } from '../_contexts/chat';
 import { cn } from '@/lib/utils';
 
 import ModelSelector from './model-selector';
+import { usePrivy } from '@privy-io/react-auth';
 
 const ChatInput: React.FC = () => {
+
+    const { user } = usePrivy();
 
     const { input, setInput, onSubmit, isLoading, model, setModel } = useChat();
 
@@ -55,7 +58,7 @@ const ChatInput: React.FC = () => {
                     onChange={e => {
                         setInput(e.target.value);
                     }}
-                    disabled={isLoading}
+                    disabled={isLoading || !user}
                     autoFocus
                 />
                 <div className="flex items-center justify-between px-2 pb-2">
@@ -70,7 +73,7 @@ const ChatInput: React.FC = () => {
                                 <Button 
                                     type="submit" 
                                     size="icon" 
-                                    disabled={input.trim() === '' || isLoading}
+                                    disabled={input.trim() === '' || isLoading || !user}
                                     variant="ghost"
                                     className="h-8 w-8"
                                 >

@@ -1,13 +1,12 @@
 import Chat from "./_components/chat";
 
-import { ChatProvider } from "./_contexts/chat";
+import NotLoggedInAlert from "./_components/not-logged-in-alert";
 
 export default function Home() {
   return (
-    <ChatProvider>
-      <div className="h-full w-full">
-        <Chat />
-      </div>
-    </ChatProvider>
+    <div className="h-full w-full">
+      <Chat />
+      <NotLoggedInAlert />
+    </div>
   );
 }

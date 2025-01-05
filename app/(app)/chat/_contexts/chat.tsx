@@ -1,9 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useState } from 'react';
+import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 
 import { Message, useChat as useAiChat } from 'ai/react';
 import { Models } from '@/types/models';
+import { usePrivy } from '@privy-io/react-auth';
+import { generateId } from 'ai';
+import { useUserChats } from '@/hooks';
 
 export enum ColorMode {
     LIGHT = 'light',
@@ -27,6 +30,9 @@ interface ChatContextType {
     isResponseLoading: boolean;
     model: Models;
     setModel: (model: Models) => void;
+    setChat: (chatId: string) => void;
+    resetChat: () => void;
+    chatId: string;
 }
 
 const ChatContext = createContext<ChatContextType>({
@@ -40,29 +46,45 @@ const ChatContext = createContext<ChatContextType>({
     addToolResult: () => {},
     model: Models.OpenAI,
     setModel: () => {},
+    setChat: () => {},
+    resetChat: () => {},
+    chatId: '',
 });
 
 interface ChatProviderProps {
     children: ReactNode;
 }
 
-const initialMessage =
-`You are a helpful on-chain agent that can act on the user's behalf.`
-
 export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
+    const { user, getAccessToken } = usePrivy();
+
+    const [chatId, setChatId] = useState<string>(generateId());
     const [isResponseLoading, setIsResponseLoading] = useState(false);
     const [model, setModel] = useState<Models>(Models.OpenAI);
 
-    const { messages, input, setInput, append, isLoading, addToolResult } = useAiChat({
+    const { mutate } = useUserChats();
+
+    const setChat = async (chatId: string) => {
+        setChatId(chatId);
+        const chat = await fetch(`/api/chats/${chatId}`, {
+            headers: {
+                Authorization: `Bearer ${await getAccessToken()}`,
+            },
+        });
+        const chatData = await chat.json();
+        if (chatData) {
+            setMessages(chatData.messages);
+        }
+    }
+
+    const resetChat = () => {
+        setChatId(generateId());
+        setMessages([]);
+    }
+
+    const { messages, input, setInput, append, isLoading, addToolResult, setMessages } = useAiChat({
         maxSteps: 15,
-        initialMessages: [
-            {
-                id: 'initial-message',
-                role: 'system',
-                content: initialMessage,
-            }
-        ],
         onResponse: () => {
             setIsResponseLoading(false);
         },
@@ -70,8 +92,32 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         body: {
             model,
             modelName: model,
+            userId: user?.id,
+            chatId,
         },
     });
+
+    useEffect(() => {
+        const updateChat = async () => {
+            if(messages.length > 0 && !isLoading) {
+                const response = await fetch(`/api/chats/${chatId}`, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${await getAccessToken()}`,
+                    },
+                    body: JSON.stringify({
+                        messages,
+                    }),
+                });
+                const data = await response.json();
+                if(typeof data === 'object') {
+                    mutate();
+                }
+            }
+        };
+
+        updateChat();
+    }, [isLoading]);
 
     const onSubmit = async () => {
         if (!input.trim()) return;
@@ -106,6 +152,9 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             }),
             model,
             setModel,
+            setChat,
+            resetChat,
+            chatId,
         }}>
             {children}
         </ChatContext.Provider>

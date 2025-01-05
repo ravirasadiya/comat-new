@@ -16,6 +16,7 @@ import { platformGroup, agentsGroup } from '../../_data';
 import AuthButton from './auth-button';
 import ColorModeToggle from './color-mode-toggle';
 import Logo from './logo';
+import ChatsGroup from './chats-group';
 
 interface Props {
     children: React.ReactNode;
@@ -30,6 +31,7 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                     <AuthButton />
                 </SidebarHeader>
                 <SidebarContent>
+                    <ChatsGroup />
                     <SidebarGroup group={platformGroup} />
                     <SidebarGroup group={agentsGroup} />
                 </SidebarContent>
