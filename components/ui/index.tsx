@@ -18,3 +18,4 @@ export * from "./hyper-text";
 export * from "./separator";
 export * from "./skeleton";
 export * from "./sheet";
+export * from "./select";

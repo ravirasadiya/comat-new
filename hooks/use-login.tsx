@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { useConnectWallet, usePrivy, useLogin as usePrivyLogin, Wallet } from "@privy-io/react-auth";
+
 import { useFundWallet, useSolanaWallets } from "@privy-io/react-auth/solana";
 
 export const useLogin = ({

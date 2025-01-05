@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 import { CornerDownRight } from 'lucide-react';
 
@@ -14,19 +14,15 @@ import { useChat } from '../_contexts/chat';
 
 import { cn } from '@/lib/utils';
 
+import ModelSelector from './model-selector';
+
 const ChatInput: React.FC = () => {
 
-    const { input, setInput, onSubmit, isLoading, solanaPrivateKey } = useChat();
+    const { input, setInput, onSubmit, isLoading, model, setModel } = useChat();
 
     const { onKeyDown } = useEnterSubmit({ onSubmit: onSubmit })
 
     const inputRef = useRef<HTMLTextAreaElement>(null)
-
-    useEffect(() => {
-        if (solanaPrivateKey && inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [solanaPrivateKey]);
 
     return (
         <div className="flex flex-col w-full">
@@ -60,8 +56,14 @@ const ChatInput: React.FC = () => {
                         setInput(e.target.value);
                     }}
                     disabled={isLoading}
+                    autoFocus
                 />
-                <div className="flex items-center justify-end px-2 pb-2">
+                <div className="flex items-center justify-between px-2 pb-2">
+                    <ModelSelector
+                        model={model}
+                        onModelChange={setModel}
+                        disabled={isLoading}
+                    />
                     <TooltipProvider>
                         <Tooltip delayDuration={0}>
                             <TooltipTrigger asChild>

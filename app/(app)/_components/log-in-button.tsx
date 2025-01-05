@@ -13,14 +13,14 @@ interface Props {
 
 const LogInButton: React.FC<Props> = ({ onComplete }) => {
 
-    const { login } = useLogin({
+    const { login, user, connectWallet } = useLogin({
         onComplete
     })
 
     return (
         <Button 
             variant="brand"
-            onClick={() => login()}
+            onClick={() => { if(user) { connectWallet() } else { login() } }}
             className="w-full"
         >
             Connect Wallet
