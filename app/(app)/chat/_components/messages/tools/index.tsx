@@ -16,6 +16,8 @@ import {
 
 import { SearchRecentTweets } from './twitter'
 
+import { SearchKnowledge } from './knowledge'
+
 import { 
     SOLANA_BALANCE_NAME,
     SOLANA_GET_WALLET_ADDRESS_NAME,
@@ -27,6 +29,7 @@ import {
     SOLANA_UNSTAKE_NAME,
     SOLANA_ALL_BALANCES_NAME,
     TWITTER_SEARCH_RECENT_NAME,
+    SEARCH_KNOWLEDGE_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -58,6 +61,8 @@ const ToolInvocation: React.FC<Props> = ({ tool }) => {
             return <Unstake tool={tool} />
         case SOLANA_ALL_BALANCES_NAME:
             return <AllBalances tool={tool} />
+        case SEARCH_KNOWLEDGE_NAME:
+            return <SearchKnowledge tool={tool} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">
