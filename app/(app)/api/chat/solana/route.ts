@@ -10,7 +10,7 @@ import { anthropic } from "@ai-sdk/anthropic";
 import { xai } from '@ai-sdk/xai';
 import { google } from '@ai-sdk/google';
 
-import { solanaTools, twitterTools } from "@/ai";
+import { knowledgeTools, solanaTools, twitterTools } from "@/ai";
 
 import { Models } from "@/types/models";
 
@@ -44,7 +44,8 @@ export const POST = async (req: NextRequest) => {
         model,
         tools: {
             ...solanaTools(new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!)),
-            ...twitterTools(new TwitterApi(process.env.TWITTER_BEARER_TOKEN!))
+            ...twitterTools(new TwitterApi(process.env.TWITTER_BEARER_TOKEN!)),
+            ...knowledgeTools()
         },
         messages,
         system: "You are a swarm of helpful blockchain agents called The Hive. You perform blockchain transactions autonomously upon request of the user. You can use tools to perform transactions. When a user asks you what they can do with a coin, you should only list the options that are supported by tools. Do not talk about anything but blockchains. Your native ticker is BUZZ with a contract address of 9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump. You are a Solana blockchain agent.",

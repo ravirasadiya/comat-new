@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import ReactMarkdown, { Components } from "react-markdown";
 
 import { cn } from '@/lib/utils';
+import { CodeBlock } from './codeblock';
 
 interface Props {
     children: string
@@ -73,6 +74,26 @@ export const Markdown: React.FC<Props> = ({ children, asSpan = false, components
                             {children}
                         </a>
                     )
+                },
+                code({ className, children }) {
+
+                    const match = /language-(\w+)/.exec(className || '')
+
+
+                    if (!match) {
+                        return (
+                            <code className={className}>
+                                {children}
+                            </code>
+                        )
+                    }
+
+                    return (
+                        <CodeBlock
+                            language={(match[1]) || 'Plain Text'}
+                            value={String(children).replace(/\n$/, '')}
+                        />
+                    );
                 },
                 ol({ children }) {
                     return <ol className="list-decimal pl-4 text-sm md:text-base flex flex-col gap-2">{children}</ol>

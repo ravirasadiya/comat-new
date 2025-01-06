@@ -2,14 +2,14 @@
 
 import React from 'react'
 
-import { Markdown, Icon } from '@/components/ui';
+import { Markdown, Icon, Logo } from '@/components/ui';
 
 import ToolInvocation from './tools';
 
 import { cn } from '@/lib/utils';
 
 import type { Message } from 'ai';
-import Logo from '@/components/ui/logo';
+import Link from './link';
 
 interface Props {
     message: Message,
@@ -69,9 +69,7 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
             <div className="md:pt-2 w-full max-w-full md:flex-1 md:w-0 overflow-hidden flex flex-col gap-2">
                 {
                     message.content && (
-                        <Markdown>
-                            {message.content}
-                        </Markdown>
+                        <MessageMarkdown content={message.content} />
                     )
                 }
                 {
@@ -87,5 +85,22 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
         </div>
     )
 }
+
+const MessageMarkdown = React.memo(({ content }: { content: string }) => {
+    return (
+        <Markdown
+            components={{
+                a: ({ href, children }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+                    if(!href) return children
+                    return <Link url={href}>{children}</Link>
+                }
+            }}
+        >
+            {content}
+        </Markdown>
+    )
+})
+
+MessageMarkdown.displayName = 'MessageMarkdown';
 
 export default Message;
