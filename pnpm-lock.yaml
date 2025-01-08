@@ -26,6 +26,9 @@ importers:
       '@coinbase/coinbase-sdk':
         specifier: ^0.13.0
         version: 0.13.0(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@jup-ag/api':
+        specifier: ^6.0.32
+        version: 6.0.32
       '@mendable/firecrawl-js':
         specifier: ^1.11.2
         version: 1.11.2(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
@@ -804,6 +807,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@jup-ag/api@6.0.32':
+    resolution: {integrity: sha512-MkNmYhTbf8zmT52xpM/f7pfZJTlAz0G+juFqBJo0iWZ52stl6EBDKTUCphUQkn153pkUqsLzvFW/q5EjarUI5A==}
 
   '@langchain/core@0.3.26':
     resolution: {integrity: sha512-6RUQHEp8wv+JwtYIIEBYBzbLlcAQZFc7EDOgAM0ukExjh9HiXoJzoWpgMRRCrr/koIbtwXPJUqBprZK1I1CXHQ==}
@@ -6956,6 +6962,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@jup-ag/api@6.0.32': {}
 
   '@langchain/core@0.3.26(openai@4.77.0(encoding@0.1.13)(zod@3.24.1))':
     dependencies:

@@ -25,12 +25,13 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
 
     const { data: stakeData, isLoading: stakeDataLoading } = useStakeData({
       inputAmount: args.amount,
-      slippageBps: 500,
+      slippageBps: 300,
       userPublicKey,
+      contractAddress: args.contractAddress,
     });
 
     const { data: inputTokenData, isLoading: inputTokenDataLoading } = useTokenDataByAddress("So11111111111111111111111111111111111111112");
-    const { data: outputTokenData, isLoading: outputTokenDataLoading } = useTokenDataByAddress("jupSoLaHXQiZZTSfEWMTRRgpnyFm8f6sZdosWBjx93v");
+    const { data: outputTokenData, isLoading: outputTokenDataLoading } = useTokenDataByAddress(args.contractAddress);
 
     const onStake = async () => {
 
@@ -46,12 +47,11 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
             const tx = await sendTransaction(transaction);
         
             addToolResult(toolCallId, {
-                message: `Successfully staked ${args.amount} SOL for jupSOL.`,
+                message: `Successfully staked ${args.amount} SOL for ${outputTokenData!.symbol}.`,
                 body: {
                     transaction: tx,
                     inputAmount: args.amount,
-                    inputToken: inputTokenData!.symbol,
-                    outputToken: outputTokenData!.symbol
+                    symbol: outputTokenData!.symbol,
                 }
             });
         } catch (error) {
