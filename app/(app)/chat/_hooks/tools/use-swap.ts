@@ -31,7 +31,6 @@ export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, user
       userPublicKey,
     });
 
-    console.log(swapData);
 
     const { data: inputTokenData, isLoading: inputTokenDataLoading } = useTokenDataByAddress(args.inputMint ?? "So11111111111111111111111111111111111111112");
     const { data: outputTokenData, isLoading: outputTokenDataLoading } = useTokenDataByAddress(args.outputMint);

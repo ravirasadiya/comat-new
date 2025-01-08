@@ -8,7 +8,7 @@ import { useSolanaWallets } from "@privy-io/react-auth/solana";
 
 import { useChat } from "../../_contexts/chat";
 
-import { useStakeData, useTokenDataByAddress } from "@/hooks";
+import { useNativeBalance, useStakeData, useTokenAccounts, useTokenDataByAddress } from "@/hooks";
 
 import type { StakeArgumentsType } from "@/ai";
 import { useSendTransaction } from "@/hooks/privy";
@@ -33,6 +33,9 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
     const { data: inputTokenData, isLoading: inputTokenDataLoading } = useTokenDataByAddress("So11111111111111111111111111111111111111112");
     const { data: outputTokenData, isLoading: outputTokenDataLoading } = useTokenDataByAddress(args.contractAddress);
 
+    const { mutate: mutateNativeBalance } = useNativeBalance(userPublicKey);
+    const { mutate: mutateTokenAccounts } = useTokenAccounts(userPublicKey);
+
     const onStake = async () => {
 
         if (!wallets.length) return;
@@ -54,8 +57,11 @@ export const useStake = (toolCallId: string, args: StakeArgumentsType, userPubli
                     symbol: outputTokenData!.symbol,
                 }
             });
+
+            mutateNativeBalance();
+            mutateTokenAccounts();
+
         } catch (error) {
-            console.error(error);
             addToolResult(toolCallId, {
                 message: `Error executing stake: ${error}`,
             });
