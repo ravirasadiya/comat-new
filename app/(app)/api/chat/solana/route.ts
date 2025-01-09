@@ -10,9 +10,6 @@ import { google } from '@ai-sdk/google';
 import { Models } from "@/types/models";
 import { chooseAgent } from "./utils";
 import { agents } from "@/ai/agents";
-import { InvokeAgentAction } from "@/ai/invoke/actions/invoke-agent";
-import { invokeTool } from "@/ai";
-import { INVOKE_AGENT_NAME } from "@/ai/action-names";
 
 const system = 
 `You a network of blockchain agents called The Hive (or Hive for short). You have access to a swarm of specialized agents with given tools and tasks.
