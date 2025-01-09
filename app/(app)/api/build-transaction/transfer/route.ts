@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         }
 
         // Create connection
-        const connection = new Connection(process.env.HELIUS_RPC_URL!);
+        const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!);
 
         // Convert parameters to appropriate types
         const fromPubkey = new PublicKey(from);

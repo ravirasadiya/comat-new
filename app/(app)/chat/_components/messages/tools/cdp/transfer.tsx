@@ -21,17 +21,19 @@ const Transfer: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            agentName="Token Agent"
-            icon="GalleryHorizontalEnd"
             loadingText={`Transferring...`}
-            resultHeading={(result: TransferActionResultType) => result.body ? `Transfer Complete` : `Transfer Failed`}
-            resultBody={(result: TransferActionResultType) => result.body 
-                ? (
-                    <TransferSuccess
-                        args={tool.args}
-                        body={result.body}
-                    />
-                ) : "No transaction link found"}
+            result={{
+                heading: (result: TransferActionResultType) => result.body 
+                    ? `Transfer Complete` 
+                    : `Transfer Failed`,
+                body: (result: TransferActionResultType) => result.body 
+                    ? (
+                        <TransferSuccess
+                            args={tool.args}
+                            body={result.body}
+                        />
+                    ) : "No transaction link found"
+            }}
         />
     )
 }

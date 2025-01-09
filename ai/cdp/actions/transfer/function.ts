@@ -31,7 +31,8 @@ export async function transfer(
     return {
       message: `Transferred ${args.amount} of ${args.assetId} to ${args.destination}.\nTransaction hash for the transfer: ${transactionHash}\nTransaction link for the transfer: ${transaction.getTransactionLink()}`,
       body: {
-        transactionHash
+        transactionHash,
+        symbol: args.assetId,
       }
     };
   } catch (error) {

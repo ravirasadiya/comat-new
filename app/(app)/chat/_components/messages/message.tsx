@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 
 import type { Message } from 'ai';
 import Link from './link';
+import { getAgentName } from './tools/tool-to-agent';
 
 interface Props {
     message: Message,
@@ -75,8 +76,22 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
                 {
                     message.toolInvocations && message.toolInvocations.length > 0 && (
                         <div className="flex flex-col gap-2">
-                            {message.toolInvocations.map((tool) => (
-                                <ToolInvocation key={tool.toolCallId} tool={tool} />
+                            {message.toolInvocations.map((tool, index) => (
+                                <ToolInvocation 
+                                    key={tool.toolCallId} 
+                                    tool={tool} 
+                                    prevToolAgent={
+                                        index === 0 ? (
+                                            previousMessage?.toolInvocations?.[0]
+                                                ? getAgentName(previousMessage?.toolInvocations?.[0])
+                                                : undefined
+                                        ) : (
+                                            message.toolInvocations![index - 1]
+                                                ? getAgentName(message.toolInvocations![index - 1])
+                                                : undefined
+                                        )
+                                    }
+                                />
                             ))}
                         </div>
                     )

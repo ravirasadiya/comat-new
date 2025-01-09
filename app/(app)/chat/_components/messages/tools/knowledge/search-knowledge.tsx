@@ -6,24 +6,27 @@ import type { ToolInvocation } from 'ai';
 import type { SearchKnowledgeResultType } from '@/ai';
 
 interface Props {
-    tool: ToolInvocation
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const SearchKnowledge: React.FC<Props> = ({ tool }) => {
+const SearchKnowledge: React.FC<Props> = ({ tool, prevToolAgent }) => {
     
 
     return (
         <ToolCard 
             tool={tool}
-            agentName="Knowledge Agent"
-            icon="Brain"
             loadingText={`Searching Knowledge...`}
-            resultHeading={(result: SearchKnowledgeResultType) => result.body?.knowledge ? `Searched knowledge base` : `Failed to fetch knowledge`}
-            resultBody={(result: SearchKnowledgeResultType) => result.body 
-                ? `Included the top ${result.body.knowledge.length} pages in context.`
-                :  "No knowledge found"
-            }
+            result={{
+                heading: (result: SearchKnowledgeResultType) => result.body?.knowledge 
+                    ? `Searched knowledge base` 
+                    : `Failed to fetch knowledge`,
+                body: (result: SearchKnowledgeResultType) => result.body 
+                    ? `Included the top ${result.body.knowledge.length} pages in context.`
+                    :  "No knowledge found"
+            }}
             defaultOpen={false}
+            prevToolAgent={prevToolAgent}
         />
     )
 }

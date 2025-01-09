@@ -13,11 +13,11 @@ const GetWalletDetails: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard
             tool={tool}
-            icon="Wallet"
-            agentName="Wallet Agent"
             loadingText="Getting Wallet Details..."
-            resultHeading={() => "Fetched Wallet Details"}
-            resultBody={(result: GetWalletDetailsActionResultType) => result.body?.address ?? "No address found"}
+            result={{
+                heading: (result: GetWalletDetailsActionResultType) => result.body?.address ?? "No address found",
+                body: (result: GetWalletDetailsActionResultType) => result.body?.address ?? "No address found"
+            }}
         />
     )
 }

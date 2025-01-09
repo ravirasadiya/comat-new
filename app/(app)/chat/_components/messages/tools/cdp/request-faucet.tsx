@@ -14,13 +14,15 @@ const RequestFaucet: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard
             tool={tool}
-            agentName="Faucet Agent"
-            icon="Droplet"
             loadingText="Requesting Faucet Funds..."
-            resultHeading={() => "Received Faucet Funds"}
-            resultBody={(result: RequestFaucetFundsActionResultType) => result.body 
-                ? `[Transaction Link](${result.body.transactionLink})` 
-                : result.message}
+            result={{
+                heading: (result: RequestFaucetFundsActionResultType) => result.body 
+                    ? "Received Faucet Funds" 
+                    : "Failed to receive faucet funds",
+                body: (result: RequestFaucetFundsActionResultType) => result.body 
+                    ? `[Transaction Link](${result.body.transactionLink})` 
+                    : result.message
+            }}
         />
     )
 }

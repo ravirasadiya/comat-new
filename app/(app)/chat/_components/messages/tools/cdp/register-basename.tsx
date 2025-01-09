@@ -14,13 +14,15 @@ const RegisterBasename: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard
             tool={tool}
-            agentName="Basename Agent"
-            icon="Globe"
             loadingText="Registering Basename..."
-            resultHeading={() => "Basename Registered"}
-            resultBody={(result: RegisterBasenameActionResultType) => result.body 
-                ? result.body.basename
-                : result.message}
+            result={{
+                heading: (result: RegisterBasenameActionResultType) => result.body 
+                    ? "Basename Registered" 
+                    : "Failed to register basename",
+                body: (result: RegisterBasenameActionResultType) => result.body 
+                    ? result.body.basename
+                    : "No basename found"
+            }}
         />
     )
 }

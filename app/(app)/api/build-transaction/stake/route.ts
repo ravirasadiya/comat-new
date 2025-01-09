@@ -8,8 +8,6 @@ export const POST = async (req: NextRequest) => {
     const inputMintDecimals = await getTokenDataByAddress("So11111111111111111111111111111111111111112");
     if (!inputMintDecimals) throw new Error("Input mint not found");
 
-    console.log(inputAmount, slippageBps, userPublicKey, contractAddress, inputMintDecimals);
-
     const quoteResponse = await (
         await fetch(
             `${JUP_API}/quote?` +
@@ -28,7 +26,7 @@ export const POST = async (req: NextRequest) => {
 
     // Get serialized transaction
     try {
-        const { swapTransaction, simulationError } = await (
+        const { swapTransaction } = await (
             await fetch("https://quote-api.jup.ag/v6/swap", {
                 method: "POST",
                 headers: {
@@ -41,8 +39,6 @@ export const POST = async (req: NextRequest) => {
                 }),
             })
         ).json();
-
-        console.log(simulationError);
 
         if (!swapTransaction) {
             return NextResponse.json({ error: "Failed to generate transaction" }, { status: 400 });

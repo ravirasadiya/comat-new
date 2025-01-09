@@ -12,7 +12,8 @@ import {
     Unstake,
     AllBalances,
     Lend,
-    LiquidStakingYields
+    LiquidStakingYields,
+    Transfer
 } from './solana'
 
 import { SearchRecentTweets } from './twitter'
@@ -31,42 +32,53 @@ import {
     SOLANA_ALL_BALANCES_NAME,
     TWITTER_SEARCH_RECENT_NAME,
     SEARCH_KNOWLEDGE_NAME,
-    SOLANA_LIQUID_STAKING_YIELDS_NAME
+    SOLANA_LIQUID_STAKING_YIELDS_NAME,
+    SOLANA_TRANSFER_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
+import { INVOKE_AGENT_NAME } from '@/ai/invoke/actions/invoke-agent/name'
+import { InvokeAgent } from './invoke'
 
 interface Props {
-    tool: ToolInvocationType
+    tool: ToolInvocationType,
+    prevToolAgent?: string,
 }
 
-const ToolInvocation: React.FC<Props> = ({ tool }) => {
+const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
+
+    const toolParts = tool.toolName.split("-");
+    const toolName = toolParts.slice(1).join("-");
     
-    switch(tool.toolName) {
+    switch(toolName) {
         case SOLANA_BALANCE_NAME:
-            return <Balance tool={tool} />
+            return <Balance tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_GET_WALLET_ADDRESS_NAME:
-            return <GetWalletAddress tool={tool} />
+            return <GetWalletAddress tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_GET_TRENDING_TOKENS_NAME:
-            return <GetTrendingTokens tool={tool} />
+            return <GetTrendingTokens tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_GET_TOKEN_DATA_NAME:
-            return <GetTokenData tool={tool} />
+            return <GetTokenData tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_TRADE_NAME:
-            return <Trade tool={tool} />
+            return <Trade tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_LIQUID_STAKING_YIELDS_NAME:
-            return <LiquidStakingYields tool={tool} />
+            return <LiquidStakingYields tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_TRANSFER_NAME:
+            return <Transfer tool={tool} prevToolAgent={prevToolAgent} />
         case TWITTER_SEARCH_RECENT_NAME:
             return <SearchRecentTweets tool={tool} />
         case SOLANA_LEND_NAME:
-            return <Lend tool={tool} />
+            return <Lend tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_STAKE_NAME:
-            return <Stake tool={tool} />
+            return <Stake tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_UNSTAKE_NAME:
-            return <Unstake tool={tool} />
+            return <Unstake tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_ALL_BALANCES_NAME:
-            return <AllBalances tool={tool} />
+            return <AllBalances tool={tool} prevToolAgent={prevToolAgent} />
         case SEARCH_KNOWLEDGE_NAME:
-            return <SearchKnowledge tool={tool} />
+            return <SearchKnowledge tool={tool} prevToolAgent={prevToolAgent} />
+        case INVOKE_AGENT_NAME:
+            return <InvokeAgent tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

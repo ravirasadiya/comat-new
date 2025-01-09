@@ -12,22 +12,29 @@ import type { ToolInvocation } from 'ai';
 import type { GetWalletAddressResultType } from '@/ai';
 
 interface Props {
-    tool: ToolInvocation
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const GetWalletAddress: React.FC<Props> = ({ tool }) => {
+const GetWalletAddress: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
     return (
         <ToolCard 
             tool={tool}
-            icon="Wallet"
-            agentName="Wallet Agent"
             loadingText={`Getting Wallet Address...`}   
-            resultHeading={() => `Fetched Wallet Address`}
-            resultBody={(result: GetWalletAddressResultType) => result.body 
-                ? `${result.body.address}` 
-                :  "No wallet address found"}
-            callBody={(toolCallId: string) => <GetWalletAddressAction toolCallId={toolCallId} />}
+            result={{
+                heading: (result: GetWalletAddressResultType) => result.body 
+                    ? `Fetched Wallet Address`
+                    : "No wallet address found",
+                body: (result: GetWalletAddressResultType) => result.body 
+                    ? `${result.body.address}` 
+                    :  "No wallet address found"
+            }}
+            call={{
+                heading: "Get Wallet Address",
+                body: (toolCallId: string) => <GetWalletAddressAction toolCallId={toolCallId} />
+            }}
+            prevToolAgent={prevToolAgent}
         />
     )
 }

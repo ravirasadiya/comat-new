@@ -6,32 +6,37 @@ import UnstakeCallBody from './unstake-call-body';
 import UnstakeResult from './unstake-result';
 
 import type { ToolInvocation } from 'ai';
-import type { StakeResultType, UnstakeResultType, UnstakeArgumentsType } from '@/ai';
+import type { UnstakeResultType, UnstakeArgumentsType } from '@/ai';
 
 
 interface Props {
-    tool: ToolInvocation;
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const Stake: React.FC<Props> = ({ tool }) => {
+const Unstake: React.FC<Props> = ({ tool, prevToolAgent }) => {
     return (
         <ToolCard 
             tool={tool}
-            icon="Beef"
-            agentName="Staking Agent"
-            loadingText="Staking..."
-            resultHeading={(result: StakeResultType) => result.body 
-                ? "Stake Complete"
-                : "Failed to Stake"}
-            resultBody={(result: UnstakeResultType) => result.body 
-                ? <UnstakeResult amount={tool.args.amount} unstakeResult={result.body} />
-                : result.message}
-            callBody={(toolCallId: string, args: UnstakeArgumentsType) => (
-                <UnstakeCallBody toolCallId={toolCallId} args={args} />
-            )}
+            loadingText="Unstaking..."
+            result={{
+                heading: (result: UnstakeResultType) => result.body 
+                    ? "Unstake Complete"
+                    : "Failed to Unstake",
+                body: (result: UnstakeResultType) => result.body 
+                    ? <UnstakeResult amount={tool.args.amount} unstakeResult={result.body} />
+                    : result.message
+            }}
+            call={{
+                heading: "Unstake",
+                body: (toolCallId: string, args: UnstakeArgumentsType) => (
+                    <UnstakeCallBody toolCallId={toolCallId} args={args} />
+                )
+            }}
             defaultOpen={true}
+            prevToolAgent={prevToolAgent}
         />
     );
 };
 
-export default Stake; 
+export default Unstake; 

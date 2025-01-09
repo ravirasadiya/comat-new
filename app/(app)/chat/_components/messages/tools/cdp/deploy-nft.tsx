@@ -13,25 +13,27 @@ import type { DeployNftArgumentsType, DeployNftResultBodyType, DeployNftActionRe
 
 
 interface Props {
-    tool: ToolInvocation
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const DeployNFT: React.FC<Props> = ({ tool }) => {
+const DeployNFT: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
     return (
         <ToolCard 
             tool={tool}
-            icon="GalleryHorizontalEnd"
-            agentName="NFT Agent"
             loadingText={`Deploying NFT...`}
-            resultHeading={(result: DeployNftActionResultType) => result.body ? `NFT Deployed` : `NFT Deployment Failed`}
-            resultBody={(result: DeployNftActionResultType) => result.body 
-                ? (
+            result={{
+                heading: (result: DeployNftActionResultType) => result.body ? `NFT Deployed` : `NFT Deployment Failed`,
+                body: (result: DeployNftActionResultType) => result.body 
+                    ? (
                     <NFTDeploymentSuccess
                         args={tool.args}
                         body={result.body}
-                    />
-                ) : "No transaction link found"}
+                        />
+                    ) : "No transaction link found"
+            }}
+            prevToolAgent={prevToolAgent}
         />
     )
 }

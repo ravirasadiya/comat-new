@@ -52,7 +52,6 @@ export const POST = async (req: NextRequest) => {
     });
 
     if (simulation.value.err) {
-        console.log(simulation);
         throw new Error(`Transaction simulation failed: ${simulation.value.err}`);
     }
 

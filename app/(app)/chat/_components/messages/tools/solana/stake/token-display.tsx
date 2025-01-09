@@ -3,6 +3,7 @@ import React from 'react';
 import { Skeleton } from '@/components/ui';
 
 import type { JupiterTokenData } from '@/types';
+import { round } from '@/lib/utils';
 
 interface TokenDisplayProps {
     tokenData: JupiterTokenData | null;
@@ -34,7 +35,7 @@ const TokenDisplay = ({ tokenData, isLoading, amount, decimals }: TokenDisplayPr
             />
             <p className="text-xs text-muted-foreground">
                 {amount !== undefined && decimals !== undefined 
-                    ? `${amount / (10 ** decimals)} ${tokenData.symbol}`
+                    ? `${round(amount / (10 ** decimals), 2)} ${tokenData.symbol}`
                     : amount !== undefined 
                         ? `${amount} ${tokenData.symbol}`
                         : tokenData.symbol

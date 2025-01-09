@@ -26,20 +26,12 @@ const jupiterQuoteApi = createJupiterApiClient();
   
 export const getSwapObj = async (userPublicKey: string, quoteResponse: QuoteResponse) => {
 
-    console.log(userPublicKey);
-
-
     // Get serialized transaction
     const swapObj = await jupiterQuoteApi.swapPost({
         swapRequest: {
             quoteResponse,
             userPublicKey,
             wrapAndUnwrapSol: true,
-            // dynamicComputeUnitLimit: true,
-            // prioritizationFeeLamports: 'auto',
-            // dynamicSlippage: {
-            //     maxBps: 300,
-            // }
         },
     });
     return swapObj;

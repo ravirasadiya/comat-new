@@ -60,7 +60,6 @@ export async function getTokenPairsFromTicker(
   ticker: string
 ): Promise<DexScreenerPair[] | null> {
   try {
-
     const response = await fetch(
       `https://api.dexscreener.com/latest/dex/search?q=${ticker.toLowerCase()}`
     );

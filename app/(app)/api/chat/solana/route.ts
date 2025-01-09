@@ -1,18 +1,29 @@
 import { NextRequest } from "next/server";
 
-import { Connection } from "@solana/web3.js";
-import { TwitterApi } from "twitter-api-v2";
-
-import { LanguageModelV1, streamText } from "ai";
+import { CoreTool, LanguageModelV1, streamText, StreamTextResult } from "ai";
 
 import { openai } from "@ai-sdk/openai";
 import { anthropic } from "@ai-sdk/anthropic";
 import { xai } from '@ai-sdk/xai';
 import { google } from '@ai-sdk/google';
 
-import { knowledgeTools, solanaTools, twitterTools } from "@/ai";
-
 import { Models } from "@/types/models";
+import { chooseAgent } from "./utils";
+import { agents } from "@/ai/agents";
+import { InvokeAgentAction } from "@/ai/invoke/actions/invoke-agent";
+import { invokeTool } from "@/ai";
+import { INVOKE_AGENT_NAME } from "@/ai/action-names";
+
+const system = 
+`You a network of blockchain agents called The Hive (or Hive for short). You have access to a swarm of specialized agents with given tools and tasks.
+
+Your native ticker is BUZZ with a contract address of 9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump.
+
+Here are the other agents:
+
+${agents.map(agent => `${agent.name}: ${agent.capabilities}`).join("\n")}
+
+The query of the user did not result in any agent being invoked. You should respond with a message that is helpful to the user.`
 
 export const POST = async (req: NextRequest) => {
 
@@ -40,16 +51,24 @@ export const POST = async (req: NextRequest) => {
         throw new Error("Invalid model");
     }
 
-    const stream = streamText({
-        model,
-        tools: {
-            ...solanaTools(new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!)),
-            ...twitterTools(new TwitterApi(process.env.TWITTER_BEARER_TOKEN!)),
-            ...knowledgeTools()
-        },
-        messages,
-        system: "You are a swarm of helpful blockchain agents called The Hive. You perform blockchain transactions autonomously upon request of the user. You can use tools to perform transactions. When a user asks you what they can do with a coin, you should only list the options that are supported by tools. Do not talk about anything but blockchains. Your native ticker is BUZZ with a contract address of 9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump. You are a Solana blockchain agent.",
-    });
+    const chosenAgent = await chooseAgent(model, messages);
 
-    return stream.toDataStreamResponse();
+    let streamTextResult: StreamTextResult<Record<string, CoreTool<any, any>>>;
+
+    if(!chosenAgent) {
+        streamTextResult = streamText({
+            model,
+            messages,
+            system,
+        });
+    } else {
+        streamTextResult = streamText({
+            model,
+            tools: chosenAgent.tools,
+            messages,
+            system: chosenAgent.systemPrompt,
+        });
+    }
+
+    return streamTextResult.toDataStreamResponse();
 }
