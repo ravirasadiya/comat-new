@@ -9,6 +9,7 @@ export type TransferArgumentsType = z.infer<TransferSchemaType>;
 
 export type TransferResultBodyType = {
   transactionHash: string;
+  symbol: string;
 };
 
 export type TransferActionResultType = CdpActionResult<TransferResultBodyType>; 

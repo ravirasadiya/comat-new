@@ -20,17 +20,17 @@ const DeployToken: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            agentName="Token Agent"
-            icon="Coins"
             loadingText={`Deploying Token...`}
-            resultHeading={(result: DeployTokenActionResultType) => result.body ? `Token Deployed` : `Token Deployment Failed`}
-            resultBody={(result: DeployTokenActionResultType) => result.body 
-                ? (
-                    <TokenDeploymentSuccess 
-                        args={tool.args}
-                        body={result.body}
-                    />
-                ) : "No transaction link found"}
+            result={{
+                heading: (result: DeployTokenActionResultType) => result.body ? `Token Deployed` : `Token Deployment Failed`,
+                body: (result: DeployTokenActionResultType) => result.body 
+                    ? (
+                        <TokenDeploymentSuccess 
+                            args={tool.args}
+                            body={result.body}
+                        />
+                    ) : "No transaction link found"
+            }}
         />
     )
 }

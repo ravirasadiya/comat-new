@@ -8,6 +8,7 @@ import { useStake } from '@/app/(app)/chat/_hooks/tools/use-stake';
 import type { StakeArgumentsType } from '@/ai';
 
 import TokenDisplay from './token-display';
+import { round } from '@/lib/utils';
 
 interface StakeDisplayProps {
     toolCallId: string;
@@ -40,7 +41,7 @@ const StakeDisplay: React.FC<StakeDisplayProps> = ({ toolCallId, args, userPubli
                     <TokenDisplay 
                         tokenData={outputTokenData ?? null}
                         isLoading={outputTokenDataLoading}
-                        amount={stakeData?.outAmount}
+                        amount={stakeData ? round(parseFloat(stakeData.outAmount), 2) : undefined}
                         decimals={outputTokenData?.decimals}
                     />
                 </div>

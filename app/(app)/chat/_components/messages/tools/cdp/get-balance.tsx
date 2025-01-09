@@ -15,13 +15,15 @@ const GetBalance: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            agentName="Token Agent"
-            icon="HandCoins"
             loadingText={`Getting ${tool.args.assetId} Balance...`}
-            resultHeading={() => `Read ${tool.args.assetId.toUpperCase()} Balance`}
-            resultBody={(result: GetBalanceActionResultType) => result.body 
-                ? `${result.body.balance.toFixed(4)} ${tool.args.assetId.toUpperCase()}` 
-                :  "No balance found"}
+            result={{
+                heading: (result: GetBalanceActionResultType) => result.body 
+                    ? `Read ${tool.args.assetId.toUpperCase()} Balance` 
+                    :  "Failed to read balance",
+                body: (result: GetBalanceActionResultType) => result.body 
+                    ? `${result.body.balance.toFixed(4)} ${tool.args.assetId.toUpperCase()}` 
+                    :  "No balance found"
+            }}
         />
     )
 }

@@ -6,21 +6,25 @@ import type { ToolInvocation } from 'ai';
 import type { LiquidStakingYieldsResultBodyType, LiquidStakingYieldsResultType } from '@/ai';
 
 interface Props {
-    tool: ToolInvocation
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const LiquidStakingYieldsTool: React.FC<Props> = ({ tool }) => {
+const LiquidStakingYieldsTool: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
     return (
         <ToolCard 
             tool={tool}
-            icon="Beef"
-            agentName="Staking Agent"
             loadingText={`Getting Best Liquid Staking Yields...`}   
-            resultHeading={() => `Fetched Best Liquid Staking Yields`}
-            resultBody={(result: LiquidStakingYieldsResultType) => result.body 
-                ? <LiquidStakingYields body={result.body} /> 
-                :  "No staking yields found"}
+            result={{
+                heading: (result: LiquidStakingYieldsResultType) => result.body 
+                    ? `Fetched Best Liquid Staking Yields`
+                    : "No staking yields found",
+                body: (result: LiquidStakingYieldsResultType) => result.body 
+                    ? <LiquidStakingYields body={result.body} /> 
+                    :  "No staking yields found"
+            }}
+            prevToolAgent={prevToolAgent}
         />
     )
 }
@@ -28,7 +32,7 @@ const LiquidStakingYieldsTool: React.FC<Props> = ({ tool }) => {
 const LiquidStakingYields: React.FC<{ body: LiquidStakingYieldsResultBodyType }> = ({ body }) => {
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-2 gap-2">
             {
                 body.map((item) => (
                     <div 

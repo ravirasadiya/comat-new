@@ -10,26 +10,31 @@ import type { StakeResultType, StakeArgumentsType } from '@/ai';
 import type { ToolInvocation } from 'ai';
 
 interface Props {
-    tool: ToolInvocation;
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const Stake: React.FC<Props> = ({ tool }) => {
+const Stake: React.FC<Props> = ({ tool, prevToolAgent }) => {
     return (
         <ToolCard 
             tool={tool}
-            icon="Beef"
-            agentName="Staking Agent"
             loadingText="Staking..."
-            resultHeading={(result: StakeResultType) => result.body 
-                ? "Stake Complete"
-                : "Failed to Stake"}
-            resultBody={(result: StakeResultType) => result.body 
-                ? <StakeResult amount={tool.args.amount} stakeResult={result.body} />
-                : result.message}
-            callBody={(toolCallId: string, args: StakeArgumentsType) => (
-                <StakeCallBody toolCallId={toolCallId} args={args} />
-            )}
+            result={{
+                heading: (result: StakeResultType) => result.body 
+                    ? "Stake Complete"
+                    : "Failed to Stake",
+                body: (result: StakeResultType) => result.body 
+                    ? <StakeResult amount={tool.args.amount} stakeResult={result.body} />
+                    : result.message
+            }}
+            call={{
+                heading: "Stake",
+                body: (toolCallId: string, args: StakeArgumentsType) => (
+                    <StakeCallBody toolCallId={toolCallId} args={args} />
+                )
+            }}
             defaultOpen={true}
+            prevToolAgent={prevToolAgent}
         />
     );
 };

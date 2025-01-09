@@ -24,10 +24,7 @@ const StakeCallBody = ({ toolCallId, args }: StakeCallBodyProps) => {
                 wallets.length ? (
                     <StakeDisplay toolCallId={toolCallId} args={args} userPublicKey={wallets[0].address} />
                 ) : (
-                    <div className="flex flex-col items-center gap-2">
-                        <p className="text-sm text-muted-foreground">Connect your wallet to stake tokens</p>
-                        <LoginButton />
-                    </div>
+                    <LoginButton />
                 )
             }
         </div>

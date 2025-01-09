@@ -8,3 +8,4 @@ export { default as Unstake } from './unstake';
 export { default as AllBalances } from './all-balances';
 export { default as Lend } from './lend';
 export { default as LiquidStakingYields } from './liquid-staking-yields';
+export { default as Transfer } from './transfer';

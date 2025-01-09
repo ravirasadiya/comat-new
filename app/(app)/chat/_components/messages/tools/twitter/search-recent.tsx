@@ -20,15 +20,15 @@ const SearchRecentTweets: React.FC<Props> = ({ tool }) => {
     return (
         <ToolCard 
             tool={tool}
-            icon="Twitter"
-            agentName="Twitter Agent"
             loadingText={`Getting Recent Tweets...`}
-            resultHeading={(result: TwitterSearchRecentResultType) => result.body 
-                ? `Fetched Recent Tweets`
-                :  "Failed to fetch recent tweets"}
-            resultBody={(result: TwitterSearchRecentResultType) => result.body 
-                ? <Tweets tweets={result.body.tweets} />
-                :  "No tweets found"}
+            result={{
+                heading: (result: TwitterSearchRecentResultType) => result.body 
+                    ? `Fetched Recent Tweets`
+                    :  "Failed to fetch recent tweets",
+                body: (result: TwitterSearchRecentResultType) => result.body 
+                    ? <Tweets tweets={result.body.tweets} />
+                    :  "No tweets found"
+            }}
             defaultOpen={true}
         />
     )

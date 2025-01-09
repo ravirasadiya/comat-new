@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Separator } from '@/components/ui';
+import { Button } from '@/components/ui';
 
 import ToolCard from '../tool-card';
 
@@ -14,25 +14,29 @@ import { cn } from '@/lib/utils';
 import Address from '@/app/_components/address';
 
 interface Props {
-    tool: ToolInvocation
+    tool: ToolInvocation,
+    prevToolAgent?: string,
 }
 
-const GetTokenData: React.FC<Props> = ({ tool }) => {
+const GetTokenData: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
     return (
         <ToolCard 
             tool={tool}
-            icon="ChartCandlestick"
-            agentName="Market Agent"
             loadingText={`Getting Token Data...`}
-            resultHeading={(result: GetTokenDataResultType) => `Fetched ${result.body?.token.symbol || "Token"} Data`}
-            resultBody={(result: GetTokenDataResultType) => result.body 
-                ? <TokenCard 
-                    token={result.body.token} 
-                    pair={result.body.pair} 
-                />
-                :  "No token data found"}
+            result={{
+                heading: (result: GetTokenDataResultType) => result.body 
+                    ? `Fetched ${result.body.token.symbol || "Token"} Data`
+                    : `Failed to fetch token data`,
+                body: (result: GetTokenDataResultType) => result.body 
+                    ? <TokenCard 
+                        token={result.body.token} 
+                        pair={result.body.pair} 
+                    />
+                    :  "No token data found"
+            }}
             defaultOpen={true}
+            prevToolAgent={prevToolAgent}
         />
     )
 }
@@ -42,7 +46,6 @@ const TokenCard = ({ token, pair }: { token: JupiterTokenData, pair: DexScreener
 
     return (
         <div className="flex flex-col gap-2 min-w-[300px]">
-            <Separator />
             <div className="flex items-center gap-2">
                 <img 
                     src={token.logoURI} 
@@ -51,7 +54,6 @@ const TokenCard = ({ token, pair }: { token: JupiterTokenData, pair: DexScreener
                 />
                 <p className="text-xl font-bold">{token.name} ({token.symbol})</p>
             </div>
-            <Separator />
             <div className="flex flex-col">
                 <p className="text-lg font-semibold flex items-center gap-1">
                     ${pair.priceUsd} 
@@ -71,7 +73,6 @@ const TokenCard = ({ token, pair }: { token: JupiterTokenData, pair: DexScreener
                 <p className="text-xs text-muted-foreground">24h Volume: ${pair.volume?.h24.toLocaleString()}</p>
                 <p className="text-xs text-muted-foreground">Liquidity: ${pair.liquidity?.usd.toLocaleString()}</p>
             </div>
-            <Separator />
             <div className="flex items-center justify-between gap-4">
                 <Address address={token.address} />
                 <Link href={pair.url} target="_blank">
