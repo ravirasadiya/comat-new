@@ -1,4 +1,4 @@
-import { KNOWLEDGE_AGENT_NAME, MARKET_AGENT_NAME, STAKING_AGENT_NAME, WALLET_AGENT_NAME } from "@/ai/agents/names";
+import { KNOWLEDGE_AGENT_NAME, MARKET_AGENT_NAME, STAKING_AGENT_NAME, WALLET_AGENT_NAME, WORKER_GENERATOR_AGENT_NAME } from "@/ai/agents/names";
 import { SOCIAL_AGENT_NAME } from "@/ai/agents/social/name";
 import { TRADING_AGENT_NAME } from "@/ai/agents/trading/name";
 import { IconName } from "@/types";
@@ -11,7 +11,8 @@ export const toolToAgent = {
     "market": MARKET_AGENT_NAME,
     "knowledge": KNOWLEDGE_AGENT_NAME,
     "trading": TRADING_AGENT_NAME,
-    "social": SOCIAL_AGENT_NAME
+    "social": SOCIAL_AGENT_NAME,
+    "workergenerator": WORKER_GENERATOR_AGENT_NAME
 }
 
 export const getAgentName = (tool: ToolInvocation) => {
@@ -34,6 +35,8 @@ export const getAgentIcon = (agentName: string): IconName => {
             return "ChartCandlestick";
         case SOCIAL_AGENT_NAME:
             return "Twitter";
+        case WORKER_GENERATOR_AGENT_NAME:
+            return "Bot";
         default:
             return "Brain";
     }

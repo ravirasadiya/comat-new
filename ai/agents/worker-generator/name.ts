@@ -1,0 +1,1 @@
+export const WORKER_GENERATOR_AGENT_NAME = "Worker Generator Agent";

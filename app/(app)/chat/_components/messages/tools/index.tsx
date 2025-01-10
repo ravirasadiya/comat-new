@@ -23,6 +23,8 @@ import { SearchRecentTweets } from './twitter'
 
 import { SearchKnowledge } from './knowledge'
 
+import { CopyTraderWorker, XWatcherWorker } from './worker-generator';
+
 import { 
     SOLANA_BALANCE_NAME,
     SOLANA_GET_WALLET_ADDRESS_NAME,
@@ -39,7 +41,9 @@ import {
     SOLANA_TRANSFER_NAME,
     SOLANA_GET_TOKEN_ADDRESS_NAME,
     SOLANA_TOP_HOLDERS_NAME,
-    SOLANA_BUBBLE_MAPS_NAME
+    SOLANA_BUBBLE_MAPS_NAME,
+    X_WATCHER_WORKER_NAME,
+    COPY_TRADER_WORKER_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -91,6 +95,10 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <GetTopHolders tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_BUBBLE_MAPS_NAME:
             return <BubbleMaps tool={tool} prevToolAgent={prevToolAgent} />
+        case X_WATCHER_WORKER_NAME:
+            return <XWatcherWorker tool={tool} prevToolAgent={prevToolAgent} />
+        case COPY_TRADER_WORKER_NAME:
+            return <CopyTraderWorker tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

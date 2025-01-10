@@ -1,0 +1,1 @@
+export const COPY_TRADER_WORKER_NAME = "copy_trader_worker"; 

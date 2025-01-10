@@ -4,6 +4,7 @@ import { walletAgent } from "./wallet";
 import { knowledgeAgent } from "./knowledge";
 import { tradingAgent } from "./trading";
 import { socialAgent } from "./social";
+import { workerGeneratorAgent } from "./worker-generator";
 
 export const agents = [
     walletAgent,
@@ -11,5 +12,6 @@ export const agents = [
     marketAgent,
     tradingAgent,
     knowledgeAgent,
-    socialAgent
+    socialAgent,
+    workerGeneratorAgent
 ]
