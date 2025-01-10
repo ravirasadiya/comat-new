@@ -9,3 +9,6 @@ export { default as AllBalances } from './all-balances';
 export { default as Lend } from './lend';
 export { default as LiquidStakingYields } from './liquid-staking-yields';
 export { default as Transfer } from './transfer';
+export { default as GetTokenAddress } from './get-token-address';
+export { default as GetTopHolders } from './top-holders';
+export { default as BubbleMaps } from './bubble-maps';

@@ -1,8 +1,8 @@
 import { LAMPORTS_PER_SOL, PublicKey, Connection } from "@solana/web3.js";
 
-import { getAccount } from "@solana/spl-token";
 
-import { getBalances, getTokenDataByAddress } from "@/lib/solana";
+import { getTokenDataByAddress } from "@/lib/solana";
+import { getTokenAccountsByOwner } from "@/services/helius";
 
 import type { SolanaActionResult } from "../solana-action";
 import type { AllBalancesArgumentsType, AllBalancesResultBodyType } from "./types";
@@ -29,14 +29,14 @@ export async function getAllBalances(
     });
 
     // Get all token accounts
-    const tokenAccounts = await getBalances(args.walletAddress);
+    const tokenAccounts = await getTokenAccountsByOwner(args.walletAddress);
 
     // Get balance for each token account
-    for await (const account of tokenAccounts.token_accounts) {
-      const token = await getTokenDataByAddress(account.mint);
+    for await (const account of tokenAccounts) {
+      const token = await getTokenDataByAddress(account.mint!);
         if (token) {
           balances.push({
-            balance: account.amount / 10 ** token.decimals,
+            balance: account.amount! / 10 ** token.decimals,
             token: token.symbol,
             name: token.name,
             logoURI: token.logoURI

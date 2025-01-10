@@ -18,22 +18,12 @@ const Address: React.FC<Props> = ({ address }) => {
     };
 
     return (
-        <div className="flex items-center gap-2">
-            <p className="text-sm text-muted-foreground">
-                {`${address.slice(0, 4)}...${address.slice(-4)}`}
-            </p>
-            <Button 
-                variant="ghost"
-                size="icon"
-                onClick={handleCopy}
-                className="h-4 w-4"
-            >
-                <Icon 
-                    name={copied ? "Check" : "Copy"} 
-                    className="w-3 h-3" 
-                />
-            </Button>
-        </div>
+        <p 
+            className="text-sm text-muted-foreground cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-md p-1"
+            onClick={handleCopy}
+        >
+            {`${address.slice(0, 4)}...${address.slice(-4)}`}
+        </p>
     )
 }
 

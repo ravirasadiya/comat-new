@@ -13,4 +13,6 @@ Meteora docs (liquidity mining)
 Orca docs (decentralized exchange)
 Jito docs (solana liquid staking)
 Kamino docs (yield farming vaults and borrow/lend)
-Lulo docs (borrow/lend protocol)`
+Lulo docs (borrow/lend protocol)
+
+After searching the docs, answer the user's question with the most relevant information.`

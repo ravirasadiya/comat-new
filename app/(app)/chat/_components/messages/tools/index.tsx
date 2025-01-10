@@ -13,7 +13,10 @@ import {
     AllBalances,
     Lend,
     LiquidStakingYields,
-    Transfer
+    Transfer,
+    GetTokenAddress,
+    GetTopHolders,
+    BubbleMaps
 } from './solana'
 
 import { SearchRecentTweets } from './twitter'
@@ -33,7 +36,10 @@ import {
     TWITTER_SEARCH_RECENT_NAME,
     SEARCH_KNOWLEDGE_NAME,
     SOLANA_LIQUID_STAKING_YIELDS_NAME,
-    SOLANA_TRANSFER_NAME
+    SOLANA_TRANSFER_NAME,
+    SOLANA_GET_TOKEN_ADDRESS_NAME,
+    SOLANA_TOP_HOLDERS_NAME,
+    SOLANA_BUBBLE_MAPS_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -79,6 +85,12 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <SearchKnowledge tool={tool} prevToolAgent={prevToolAgent} />
         case INVOKE_AGENT_NAME:
             return <InvokeAgent tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_GET_TOKEN_ADDRESS_NAME:
+            return <GetTokenAddress tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_TOP_HOLDERS_NAME:
+            return <GetTopHolders tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_BUBBLE_MAPS_NAME:
+            return <BubbleMaps tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">
