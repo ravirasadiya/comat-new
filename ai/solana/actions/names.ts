@@ -11,4 +11,5 @@ export * from "./all-balances/name";
 export * from "./liquid-staking-yields/name";
 export * from "./get-token-address/name";
 export * from "./top-holders/name";
+export * from "./token-holders/name";
 export * from "./bubble-maps/name";

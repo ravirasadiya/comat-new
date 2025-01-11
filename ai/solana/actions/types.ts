@@ -14,3 +14,4 @@ export * from "./liquid-staking-yields/types";
 export * from "./get-token-address/types";
 export * from "./top-holders/types";
 export * from "./bubble-maps/types";
+export * from "./token-holders/types";

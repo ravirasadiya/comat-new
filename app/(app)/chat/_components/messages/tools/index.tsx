@@ -39,12 +39,14 @@ import {
     SOLANA_TRANSFER_NAME,
     SOLANA_GET_TOKEN_ADDRESS_NAME,
     SOLANA_TOP_HOLDERS_NAME,
-    SOLANA_BUBBLE_MAPS_NAME
+    SOLANA_BUBBLE_MAPS_NAME,
+    SOLANA_TOKEN_HOLDERS_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
 import { INVOKE_AGENT_NAME } from '@/ai/invoke/actions/invoke-agent/name'
 import { InvokeAgent } from './invoke'
+import NumHolders from './solana/num-holders'
 
 interface Props {
     tool: ToolInvocationType,
@@ -91,6 +93,8 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <GetTopHolders tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_BUBBLE_MAPS_NAME:
             return <BubbleMaps tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_TOKEN_HOLDERS_NAME:
+            return <NumHolders tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">
