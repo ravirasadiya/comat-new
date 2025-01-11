@@ -3,7 +3,7 @@ import React from 'react'
 import ToolCard from '../tool-card';
 
 import type { ToolInvocation } from 'ai';
-import type { BalanceResultType, GetTokenAddressResultType } from '@/ai';
+import type { GetTokenAddressResultType } from '@/ai';
 import Address from '@/app/_components/address';
 
 interface Props {

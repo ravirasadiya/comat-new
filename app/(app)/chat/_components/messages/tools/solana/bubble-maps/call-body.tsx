@@ -44,6 +44,7 @@ const BubbleMapsCallBody: React.FC<Props> = ({ toolCallId, args }) => {
                     }
                 })
                 .catch(err => {
+                    console.error(err)
                     addToolResult(toolCallId, {
                         message: "Error fetching Bubble Maps",
                         body: {

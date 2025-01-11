@@ -16,9 +16,6 @@ interface Props {
 
 const BubbleMaps: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
-    console.log(tool.args)
-
-
     return (
         <ToolCard 
             tool={tool}

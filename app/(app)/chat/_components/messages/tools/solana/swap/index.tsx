@@ -15,8 +15,6 @@ interface SwapProps {
 
 const Swap: React.FC<SwapProps> = ({ tool, prevToolAgent }) => {
 
-    console.log(tool.args);
-
     return (
         <ToolCard 
             tool={tool}

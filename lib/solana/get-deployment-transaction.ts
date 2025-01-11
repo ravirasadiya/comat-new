@@ -5,7 +5,7 @@ export const getDeploymentTransaction = async (address: string) => {
     const mintAddress = new PublicKey(address);
 
     let signatures: any[] = [];
-    let options: any = { limit: 1000 };
+    const options: any = { limit: 1000 };
     let fetchedSignatures;
 
     do {

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { Button, Icon, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui';
 
 interface Props {
     address: string;

@@ -45,8 +45,6 @@ const GetTokenData: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
 const TokenCard = ({ token, pair, pool }: { token: JupiterTokenData, pair: DexScreenerPair, pool: RaydiumPoolInfo }) => {
 
-    console.log(pair);
-
     return (
         <div className="flex flex-col gap-2 min-w-[300px]">
             <div className="flex items-center gap-2">
