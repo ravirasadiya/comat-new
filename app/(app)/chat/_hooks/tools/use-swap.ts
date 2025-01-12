@@ -25,7 +25,7 @@ export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, user
 
     const { data: swapData, isLoading: swapDataLoading } = useSwapData({
       inputMint: args.inputMint ?? "So11111111111111111111111111111111111111112", 
-      outputMint: args.outputMint, 
+      outputMint: args.outputMint ?? "So11111111111111111111111111111111111111112", 
       inputAmount: args.inputAmount,
       slippageBps: args.slippageBps,
       userPublicKey,
@@ -33,7 +33,7 @@ export const useSwap = (toolCallId: string, args: SolanaTradeArgumentsType, user
 
 
     const { data: inputTokenData, isLoading: inputTokenDataLoading } = useTokenDataByAddress(args.inputMint ?? "So11111111111111111111111111111111111111112");
-    const { data: outputTokenData, isLoading: outputTokenDataLoading } = useTokenDataByAddress(args.outputMint);
+    const { data: outputTokenData, isLoading: outputTokenDataLoading } = useTokenDataByAddress(args.outputMint ?? "So11111111111111111111111111111111111111112");
 
     const onSwap = async () => {
 

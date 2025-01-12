@@ -11,3 +11,7 @@ export * from "./stake/types";
 export * from "./all-balances/types";
 export * from "./unstake/types";
 export * from "./liquid-staking-yields/types";
+export * from "./get-token-address/types";
+export * from "./top-holders/types";
+export * from "./bubble-maps/types";
+export * from "./token-holders/types";

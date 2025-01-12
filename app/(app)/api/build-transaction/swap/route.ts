@@ -6,7 +6,7 @@ import { Connection, PublicKey, VersionedTransaction } from "@solana/web3.js";
 export const POST = async (req: NextRequest) => {
     const { outputMint, inputMint, inputAmount, slippageBps, userPublicKey } = await req.json();
 
-    const outputMintPk = new PublicKey(outputMint);
+    const outputMintPk = outputMint ? new PublicKey(outputMint) : new PublicKey("So11111111111111111111111111111111111111112");
     const inputMintPk = inputMint ? new PublicKey(inputMint) : new PublicKey("So11111111111111111111111111111111111111112");
         
     const inputMintDecimals = await getTokenDataByAddress(inputMintPk.toString());

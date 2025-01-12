@@ -63,7 +63,7 @@ export const POST = async (req: NextRequest) => {
             model,
             tools: chosenAgent.tools,
             messages,
-            system: chosenAgent.systemPrompt,
+            system: `${chosenAgent.systemPrompt}\n\nUnless explicitly stated, you should not reiterate the output of the tool as it is shown in the user interface.`,
         });
     }
 

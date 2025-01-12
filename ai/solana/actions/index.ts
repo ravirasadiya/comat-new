@@ -8,6 +8,9 @@ import { SolanaStakeAction } from "./stake";
 import { SolanaUnstakeAction } from "./unstake";
 import { SolanaAllBalancesAction } from "./all-balances";
 import { SolanaLiquidStakingYieldsAction } from "./liquid-staking-yields";
+import { SolanaGetTokenAddressAction } from "./get-token-address";
+import { SolanaTopHoldersAction } from "./top-holders";
+import { SolanaTokenHoldersAction } from "./token-holders";
 
 import type { SolanaAction, SolanaActionSchemaAny } from "./solana-action";
 
@@ -22,7 +25,10 @@ export function getAllSolanaActions(): SolanaAction<SolanaActionSchemaAny, any>[
     new SolanaStakeAction(),
     new SolanaUnstakeAction(),
     new SolanaAllBalancesAction(),
-    new SolanaLiquidStakingYieldsAction()
+    new SolanaLiquidStakingYieldsAction(),
+    new SolanaGetTokenAddressAction(),
+    new SolanaTopHoldersAction(),
+    new SolanaTokenHoldersAction()
   ];
 }
 
@@ -40,3 +46,7 @@ export * from './stake';
 export * from './unstake';
 export * from './all-balances';
 export * from './liquid-staking-yields';
+export * from './get-token-address';
+export * from './top-holders';
+export * from './token-holders';
+export * from './bubble-maps';

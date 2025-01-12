@@ -45,6 +45,16 @@ export interface DexScreenerPair {
         quote: number;
     };
     fdv?: number;
+    info?: {
+        imageUrl?: string;
+        websites?: {
+            url: string;
+        }[];
+        socials?: {
+            type: string;
+            url: string;
+        }[];
+    };
 }
 
 export interface DexScreenerResponse {

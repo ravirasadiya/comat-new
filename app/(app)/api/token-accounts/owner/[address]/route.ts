@@ -1,18 +1,19 @@
 import { NextResponse } from 'next/server';
 
-import { getTokenDataByAddress, getBalances } from '@/lib/solana';
+import { getTokenDataByAddress } from '@/lib/solana';
+import { getTokenAccountsByOwner } from '@/services/helius';
 
 export const GET = async (request: Request, { params }: { params: Promise<{ address: string }> }) => {
     try {
         const { address } = await params;
 
-        const tokenAccounts = await getBalances(address);
+        const tokenAccounts = await getTokenAccountsByOwner(address);
 
-        const tokenDatas = await Promise.all(tokenAccounts.token_accounts.map(async (tokenAccount) => {
-            return getTokenDataByAddress(tokenAccount.mint);
-        }));
+        const tokenDatas = (await Promise.all(tokenAccounts.map(async (tokenAccount) => {
+            return getTokenDataByAddress(tokenAccount.mint!);
+        }))).filter((tokenData) => tokenData !== null);
 
-        return NextResponse.json(tokenAccounts.token_accounts.map((tokenAccount, index) => {
+        return NextResponse.json(tokenAccounts.map((tokenAccount, index) => {
             return {
                 ...tokenAccount,
                 token_data: tokenDatas[index]
