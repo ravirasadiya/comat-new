@@ -142,15 +142,15 @@ const TokenCard = ({ token, pair, pool }: { token: JupiterTokenData, pair: DexSc
                                 <div className="grid grid-cols-3 gap-4">
                                     <div>
                                         <h4 className="text-xs text-muted-foreground">Day</h4>
-                                        <p className="text-sm font-medium">{pool.day.apr.toLocaleString()}%</p>
+                                        <p className="text-sm font-medium">{(pool.day.apr / 100).toLocaleString()}%</p>
                                     </div>
                                     <div>
                                         <h4 className="text-xs text-muted-foreground">Week</h4>
-                                        <p className="text-sm font-medium">{pool.week.apr.toLocaleString()}%</p>
+                                        <p className="text-sm font-medium">{(pool.week.apr / 100).toLocaleString()}%</p>
                                     </div>
                                     <div>
                                         <h4 className="text-xs text-muted-foreground">Month</h4>
-                                        <p className="text-sm font-medium">{pool.month.apr.toLocaleString()}%</p>
+                                        <p className="text-sm font-medium">{(pool.month.apr / 100).toLocaleString()}%</p>
                                     </div>
                                 </div>
                             </div>
