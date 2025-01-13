@@ -27,7 +27,7 @@ const Address: React.FC<Props> = ({ address, className }) => {
                         className={cn("text-sm text-muted-foreground cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-md w-fit px-1", className)}
                         onClick={handleCopy}
                     >
-                        {`${address.slice(0, 4)}...${address.slice(-4)}`}
+                        {truncateAddress(address)}
                     </p>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
