@@ -3,8 +3,9 @@
 import React, { useState } from 'react'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui';
-import { truncateAddress } from '@/lib/wallet';
+
 import { cn } from '@/lib/utils';
+import { truncateAddress } from '@/lib/wallet';
 
 interface Props {
     address: string;
@@ -25,10 +26,7 @@ const Address: React.FC<Props> = ({ address, className }) => {
             <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                     <p 
-                        className={cn(
-                            "text-sm text-muted-foreground cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-md p-1 w-fit", 
-                            className
-                        )}
+                        className={cn("text-sm text-muted-foreground cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-md w-fit px-1", className)}
                         onClick={handleCopy}
                     >
                         {truncateAddress(address)}

@@ -31,7 +31,7 @@ const GetWalletAddress: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     :  "No wallet address found"
             }}
             call={{
-                heading: "Get Wallet Address",
+                heading: "Connect Wallet",
                 body: (toolCallId: string) => <GetWalletAddressAction toolCallId={toolCallId} />
             }}
             prevToolAgent={prevToolAgent}
@@ -67,7 +67,6 @@ const GetWalletAddressAction = ({ toolCallId }: { toolCallId: string }) => {
 
     return (
         <div className="flex flex-col items-center gap-2">
-            <p className="text-sm text-muted-foreground">Connect your wallet to proceed</p>
             <LoginButton onComplete={onComplete} />
         </div>
     )

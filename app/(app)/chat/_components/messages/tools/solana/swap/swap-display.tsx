@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 import { ChevronRight } from 'lucide-react';
 
 import { useSwap } from '@/app/(app)/chat/_hooks/tools/use-swap';
@@ -28,7 +28,7 @@ const SwapDisplay = ({ toolCallId, args, userPublicKey }: SwapDisplayProps) => {
     } = useSwap(toolCallId, args, userPublicKey);
 
     return (
-        <div className="flex flex-col gap-2">
+        <Card className="flex flex-col gap-2 p-2">
             <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 w-full">
                     <TokenDisplay 
@@ -65,7 +65,7 @@ const SwapDisplay = ({ toolCallId, args, userPublicKey }: SwapDisplayProps) => {
                     Cancel
                 </Button>
             </div>
-        </div>
+        </Card>
     );
 };
 

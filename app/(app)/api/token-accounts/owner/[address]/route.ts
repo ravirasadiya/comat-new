@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
-import { getTokenDataByAddress } from '@/lib/solana';
 import { getTokenAccountsByOwner } from '@/services/helius';
+import { getToken } from '@/db/services';
 
 export const GET = async (request: Request, { params }: { params: Promise<{ address: string }> }) => {
     try {
@@ -10,15 +10,15 @@ export const GET = async (request: Request, { params }: { params: Promise<{ addr
         const tokenAccounts = await getTokenAccountsByOwner(address);
 
         const tokenDatas = (await Promise.all(tokenAccounts.map(async (tokenAccount) => {
-            return getTokenDataByAddress(tokenAccount.mint!);
-        }))).filter((tokenData) => tokenData !== null);
+            return getToken(tokenAccount.mint!);
+        })))
 
         return NextResponse.json(tokenAccounts.map((tokenAccount, index) => {
             return {
                 ...tokenAccount,
                 token_data: tokenDatas[index]
             };
-        }));
+        }).filter((tokenAccount) => tokenAccount.token_data !== null));
     } catch (error) {
         console.error('Error fetching token accounts:', error);
         return NextResponse.json(

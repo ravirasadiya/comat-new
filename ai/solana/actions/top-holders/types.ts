@@ -9,7 +9,7 @@ export type TopHoldersSchemaType = typeof TopHoldersInputSchema;
 export type TopHoldersArgumentsType = z.infer<TopHoldersSchemaType>;
 
 export type TopHoldersResultBodyType = {
-    topHolders: (TokenLargestAccount & { percentageOwned: number })[];
+    topHolders: (TokenLargestAccount & { owner: string, percentageOwned: number })[];
     percentageOwned: number;
 }; 
 

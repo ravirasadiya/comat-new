@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 
+import Image from 'next/image';
+
+import { Button, Card } from '@/components/ui';
+
+import WalletAddress from '@/app/_components/wallet-address';
+
 import ToolCard from '../tool-card';
 
+import type { TokenLargestAccount } from '@/services/helius';
+
 import type { ToolInvocation } from 'ai';
-import type { TopHoldersResultType } from '@/ai';
-import { TokenLargestAccount } from '@/services/helius';
-import Address from '@/app/_components/address';
-import { Button } from '@/components/ui/button';
+import type { TopHoldersResultBodyType, TopHoldersResultType } from '@/ai';
+import { raydiumAuthorityAddress } from '@/services/raydium';
 
 interface Props {
     tool: ToolInvocation,
@@ -34,22 +40,24 @@ const GetTopHolders: React.FC<Props> = ({ tool, prevToolAgent }) => {
     )
 }
 
-const TopHolders = ({ topHolders, percentageOwned }: { topHolders: (TokenLargestAccount & { percentageOwned: number })[], percentageOwned: number }) => {
+const TopHolders = ({ topHolders, percentageOwned }: TopHoldersResultBodyType) => {
 
     const [showAll, setShowAll] = useState(false);
 
     return (
         <div className="flex flex-col gap-2">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-md">
                 {(percentageOwned * 100).toFixed(2)}% of the total supply is owned by the top 20 holders
             </p>
-            {topHolders.slice(0, showAll ? topHolders.length : 5).map((topHolder: (TokenLargestAccount & { percentageOwned: number }), index: number) => (
-                <TopHolder
-                    key={topHolder.address} 
-                    topHolder={topHolder} 
-                    index={index}
-                />
-            ))}
+            <div className="flex flex-col gap-2">
+                {topHolders.slice(0, showAll ? topHolders.length : 5).map((topHolder, index) => (
+                    <TopHolder
+                        key={topHolder.owner} 
+                        topHolder={topHolder}
+                        index={index}
+                    />
+                ))}
+            </div>
             <Button
                 variant="outline"
                 onClick={() => setShowAll(!showAll)}
@@ -60,15 +68,35 @@ const TopHolders = ({ topHolders, percentageOwned }: { topHolders: (TokenLargest
     )
 }
 
-const TopHolder = ({ topHolder, index }: { topHolder: (TokenLargestAccount & { percentageOwned: number }), index: number }) => {
+const TopHolder = ({ topHolder, index }: { topHolder: (TokenLargestAccount & { percentageOwned: number, owner: string }), index: number }) => {
     return (
-        <div className="flex items-center gap-2">
+        <Card className="flex flex-row items-center gap-2 p-2">
             <p className="text-sm text-muted-foreground">
                 {index + 1})
             </p>
-            <Address address={topHolder.address} />
-            <p className="text-sm font-bold">{topHolder.uiAmount.toLocaleString()} ({topHolder.percentageOwned.toFixed(2)}%)</p>
-        </div>
+            <div className="flex flex-col">
+                {
+                    topHolder.owner === raydiumAuthorityAddress ? (
+                        <div className="flex flex-row items-center gap-2">
+                            <Image
+                                src="/dexes/raydium.png"
+                                alt="Raydium"
+                                width={16}
+                                height={16}
+                            />
+                            <p className="text-sm font-bold">
+                                Raydium
+                            </p>
+                        </div>
+                    ) : (
+                        <WalletAddress 
+                            address={topHolder.owner} 
+                            className="text-sm font-bold"
+                        />
+                )}
+                <p className="text-xs">{topHolder.uiAmount.toLocaleString()} ({topHolder.percentageOwned.toFixed(2)}%)</p>
+            </div>
+        </Card>
     )
 }
 

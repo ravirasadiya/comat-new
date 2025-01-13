@@ -1,9 +1,9 @@
-import { getTokenDataAndPairByTicker, getTokenDataAndPairByAddress } from "@/lib/solana";
+import { getRaydiumPoolById } from "@/services/raydium";
+import { getToken, getTokenBySymbol } from "@/db/services";
+import { getTokenPairsFromAddress } from "@/services/dexscreener";
 
 import type { SolanaActionResult } from "../solana-action";
-
 import type { GetTokenDataArgumentsType, GetTokenDataResultBodyType } from "./types";
-import { getLPData } from "@/services/raydium/get-lp-data";
 
 /**
  * Gets the token data for a given ticker.
@@ -16,37 +16,40 @@ export async function getTokenData(args: GetTokenDataArgumentsType): Promise<Sol
   try {
 
     if (args.address) {
-        const token = await getTokenDataAndPairByAddress(args.address);
-        if (!token) {
-            throw new Error('Failed to fetch token data');
-        }
-        const pool = await getLPData(token.pair.pairAddress);
-        if (!pool) {
-            throw new Error('Failed to fetch pool data');
-        }
+        const token = await getToken(args.address);
+        if (!token) throw new Error('No token data found');
+        const dexscreenerPairs = await getTokenPairsFromAddress(args.address);
+        
+        const pairs = await Promise.all(dexscreenerPairs.filter(pair => pair.dexId === "raydium").map(async (pair) => {
+            const raydiumPool = await getRaydiumPoolById(pair.pairAddress);
+            return {
+                pair,
+                pool: raydiumPool
+            };
+        }));
         return {
             message: `Found token data for ${args.address}. The user is shown the following token data in the UI, DO NOT REITERATE THE TOKEN DATA. Ask the user what they want to do next.`,
             body: {
-                token: token.token,
-                pair: token.pair,
-                pool: pool.data[0]
+                token,
+                pairs
             }
         }
     } else if (args.ticker) {
-        const token = await getTokenDataAndPairByTicker(args.ticker);
-        if (!token) {
-            throw new Error('Failed to fetch token data');
-        }
-        const pool = await getLPData(token.pair.pairAddress);
-        if (!pool) {
-            throw new Error('Failed to fetch pool data');
-        }
+        const token = await getTokenBySymbol(args.ticker);
+        if (!token) throw new Error('No token data found');
+        const dexscreenerPairs = await getTokenPairsFromAddress(token.id);
+        const pairs = await Promise.all(dexscreenerPairs.filter(pair => pair.dexId === "raydium").map(async (pair) => {
+            const raydiumPool = await getRaydiumPoolById(pair.pairAddress);
+            return {
+                pair,
+                pool: raydiumPool
+            };
+        }));
         return {
             message: `Found token data for ${args.ticker}. The user is shown the following token data in the UI, DO NOT REITERATE THE TOKEN DATA. Ask the user what they want to do next.`,
             body: {
-                token: token.token,
-                pair: token.pair,
-                pool: pool.data[0]
+                token,
+                pairs
             }
         }
     } else {
