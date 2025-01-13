@@ -8,7 +8,7 @@ interface Props {
     body: SolanaDepositLiquidityResultBodyType
 }
 
-const GetPoolsResult: React.FC<Props> = ({ body }) => {
+const GetPoolsResult: React.FC<Props> = ({ }) => {
     
     return (
         <p>

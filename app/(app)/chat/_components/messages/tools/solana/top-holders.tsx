@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image';
 
@@ -8,12 +8,15 @@ import WalletAddress from '@/app/_components/wallet-address';
 
 import ToolCard from '../tool-card';
 
-import type { TokenLargestAccount } from '@/services/helius';
+import { getStreamsByMint } from '@/services/streamflow';
+
+import { knownAddresses } from '@/lib/known-addresses';
 
 import type { ToolInvocation } from 'ai';
 import type { TopHoldersResultBodyType, TopHoldersResultType } from '@/ai';
-import { raydiumAuthorityAddress } from '@/services/raydium';
-import { knownAddresses } from '@/lib/known-addresses';
+import type { TokenLargestAccount } from '@/services/helius';
+import type { Stream } from '@streamflow/stream';
+import type { ProgramAccount } from '@project-serum/anchor';
 
 interface Props {
     tool: ToolInvocation,
@@ -32,7 +35,7 @@ const GetTopHolders: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     ? `Fetched Top 20 Holders`
                     : `Failed to fetch top holders`,
                 body: (result: TopHoldersResultType) => result.body 
-                    ? <TopHolders topHolders={result.body.topHolders} percentageOwned={result.body.percentageOwned} />
+                    ? <TopHolders body={result.body} mint={tool.args.tokenAddress} />
                     :  "No top holders found"
             }}
             defaultOpen={true}
@@ -41,21 +44,43 @@ const GetTopHolders: React.FC<Props> = ({ tool, prevToolAgent }) => {
     )
 }
 
-const TopHolders = ({ topHolders, percentageOwned }: TopHoldersResultBodyType) => {
+const TopHolders = ({ body, mint }: { body: TopHoldersResultBodyType, mint: string }) => {
 
     const [showAll, setShowAll] = useState(false);
+
+    const [streamflowAccounts, setStreamflowAccounts] = useState<ProgramAccount<Stream>[]>([]);
+
+    useEffect(() => {
+        const fetchStreamflowAccounts = async () => {
+            const accounts = await getStreamsByMint(mint);
+            setStreamflowAccounts(accounts);
+        }
+        fetchStreamflowAccounts();
+    }, [mint]);
+
+    const knownAddressesWithStreamflow = {
+        ...knownAddresses,
+        ...streamflowAccounts.reduce((acc, account) => {
+            acc[account.account.escrowTokens] = {
+                name: "Streamflow Vault",
+                logo: "/vesting/streamflow.png"
+            }
+            return acc;
+        }, {} as Record<string, { name: string, logo: string }>)
+    }
 
     return (
         <div className="flex flex-col gap-2">
             <p className="text-md">
-                {(percentageOwned * 100).toFixed(2)}% of the total supply is owned by the top 20 holders
+                {(body.percentageOwned * 100).toFixed(2)}% of the total supply is owned by the top 20 holders
             </p>
             <div className="flex flex-col gap-2">
-                {topHolders.slice(0, showAll ? topHolders.length : 5).map((topHolder, index) => (
+                {body.topHolders.slice(0, showAll ? body.topHolders.length : 5).map((topHolder, index) => (
                     <TopHolder
                         key={topHolder.owner} 
                         topHolder={topHolder}
                         index={index}
+                        knownAddresses={knownAddressesWithStreamflow}
                     />
                 ))}
             </div>
@@ -69,7 +94,7 @@ const TopHolders = ({ topHolders, percentageOwned }: TopHoldersResultBodyType) =
     )
 }
 
-const TopHolder = ({ topHolder, index }: { topHolder: (TokenLargestAccount & { percentageOwned: number, owner: string }), index: number }) => {
+const TopHolder = ({ topHolder, index, knownAddresses }: { topHolder: (TokenLargestAccount & { percentageOwned: number, owner: string }), index: number, knownAddresses: Record<string, { name: string, logo: string }> }) => {
     return (
         <Card className="flex flex-row items-center gap-2 p-2">
             <p className="text-sm text-muted-foreground">

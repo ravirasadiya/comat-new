@@ -87,7 +87,7 @@ const StandardPool: React.FC<Props> = ({ pool, wallet, toolCallId }) => {
                 }
             });
         } catch (error) {
-            
+            console.error(error);
         }
         setIsDepositing(false);
     }

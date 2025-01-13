@@ -2,8 +2,8 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { getRaydiumPoolById } from "@/services/raydium";
 
-export const GET = async (req: NextRequest, { params }: { params: { poolId: string } }) => {
-    const { poolId } = params;
+export const GET = async (req: NextRequest, { params }: { params: Promise<{ poolId: string }> }) => {
+    const { poolId } = await params;
 
     const poolInfo = await getRaydiumPoolById(poolId);
 
