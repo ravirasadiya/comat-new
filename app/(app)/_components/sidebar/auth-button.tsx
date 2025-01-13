@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { ChevronsUpDown, Coins, LogIn, LogOut, Wallet } from 'lucide-react';
+import { ChevronsUpDown, Coins, LogIn, LogOut, Settings, Wallet } from 'lucide-react';
 
 import { useLogin } from '@/hooks';
 
@@ -23,6 +23,7 @@ import {
 
 import { truncateAddress } from '@/lib/wallet';
 import Balances from './balances';
+import Link from 'next/link';
 
 const AuthButton: React.FC = () => {
 
@@ -79,6 +80,15 @@ const AuthButton: React.FC = () => {
                                 </div>
                             </div>
                         </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                            <Link href="/account">
+                                <DropdownMenuItem>
+                                    <Settings className="size-4" />
+                                    Account
+                                </DropdownMenuItem>
+                            </Link>
+                        </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <Balances address={user.wallet.address} />
                         <DropdownMenuSeparator />

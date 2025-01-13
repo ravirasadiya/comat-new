@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { Markdown, Icon, Logo } from '@/components/ui';
+import { Markdown, Icon, Logo, Avatar, AvatarFallback, AvatarImage } from '@/components/ui';
 
 import ToolInvocation from './tools';
 
@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils';
 import type { Message } from 'ai';
 import Link from './link';
 import { getAgentName } from './tools/tool-to-agent';
+import { pfpURL } from '@/lib/pfp';
+import { usePrivy } from '@privy-io/react-auth';
 
 interface Props {
     message: Message,
@@ -20,6 +22,8 @@ interface Props {
 }
 
 const Message: React.FC<Props> = ({ message, className, previousMessage, nextMessage }) => {
+
+    const { user } = usePrivy();
 
     const isUser = message.role === 'user';
 
@@ -51,10 +55,17 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
                 )}>
                     {
                         isUser ? (
-                            <Icon
-                                name="User"
-                                className="w-4 h-4 md:w-6 md:h-6"
-                            />
+                            <Avatar>
+                                <AvatarFallback>
+                                    <Icon name="User" className="w-4 h-4 md:w-6 md:h-6" />
+                                </AvatarFallback>
+                                {
+                                    user && (
+                                        <AvatarImage src={pfpURL(user, false)} />
+                                    )
+                                }
+                            </Avatar>
+                            
                         ) : (
                             <Logo className="w-6 h-6 md:w-10 md:h-10" />
                         )
