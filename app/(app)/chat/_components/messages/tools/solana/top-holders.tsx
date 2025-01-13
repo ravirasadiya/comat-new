@@ -13,6 +13,7 @@ import type { TokenLargestAccount } from '@/services/helius';
 import type { ToolInvocation } from 'ai';
 import type { TopHoldersResultBodyType, TopHoldersResultType } from '@/ai';
 import { raydiumAuthorityAddress } from '@/services/raydium';
+import { knownAddresses } from '@/lib/known-addresses';
 
 interface Props {
     tool: ToolInvocation,
@@ -76,16 +77,16 @@ const TopHolder = ({ topHolder, index }: { topHolder: (TokenLargestAccount & { p
             </p>
             <div className="flex flex-col">
                 {
-                    topHolder.owner === raydiumAuthorityAddress ? (
+                    knownAddresses[topHolder.owner] ? (
                         <div className="flex flex-row items-center gap-2">
                             <Image
-                                src="/dexes/raydium.png"
-                                alt="Raydium"
+                                src={knownAddresses[topHolder.owner].logo}
+                                alt={knownAddresses[topHolder.owner].name}
                                 width={16}
                                 height={16}
                             />
                             <p className="text-sm font-bold">
-                                Raydium
+                                {knownAddresses[topHolder.owner].name}
                             </p>
                         </div>
                     ) : (
