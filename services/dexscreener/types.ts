@@ -1,6 +1,6 @@
 export interface DexScreenerPair {
     chainId: string;
-    dexId: string;
+    dexId: "raydium" | "orca" | "meteora";
     url: string;
     pairAddress: string;
     baseToken: {
