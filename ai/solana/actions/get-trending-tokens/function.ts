@@ -1,4 +1,4 @@
-import { getPrice } from "@/services/jupiter";
+import { getPrice, getPrices } from "@/services/jupiter";
 
 import type { GetTrendingTokensArgumentsType, GetTrendingTokensResultBodyType } from "./types";
 import type { SolanaActionResult } from "../solana-action";
@@ -26,10 +26,9 @@ export async function getTrendingTokens(
       tokens = tokens.slice(0, args.limit);
     }
 
-    const prices = await Promise.all(tokens.map(async (token) => {
-      const price = await getPrice(token.address);
-      return Number(price.priceInUSDC ?? "0");
-    }));
+    const pricesMap = await getPrices(tokens.map((token) => token.address));
+
+    const prices = tokens.map((token) => pricesMap[token.address].price);
 
     return {
       message: `Found ${tokens.length} trending tokens. The user is shown the tokens, do not list them. Ask the user what they want to do with the coin.`,
