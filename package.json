@@ -55,7 +55,6 @@
     "decimal.js": "^10.4.3",
     "dlx": "^0.2.1",
     "jsdom": "^25.0.1",
-    "keyv": "4.5.4",
     "leva": "^0.9.35",
     "lucide-react": "^0.469.0",
     "motion": "^11.15.0",
@@ -91,10 +90,6 @@
     "typescript": "^5"
   },
   "overrides": {
-    "react-is": "^19.0.0-rc-69d4b800-20241021",
-    "keyv": "4.5.4",
-    "cacheable-request": {
-      "keyv": "4.5.4"
-    }
+    "react-is": "^19.0.0-rc-69d4b800-20241021"
   }
 }

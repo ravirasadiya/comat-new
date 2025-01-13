@@ -146,9 +146,6 @@ importers:
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      keyv:
-        specifier: 4.5.4
-        version: 4.5.4
       leva:
         specifier: ^0.9.35
         version: 0.9.35(@types/react-dom@19.0.3(@types/react@19.0.6))(@types/react@19.0.6)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

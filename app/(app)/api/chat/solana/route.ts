@@ -50,6 +50,8 @@ export const POST = async (req: NextRequest) => {
 
     const chosenAgent = await chooseAgent(model, messages);
 
+    console.log('chosenAgent', chosenAgent);
+
     let streamTextResult: StreamTextResult<Record<string, CoreTool<any, any>>, any>;
 
     if(!chosenAgent) {

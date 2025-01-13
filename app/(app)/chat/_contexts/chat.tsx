@@ -88,6 +88,9 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         onResponse: () => {
             setIsResponseLoading(false);
         },
+        onFinish: (_, { finishReason }) => {
+            console.log('onFinish', finishReason);
+        },
         api: '/api/chat/solana',
         body: {
             model,
