@@ -3,7 +3,9 @@
 import React, { useState } from 'react'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui';
+
 import { cn } from '@/lib/utils';
+import { truncateAddress } from '@/lib/wallet';
 
 interface Props {
     address: string;
