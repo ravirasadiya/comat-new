@@ -9,5 +9,7 @@ export { default as Transfer } from './transfer';
 export { default as GetTokenAddress } from './get-token-address';
 export { default as GetTopHolders } from './top-holders';
 export { default as BubbleMaps } from './bubble-maps';
+export { default as NumHolders } from './num-holders';
 
 export * from './staking';
+export * from './liquidity';
