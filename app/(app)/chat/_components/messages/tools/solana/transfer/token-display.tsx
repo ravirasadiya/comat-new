@@ -2,11 +2,12 @@ import React from 'react';
 
 import { Skeleton } from '@/components/ui';
 
-import type { JupiterTokenData } from '@/types';
 import { round } from '@/lib/utils';
 
+import type { Token } from '@/db/types';
+
 interface TokenDisplayProps {
-    tokenData: JupiterTokenData | null;
+    tokenData: Token | null;
     isLoading: boolean;
     amount?: number;
     decimals?: number;

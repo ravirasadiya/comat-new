@@ -2,10 +2,10 @@
 
 import useSWR from "swr";
 
-import { JupiterTokenData } from "solana-agent-kit";
+import { Token } from "@/db/types";
 
 export const useTokenDataByAddress = (address: string) => {
-    const { data, isLoading, error } = useSWR<JupiterTokenData | null>(
+    const { data, isLoading, error } = useSWR<Token | null>(
         `/api/token/${address}/data`, 
         (url: string) => fetch(url).then(res => res.json())
     );

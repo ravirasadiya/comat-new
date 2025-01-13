@@ -28,6 +28,7 @@ const GetTokenAddress: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     ) : "No token address found"
             }}
             prevToolAgent={prevToolAgent}
+            defaultOpen={false}
         />
     )
 }

@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { JUP_API, getTokenDataByAddress } from "@/lib/solana";
+import { JUP_API } from "@/services/jupiter";
+
+import { getToken } from "@/db/services";
 
 export const POST = async (req: NextRequest) => {
     const { inputAmount, slippageBps, userPublicKey, contractAddress } = await req.json();
         
-    const inputMintDecimals = await getTokenDataByAddress("So11111111111111111111111111111111111111112");
+    const inputMintDecimals = await getToken("So11111111111111111111111111111111111111112");
     if (!inputMintDecimals) throw new Error("Input mint not found");
 
     const quoteResponse = await (

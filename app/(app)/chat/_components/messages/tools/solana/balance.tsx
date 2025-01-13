@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ToolCard from '../tool-card';
+import { TokenBalance } from '../utils';
 
 import type { ToolInvocation } from 'ai';
 import type { BalanceResultType } from '@/ai';
@@ -23,10 +24,12 @@ const GetBalance: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     : `Failed to fetch balance`,
                 body: (result: BalanceResultType) => result.body 
                     ? (
-                        <div className="flex flex-row items-center gap-2">
-                            <img src={result.body.logoURI} alt={result.body.name} className="w-8 h-8 rounded-full" />
-                            <p>{result.body.balance.toFixed(4)} {result.body.name} ({result.body.token})</p>
-                        </div>
+                        <TokenBalance 
+                            token={result.body.token}
+                            balance={result.body.balance}
+                            logoURI={result.body.logoURI}
+                            name={result.body.name}
+                        />
                     ) : "No balance found"
             }}
             prevToolAgent={prevToolAgent}

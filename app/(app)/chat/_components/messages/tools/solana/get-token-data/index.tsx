@@ -30,7 +30,7 @@ const GetTokenData: React.FC<Props> = ({ tool, prevToolAgent }) => {
             }}
             defaultOpen={true}
             prevToolAgent={prevToolAgent}
-            className="w-full"
+            className='w-full'
         />
     )
 }

@@ -57,7 +57,27 @@ export const findTokens = async (): Promise<Token[]> => {
  * @returns {Promise<Token[]>} An array of tokens.
  */
 export const findTokensBySymbol = async (symbol: string): Promise<Token[]> => {
-    return find(await getTokensContainer(), `SELECT * FROM c WHERE c.symbol = @symbol ORDER BY c._ts DESC`, [{ name: "@symbol", value: symbol }]);
+    return find(await getTokensContainer(), `SELECT * FROM c WHERE LOWER(c.symbol) = LOWER(@symbol)`, [{ name: "@symbol", value: symbol }]);
+};
+
+export const getTokenBySymbol = async (symbol: string): Promise<Token | null> => {
+    const tokens = await findTokensBySymbol(symbol);
+    if (!tokens || tokens.length === 0) return null;
+    if (tokens.length === 1) {
+        return tokens[0];
+    } else {
+        let verifiedToken = tokens.find(token => token.tags.includes("verified"));
+        if(verifiedToken) {
+            return verifiedToken;
+        } else {
+            let communityToken = tokens.find(token => token.tags.includes("community"));
+            if(communityToken) {
+                return communityToken;
+            } else {
+                return tokens[0];
+            }
+        }
+    }
 };
 
 // DELETE

@@ -1,10 +1,9 @@
+import { getRaydiumPoolById } from "@/services/raydium";
+import { getToken, getTokenBySymbol } from "@/db/services";
+import { getTokenPairsFromAddress } from "@/services/dexscreener";
 
 import type { SolanaActionResult } from "../solana-action";
-
 import type { GetTokenDataArgumentsType, GetTokenDataResultBodyType } from "./types";
-import { getRaydiumPoolById, getRaydiumPoolsByMint } from "@/services/raydium";
-import { findTokensBySymbol, getToken } from "@/db/services";
-import { getTokenPairsFromAddress } from "@/services/dexscreener";
 
 /**
  * Gets the token data for a given ticker.
@@ -36,9 +35,8 @@ export async function getTokenData(args: GetTokenDataArgumentsType): Promise<Sol
             }
         }
     } else if (args.ticker) {
-        const tokens = await findTokensBySymbol(args.ticker);
-        if (!tokens || tokens.length === 0) throw new Error('No token data found');
-        const token = tokens[0];
+        const token = await getTokenBySymbol(args.ticker);
+        if (!token) throw new Error('No token data found');
         const dexscreenerPairs = await getTokenPairsFromAddress(token.id);
         const pairs = await Promise.all(dexscreenerPairs.filter(pair => pair.dexId === "raydium").map(async (pair) => {
             const raydiumPool = await getRaydiumPoolById(pair.pairAddress);

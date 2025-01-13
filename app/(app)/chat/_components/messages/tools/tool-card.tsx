@@ -2,7 +2,6 @@ import React from 'react'
 
 import { 
     AnimatedShinyText, 
-    Card, 
     Collapsible, 
     CollapsibleTrigger, 
     CollapsibleContent, 
@@ -55,7 +54,7 @@ const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, loadingText, res
                 }
                 <p className="text-lg font-bold">{agentName}</p>
             </div>
-            <Card className="p-2">
+            <div>
                 {
                     tool.state === "partial-call" ? (
                         <AnimatedShinyText>
@@ -80,14 +79,14 @@ const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, loadingText, res
                                 <CollapsibleTrigger className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
                                     <p className="text-sm">{result.heading(tool.result)}</p>
                                 </CollapsibleTrigger>
-                                <CollapsibleContent className="text-sm">
+                                <CollapsibleContent className="text-sm pt-2">
                                     {result.body(tool.result)}
                                 </CollapsibleContent>
                             </Collapsible>
                         )
                     )
                 }
-            </Card>
+            </div>
         </div>
     )
 }

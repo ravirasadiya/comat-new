@@ -38,7 +38,7 @@ const CollapsibleContent = React.forwardRef<
     )}
     {...props}
   >
-    <div className="pt-2">{children}</div>
+    <div>{children}</div>
   </CollapsiblePrimitive.Content>
 ))
 CollapsibleContent.displayName = CollapsiblePrimitive.Content.displayName

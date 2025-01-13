@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getTokenDataByAddress, JUP_API } from "@/lib/solana";
 import { Connection, PublicKey, VersionedTransaction } from "@solana/web3.js";
+
+import { JUP_API } from "@/services/jupiter";
+
+import { getToken } from "@/db/services";
 
 export const POST = async (req: NextRequest) => {
     const { outputMint, inputMint, inputAmount, slippageBps, userPublicKey } = await req.json();
@@ -9,7 +12,7 @@ export const POST = async (req: NextRequest) => {
     const outputMintPk = outputMint ? new PublicKey(outputMint) : new PublicKey("So11111111111111111111111111111111111111112");
     const inputMintPk = inputMint ? new PublicKey(inputMint) : new PublicKey("So11111111111111111111111111111111111111112");
         
-    const inputMintDecimals = await getTokenDataByAddress(inputMintPk.toString());
+    const inputMintDecimals = await getToken(inputMintPk.toString());
     if (!inputMintDecimals) throw new Error("Input mint not found");
 
     const quoteResponse = await (
