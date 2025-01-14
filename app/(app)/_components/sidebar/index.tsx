@@ -1,5 +1,9 @@
 import React from 'react'
 
+import Link from 'next/link';
+
+import { FaDiscord, FaXTwitter } from 'react-icons/fa6';
+
 import {
     Sidebar as SidebarUI, 
     SidebarHeader, 
@@ -7,16 +11,19 @@ import {
     SidebarInset,
     SidebarTrigger,
     Separator,
+    SidebarFooter,
+    SidebarMenu,
+    SidebarMenuItem,
+    SidebarMenuButton,
+    SidebarSeparator,
 } from '@/components/ui'
 
-import SidebarGroup from './group';
-
-import { platformGroup, agentsGroup } from '../../_data';
 
 import AuthButton from './auth-button';
 import ColorModeToggle from './color-mode-toggle';
 import Logo from './logo';
 import ChatsGroup from './chats-group';
+
 
 interface Props {
     children: React.ReactNode;
@@ -30,11 +37,40 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                     <Logo />
                     <AuthButton />
                 </SidebarHeader>
-                <SidebarContent>
+                <SidebarContent className="relative">
                     <ChatsGroup />
-                    <SidebarGroup group={platformGroup} />
-                    <SidebarGroup group={agentsGroup} />
                 </SidebarContent>
+                <SidebarSeparator />
+                <SidebarFooter>
+                    <SidebarMenu>
+                        <SidebarMenuItem>
+                            <SidebarMenuButton 
+                                asChild 
+                            >
+                                <Link 
+                                    href={"https://x.com/askthehive_ai"} 
+                                    target={'_blank'}
+                                >
+                                    <FaXTwitter />
+                                    <span className='truncate'>Follow Us</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                        <SidebarMenuItem>
+                            <SidebarMenuButton 
+                                asChild 
+                            >
+                                <Link 
+                                    href={"https://discord.gg/6brt2aC9"} 
+                                    target={'_blank'}
+                                >
+                                    <FaDiscord />
+                                    <span className='truncate'>Join Discord</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                </SidebarFooter>
             </SidebarUI>
             <SidebarInset>
                 <header className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
