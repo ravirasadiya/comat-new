@@ -33,7 +33,7 @@ export async function getPools(args: GetPoolsArgumentsType): Promise<SolanaActio
             body: {
                 pools
             },
-            message: `Found pools for ${args.address}. The user is shown pools in the UI, DO NOT MENTION THE POOLS IN TEXT. Ask the user what they want to do next.`,
+            message: `Found pools for ${args.address}. The user is shown pools in the UI, DO NOT REITERATE THE POOLS. Ask the user what they want to do next. DO NOT LIST THE POOLS IN TEXT.`,
         }
     } else if (args.ticker) {
         const token = await getTokenBySymbol(args.ticker);
@@ -51,7 +51,6 @@ export async function getPools(args: GetPoolsArgumentsType): Promise<SolanaActio
                 pools
             },
             message: `Found token data for ${args.ticker}. The user is shown the following token data in the UI, DO NOT REITERATE THE TOKEN DATA. Ask the user what they want to do next. DO NOT LIST THE POOLS IN TEXT.`,
-
         }
     } else {
         throw new Error('Invalid input');
