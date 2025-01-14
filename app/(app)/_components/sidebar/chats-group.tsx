@@ -31,7 +31,7 @@ const ChatsGroup: React.FC = () => {
     const { setChat, chatId, resetChat } = useChat();
 
     return (
-        <SidebarGroup>
+        <SidebarGroup className="h-full flex flex-col overflow-hidden">
             <div className='flex items-center justify-between'>
                 <SidebarGroupLabel className='text-black dark:text-white font-semibold'>
                     Chats
@@ -46,33 +46,36 @@ const ChatsGroup: React.FC = () => {
                     </Button>
                 </Link>
             </div>
-            <SidebarGroupContent>
+            <SidebarGroupContent className="flex-1 h-0 overflow-hidden relative flex flex-col">
                 {
                     isLoading || !ready ? (
                         <Skeleton className="h-10 w-full" />
                     ) : (
                         chats.length > 0 ? (
-                            <SidebarMenu>
-                                {
-                                    chats.slice(0, 5).map((chat) => (
-                                        <SidebarMenuItem
-                                            key={chat.id}
-                                        >
-                                            <SidebarMenuButton 
-                                                asChild 
-                                                isActive={chat.id === chatId}
-                                                onClick={() => setChat(chat.id)}
+                            <div className="h-full max-h-full relative flex flex-col">
+                                <SidebarMenu className="flex-1 h-0 overflow-y-auto no-scrollbar">
+                                    {
+                                        chats.map((chat) => (
+                                            <SidebarMenuItem
+                                                key={chat.id}
                                             >
-                                                <Link 
-                                                    href={`/chat`} 
+                                                <SidebarMenuButton 
+                                                    asChild 
+                                                    isActive={chat.id === chatId}
+                                                    onClick={() => setChat(chat.id)}
                                                 >
-                                                    <span className='truncate'>{chat.tagline}</span>
-                                                </Link>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    ))
-                                }
-                            </SidebarMenu>
+                                                    <Link 
+                                                        href={`/chat`} 
+                                                    >
+                                                        <span className='truncate'>{chat.tagline}</span>
+                                                    </Link>
+                                                </SidebarMenuButton>
+                                            </SidebarMenuItem>
+                                        ))
+                                    }
+                                </SidebarMenu>
+                                <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-neutral-100 dark:from-neutral-800 to-transparent"></div>
+                            </div>
                         ) : (
                             user ? (
                                 <p className='text-sm text-neutral-500 dark:text-neutral-400 pl-2'>
