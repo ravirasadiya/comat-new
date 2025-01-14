@@ -1,12 +1,20 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import React, { createContext, useContext, ReactNode, useState, useEffect, useMemo } from 'react';
 
 import { Message, useChat as useAiChat } from 'ai/react';
 import { Models } from '@/types/models';
 import { usePrivy } from '@privy-io/react-auth';
 import { generateId } from 'ai';
 import { useUserChats } from '@/hooks';
+
+import {
+    SOLANA_GET_WALLET_ADDRESS_NAME,
+    SOLANA_TRADE_NAME,
+    SOLANA_STAKE_NAME,
+    SOLANA_UNSTAKE_NAME,
+    SOLANA_TRANSFER_NAME
+} from '@/ai/action-names';
 
 export enum ColorMode {
     LIGHT = 'light',
@@ -33,6 +41,7 @@ interface ChatContextType {
     setChat: (chatId: string) => void;
     resetChat: () => void;
     chatId: string;
+    inputDisabledMessage: string;
 }
 
 const ChatContext = createContext<ChatContextType>({
@@ -49,6 +58,7 @@ const ChatContext = createContext<ChatContextType>({
     setChat: () => {},
     resetChat: () => {},
     chatId: '',
+    inputDisabledMessage: '',
 });
 
 interface ChatProviderProps {
@@ -137,6 +147,34 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         });
     }
 
+    const inputDisabledMessage = useMemo(() => {
+        if(messages.length === 0) return '';
+        const lastMessage = messages[messages.length - 1];
+        let message = lastMessage.toolInvocations?.map(toolInvocation => {
+            if(toolInvocation.state === "result") return '';
+            const toolName = toolInvocation.toolName.slice(toolInvocation.toolName.indexOf('-') + 1);
+            console.log(toolName);
+            switch(toolName) {
+                case SOLANA_TRADE_NAME:
+                    return `Complete or cancel your trade`;
+                case SOLANA_TRANSFER_NAME:
+                    return `Complete or cancel your transfer`;
+                case SOLANA_STAKE_NAME:
+                    return `Complete or cancel your stake`;
+                case SOLANA_UNSTAKE_NAME:
+                    return `Complete or cancel your unstake`;
+                case SOLANA_GET_WALLET_ADDRESS_NAME:
+                    return `Connect your wallet`;
+                default:
+                    return '';
+            }
+        }).filter(message => message !== '').join(' and ');
+        if(message) {
+            message = message?.concat(' to continue');
+        }
+        return message || '';
+    }, [messages])
+
     return (
         <ChatContext.Provider value={{ 
             messages, 
@@ -155,6 +193,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             setChat,
             resetChat,
             chatId,
+            inputDisabledMessage,
         }}>
             {children}
         </ChatContext.Provider>
