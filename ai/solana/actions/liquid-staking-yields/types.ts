@@ -1,7 +1,9 @@
 import { z } from "zod";
+
 import { LiquidStakingYieldsInputSchema } from "./input-schema";
-import { SolanaActionResult } from "../solana-action";
-import { JupiterTokenData } from "@/types";
+
+import type { SolanaActionResult } from "../solana-action";
+import type { Token } from "@/db/types";
 
 export type LiquidStakingYieldsSchemaType = typeof LiquidStakingYieldsInputSchema;
 
@@ -10,7 +12,7 @@ export type LiquidStakingYieldsArgumentsType = z.infer<LiquidStakingYieldsSchema
 export type LiquidStakingYieldsResultBodyType = {
     name: string;
     yield: number;
-    tokenData: JupiterTokenData;
+    tokenData: Token;
 }[]
 
 export type LiquidStakingYieldsResultType = SolanaActionResult<LiquidStakingYieldsResultBodyType>;

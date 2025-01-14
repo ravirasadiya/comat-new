@@ -2,10 +2,9 @@ import { LAMPORTS_PER_SOL, PublicKey, Connection } from "@solana/web3.js";
 
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 
-import { getTokenDataByAddress } from "../../../../lib/solana/get-token-data";
-
 import type { BalanceArgumentsType, BalanceResultBodyType } from "./types";
 import type { SolanaActionResult } from "../solana-action";
+import { getToken } from "@/db/services";
 
 export async function getBalance(
   connection: Connection,
@@ -28,7 +27,7 @@ export async function getBalance(
       balance = token_account.value.uiAmount ?? 0;
     }
 
-    const tokenData = args.tokenAddress ? (await getTokenDataByAddress(args.tokenAddress)) : null;
+    const tokenData = args.tokenAddress ? (await getToken(args.tokenAddress)) : null;
     const tokenSymbol = tokenData?.symbol || "SOL";
     const tokenName = tokenData?.name || "Solana";
     const tokenLogoURI = tokenData?.logoURI || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX6PYmAiDpUliZWnmCHKPc3VI7QESDKhLndQ&s";

@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { Button } from '@/components/ui';
+import { Button, Card } from '@/components/ui';
 import { ChevronRight } from 'lucide-react';
 
 import { useTransfer } from '@/app/(app)/chat/_hooks/tools';
 
-import type { SolanaTransferArgumentsType } from '@/ai';
+import WalletAddress from '@/app/_components/wallet-address';
 
 import TokenDisplay from './token-display';
-import Address from '@/app/_components/address';
+
+import type { SolanaTransferArgumentsType } from '@/ai';
 
 interface TransferDisplayProps {
     toolCallId: string;
@@ -27,28 +28,27 @@ const TransferDisplay: React.FC<TransferDisplayProps> = ({ toolCallId, args, fro
     } = useTransfer(toolCallId, args, from);
 
     return (
-        <div className="flex flex-col gap-4">
+        <Card className="flex flex-col gap-4 p-2">
             <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 w-full">
                     <TokenDisplay 
                         tokenData={args.mint ? (tokenData ?? null) : {
-                            address: "So11111111111111111111111111111111111111112",
+                            id: "So11111111111111111111111111111111111111112",
                             name: "Solana",
                             symbol: "SOL",
                             decimals: 9,
                             logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
                             tags: [],
-                            daily_volume: 0,
-                            freeze_authority: "So11111111111111111111111111111111111111112",
-                            mint_authority: "So11111111111111111111111111111111111111112",
-                            permanent_delegate: null,
+                            freezeAuthority: "So11111111111111111111111111111111111111112",
+                            mintAuthority: "So11111111111111111111111111111111111111112",
+                            permanentDelegate: null,
                             extensions: {},
                         }}
                         isLoading={tokenDataLoading}
                         amount={args.amount}
                     />
                     <ChevronRight className="size-4" />
-                    <Address address={args.to} />
+                    <WalletAddress address={args.to} />
                 </div>
             </div>
             <div className="flex flex-col items-center gap-1">
@@ -71,7 +71,7 @@ const TransferDisplay: React.FC<TransferDisplayProps> = ({ toolCallId, args, fro
                     Cancel
                 </Button>
             </div>
-        </div>
+        </Card>
     );
 };
 

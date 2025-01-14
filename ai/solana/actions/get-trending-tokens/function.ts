@@ -1,8 +1,8 @@
-import { getPrice } from "@/lib/solana";
+import { getPrice } from "@/services/jupiter";
 
 import type { GetTrendingTokensArgumentsType, GetTrendingTokensResultBodyType } from "./types";
 import type { SolanaActionResult } from "../solana-action";
-import type { SolanaToken } from "@/types";
+import type { JupiterTokenData } from "@/services/jupiter";
 
 /**
  * Gets the trending tokens from Jupiter API using the birdeye-trending tag.
@@ -20,7 +20,7 @@ export async function getTrendingTokens(
       throw new Error('Failed to fetch trending tokens');
     }
 
-    let tokens: SolanaToken[] = await response.json();
+    let tokens: JupiterTokenData[] = await response.json();
 
     if (args.limit && args.limit > 0) {
       tokens = tokens.slice(0, args.limit);

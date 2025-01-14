@@ -3,8 +3,9 @@ import React from 'react'
 import ToolCard from '../tool-card';
 
 import type { ToolInvocation } from 'ai';
-import type { GetTrendingTokensResultType } from '@/ai';
-import type { SolanaToken } from '@/types';
+import type { GetTrendingTokensResultBodyType, GetTrendingTokensResultType } from '@/ai';
+import type { JupiterTokenData } from '@/services/jupiter';
+import { Card } from '@/components/ui';
 
 interface Props {
     tool: ToolInvocation,
@@ -23,7 +24,7 @@ const GetTrendingTokens: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     ? `Fetched Trending Tokens`
                     : `Failed to fetch trending tokens`,
                 body: (result: GetTrendingTokensResultType) => result.body 
-                    ? <TrendingTokens tokens={result.body.tokens} prices={result.body.prices} />
+                    ? <TrendingTokens body={result.body} />
                     :  "No trending tokens found"
             }}
             defaultOpen={true}
@@ -32,30 +33,38 @@ const GetTrendingTokens: React.FC<Props> = ({ tool, prevToolAgent }) => {
     )
 }
 
-const TrendingTokens = ({ tokens, prices }: { tokens: SolanaToken[], prices: number[] }) => {
+const TrendingTokens = ({ body }: { body: GetTrendingTokensResultBodyType }) => {
     return (
-        <div className="grid grid-cols-2 gap-4">
-            {tokens.map((token: SolanaToken, index: number) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {body.tokens.map((token: JupiterTokenData, index: number) => (
                 <TokenCard
                     key={token.address} 
                     token={token} 
-                    price={prices[index]}
+                    price={body.prices[index]}
                 />
             ))}
         </div>
     )
 }
 
-const TokenCard = ({ token, price }: { token: SolanaToken, price: number }) => {
+const TokenCard = ({ token, price }: { token: JupiterTokenData, price: number }) => {
     return (
-        <div className="flex items-center gap-2">
-            <img src={token.logoURI} alt={token.name} className="w-10 h-10" />
-            <div className="flex flex-col">
-                <p className="text-md font-bold">{token.name} ({token.symbol})</p>
-                <p className="text-sm text-muted-foreground">${price.toLocaleString()}</p>
-                <p className="text-xs text-muted-foreground">Daily Volume: ${token.daily_volume.toLocaleString()}</p>
+        <Card className="flex flex-col gap-2 p-2 justify-center">
+            <div className="flex flex-row items-center gap-2">
+                <img 
+                    src={token.logoURI} 
+                    alt={token.name} 
+                    className="w-10 h-10 rounded-full" 
+                />
+                <div className="flex flex-col">
+                    <p className="text-sm font-bold">{token.name} ({token.symbol})</p>
+                    <p className="text-xs text-muted-foreground">${price.toLocaleString()}</p>
+                </div>
             </div>
-        </div>
+            <div className="flex flex-col">
+                <p className="text-xs text-muted-foreground">24h Volume: ${token.daily_volume.toLocaleString()}</p>
+            </div>
+        </Card>
     )
 }
 
