@@ -27,9 +27,12 @@ export const GET = async (request: Request, { params }: { params: Promise<{ addr
             };
         }).filter((tokenAccount) => tokenAccount.token_data !== null);
 
-        console.log("token accounts with null data", tokenAccountsWithData.filter((tokenAccount) => tokenAccount.token_data === null));
-
-        const sortedTokenAccountsWithData = tokenAccountsWithData.sort((a, b) => b.amount / (10 ** a.token_data!.decimals) - a.amount / (10 ** b.token_data!.decimals)).slice(0, 100);
+        const sortedTokenAccountsWithData = tokenAccountsWithData
+            .sort((a, b) => b.amount / (10 ** a.token_data!.decimals) - a.amount / (10 ** b.token_data!.decimals))
+            .filter((tokenAccount) => {
+                const tags = tokenAccount.token_data?.tags || [];
+                return tags.includes("community") || tags.includes("verified");
+            });
 
         const priceChunks = [];
         for (let i = 0; i < tokenAccountsWithData.length; i += 25) {
