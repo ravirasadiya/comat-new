@@ -89,12 +89,6 @@ importers:
       '@solana/web3.js':
         specifier: ^1.98.0
         version: 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@streamflow/common':
-        specifier: ^7.2.0
-        version: 7.2.0(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
-      '@streamflow/distributor':
-        specifier: ^7.2.0
-        version: 7.2.0(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
       '@streamflow/stream':
         specifier: ^7.1.1
         version: 7.2.0(@types/react-dom@19.0.3(@types/react@19.0.6))(@types/react@19.0.6)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)(utf-8-validate@5.0.10)
@@ -2854,9 +2848,6 @@ packages:
 
   '@streamflow/common@7.2.0':
     resolution: {integrity: sha512-4u/6GIfG9cOPDT2oDWJ4HvscMGcGSOiO55eoPQFcumeFlftmwzkG8JcZX2EQG+ILT+lAnN5Vtvtz1hIdHSIMEw==}
-
-  '@streamflow/distributor@7.2.0':
-    resolution: {integrity: sha512-v0Xf8UGiHS0OCOGTyIryTs23KzcCmBULJawpaN8ojRcmFm4fK5p/cwpSyhXLvORjydAi0tTRvBJsXLzzu1EgBg==}
 
   '@streamflow/stream@7.2.0':
     resolution: {integrity: sha512-uQWrZAUMah04osZpOcy38QmpLFZ6XfRvzdn1wGlwTkmJdnOthdxPvu9CHoHcpdtP4PHes7xrJhAYjmSpxV7SxQ==}
@@ -12648,27 +12639,6 @@ snapshots:
       '@solana/wallet-adapter-base': 0.9.19(@solana/web3.js@1.95.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/web3.js': 1.95.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       aptos: 1.21.0
-      bn.js: 5.2.1
-      borsh: 2.0.0
-      bs58: 5.0.0
-      p-queue: 8.0.1
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - encoding
-      - fastestsmallesttextencoderdecoder
-      - typescript
-      - utf-8-validate
-
-  '@streamflow/distributor@7.2.0(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@coral-xyz/anchor': 0.30.1(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@coral-xyz/borsh': 0.30.1(@solana/web3.js@1.95.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
-      '@solana/buffer-layout': 4.0.1
-      '@solana/spl-token': 0.4.9(@solana/web3.js@1.95.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-base': 0.9.19(@solana/web3.js@1.95.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.95.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@streamflow/common': 7.2.0(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
       bn.js: 5.2.1
       borsh: 2.0.0
       bs58: 5.0.0
