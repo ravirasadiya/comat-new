@@ -12,7 +12,6 @@ export async function getPrices(tokenIds: string[]) {
     );
 
     if (!response.ok) {
-      console.log(response.status);
       throw new Error(`API request failed with status ${response.status}`);
     }
 
@@ -31,6 +30,5 @@ export async function getPrices(tokenIds: string[]) {
 
 export const getPrice = async (tokenId: string) => {
     const prices = await getPrices([tokenId]);
-    console.log(prices[tokenId]);
     return prices[tokenId].price;
 }

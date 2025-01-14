@@ -20,3 +20,5 @@ export * from "./skeleton";
 export * from "./sheet";
 export * from "./select";
 export * from "./number-ticker";
+export * from "./command";
+export * from "./popover";

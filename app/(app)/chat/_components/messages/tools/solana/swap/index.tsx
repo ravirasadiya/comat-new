@@ -3,7 +3,7 @@ import React from 'react';
 import ToolCard from '../../tool-card';
 
 import SwapCard from './swap-result';
-import SwapCallBody from './swap-call-body';
+import SwapCallBody from './call';
 
 import type { ToolInvocation } from 'ai';
 import type { SolanaTradeResultType, SolanaTradeArgumentsType } from '@/ai';
@@ -24,7 +24,7 @@ const Swap: React.FC<SwapProps> = ({ tool, prevToolAgent }) => {
                     ? "Trade Complete"
                     : "Failed to complete trade",
                 body: (result: SolanaTradeResultType) => result.body 
-                    ? <SwapCard tradeResult={result.body} />
+                    ? <SwapCard />
                     : result.message
             }}
             call={{

@@ -3,6 +3,7 @@ import { QuoteGetRequest } from "@jup-ag/api";
 import { jupiterQuoteApi } from "./client";
   
 export const getQuote = async (inputMint: string, outputMint: string, amount: number) => {
+
 	const params: QuoteGetRequest = {
 		inputMint,
 		outputMint,
