@@ -1,9 +1,8 @@
 import React from 'react';
 
-
 import ToolCard from '../../../tool-card';
 
-import StakeCallBody from './stake-call-body';
+import StakeCallBody from './call';
 import StakeResult from './stake-result';
 
 import type { StakeResultType, StakeArgumentsType } from '@/ai';
@@ -24,7 +23,7 @@ const Stake: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     ? "Stake Complete"
                     : "Failed to Stake",
                 body: (result: StakeResultType) => result.body 
-                    ? <StakeResult amount={tool.args.amount} stakeResult={result.body} />
+                    ? <StakeResult />
                     : result.message
             }}
             call={{

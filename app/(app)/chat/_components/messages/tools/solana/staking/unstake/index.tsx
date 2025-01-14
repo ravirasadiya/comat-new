@@ -2,7 +2,7 @@ import React from 'react';
 
 import ToolCard from '../../../tool-card';
 
-import UnstakeCallBody from './unstake-call-body';
+import UnstakeCallBody from './call';
 import UnstakeResult from './unstake-result';
 
 import type { ToolInvocation } from 'ai';
@@ -24,7 +24,7 @@ const Unstake: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     ? "Unstake Complete"
                     : "Failed to Unstake",
                 body: (result: UnstakeResultType) => result.body 
-                    ? <UnstakeResult amount={tool.args.amount} unstakeResult={result.body} />
+                    ? <UnstakeResult />
                     : result.message
             }}
             call={{

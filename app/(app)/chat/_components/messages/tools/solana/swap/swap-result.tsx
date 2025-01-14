@@ -1,16 +1,10 @@
 import React from 'react';
 
-import type { SolanaTradeResultBodyType } from '@/ai';
-
-interface Props {
-    tradeResult: SolanaTradeResultBodyType;
-}
-
-const SwapResult: React.FC<Props> = ({ tradeResult }) => {
+const SwapResult: React.FC = () => {
 
     return (
         <p className="text-xs text-muted-foreground">
-            Swapped {tradeResult.inputAmount} {tradeResult.inputToken} for {tradeResult.outputToken}
+            Swapped Successfully
         </p>
     );
 };
