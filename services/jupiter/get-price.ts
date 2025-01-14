@@ -5,39 +5,32 @@ import { FetchPriceResponse } from "solana-agent-kit";
  * @param tokenId The token's mint address
  * @returns Price response with USDC price if successful
  */
-export async function getPrice(tokenId: string): Promise<FetchPriceResponse> {
+export async function getPrices(tokenIds: string[]) {
   try {
     const response = await fetch(
-      `https://api.jup.ag/price/v2?ids=${tokenId}`
+      `https://api.jup.ag/price/v2?ids=${tokenIds.join(",")}`
     );
 
     if (!response.ok) {
+      console.log(response.status);
       throw new Error(`API request failed with status ${response.status}`);
     }
 
     const data = await response.json();
 
-    if (!data.data || !data.data[tokenId]) {
-      return {
-        status: "error",
-        message: "Token price not found",
-        code: "TOKEN_NOT_FOUND"
-      };
+    if (!data.data) {
+      return Object.fromEntries(tokenIds.map((tokenId) => [tokenId, { price: 0 }]));
     }
 
-    const price = data.data[tokenId].price;
-
-    return {
-      status: "success",
-      tokenId,
-      priceInUSDC: price
-    };
+    return data.data;
 
   } catch (error) {
-    return {
-      status: "error",
-      message: error instanceof Error ? error.message : "Unknown error occurred",
-      code: "API_ERROR"
-    };
+    return Object.fromEntries(tokenIds.map((tokenId) => [tokenId, { price: 0 }]));
   }
+}
+
+export const getPrice = async (tokenId: string) => {
+    const prices = await getPrices([tokenId]);
+    console.log(prices[tokenId]);
+    return prices[tokenId].price;
 }

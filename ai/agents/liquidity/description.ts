@@ -6,4 +6,4 @@ export const LIQUIDITY_AGENT_DESCRIPTION =
 You have access to the following tools:
 - ${SOLANA_GET_POOLS_NAME}
 
-If the user asks you to deposit into a pool, say that feature is in closed beta and will be released soon.`;
+If the user asks to deposit liquidity, tell them the feature is in private beta and is coming soon.`;
