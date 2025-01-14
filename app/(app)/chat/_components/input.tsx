@@ -21,7 +21,7 @@ const ChatInput: React.FC = () => {
 
     const { user } = usePrivy();
 
-    const { input, setInput, onSubmit, isLoading, model, setModel } = useChat();
+    const { input, setInput, onSubmit, isLoading, model, setModel, inputDisabledMessage } = useChat();
 
     const { onKeyDown } = useEnterSubmit({ onSubmit: onSubmit })
 
@@ -44,23 +44,25 @@ const ChatInput: React.FC = () => {
                     isLoading && "opacity-50 cursor-not-allowed"
                 )}
             >
-                <Textarea
-                    ref={inputRef}
-                    tabIndex={0}
-                    onKeyDown={onKeyDown}
-                    placeholder="Ask the hive anything..."
-                    className={cn(
-                        "w-full max-h-60 resize-none bg-transparent px-3 py-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-600 dark:placeholder:text-neutral-400 disabled:cursor-not-allowed disabled:opacity-50",
-                        "focus-visible:outline-none",
-                        "dark:placeholder:text-neutral-400",
-                    )}
-                    value={input}
-                    onChange={e => {
-                        setInput(e.target.value);
-                    }}
-                    disabled={isLoading || !user}
-                    autoFocus
-                />
+                <OptionalTooltip text={inputDisabledMessage}>
+                    <Textarea
+                        ref={inputRef}
+                        tabIndex={0}
+                        onKeyDown={onKeyDown}
+                        placeholder="Ask the hive anything..."
+                        className={cn(
+                            "w-full max-h-60 resize-none bg-transparent px-3 py-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-600 dark:placeholder:text-neutral-400 disabled:cursor-not-allowed disabled:opacity-50",
+                            "focus-visible:outline-none",
+                            "dark:placeholder:text-neutral-400",
+                        )}
+                        value={input}
+                        onChange={e => {
+                            setInput(e.target.value);
+                        }}
+                        disabled={isLoading || !user || inputDisabledMessage !== ''}
+                        autoFocus
+                    />
+                </OptionalTooltip>
                 <div className="flex items-center justify-between px-2 pb-2">
                     <ModelSelector
                         model={model}
@@ -87,6 +89,20 @@ const ChatInput: React.FC = () => {
                 </div>
             </form>
         </div>
+    );
+};
+
+const OptionalTooltip = ({ children, text }: { children: React.ReactNode, text: string }) => {
+
+    if(text === '') return children;
+
+    return (
+        <TooltipProvider>
+            <Tooltip delayDuration={0}>
+                <TooltipTrigger>{children}</TooltipTrigger>
+                <TooltipContent side="top">{text}</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     );
 };
 
