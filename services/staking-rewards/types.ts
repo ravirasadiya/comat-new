@@ -5,14 +5,14 @@ export interface StakingMetric {
 }
 
 export interface StakingProvider {
-    name: string;
     slug: string;
-    logoUrl: string;
     isVerified: boolean;
 }
 
 export interface OutputAsset {
     symbol: string;
+    name: string;
+    logoUrl: string;
 }
 
 export interface RewardOption {

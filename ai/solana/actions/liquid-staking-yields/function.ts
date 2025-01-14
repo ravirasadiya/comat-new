@@ -20,7 +20,7 @@ export async function getLiquidStakingYields(
     return {
       message: `Found ${bestLiquidStaking.data.rewardOptions.length} best liquid staking yields. The user has been shown the options in the UI, ask them which they want to use. DO NOT REITERATE THE OPTIONS IN TEXT.`,
       body: (await Promise.all(bestLiquidStaking.data.rewardOptions.map(async (option) => ({
-        name: option.providers[0].name,
+        name: option.outputAssets[0].name,
         yield: option.metrics.find((metric) => metric.metricKey === "reward_rate")?.defaultValue ?? 0,
         tokenData: await getTokenBySymbol(option.outputAssets[0].symbol)
       })))).filter((item) => item.tokenData !== undefined) as LiquidStakingYieldsResultBodyType
