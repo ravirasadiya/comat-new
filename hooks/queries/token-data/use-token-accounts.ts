@@ -13,7 +13,7 @@ const fetcher = async (url: string) => {
 };
 
 export const useTokenAccounts = (address: string | undefined) => {
-    const { data, isLoading, error, mutate } = useSWR<(TokenAccount & { token_data: Token })[]>(
+    const { data, isLoading, error, mutate } = useSWR<(TokenAccount & { token_data: Token, price: number })[]>(
         address ? `/api/token-accounts/owner/${address}` : null,
         fetcher
     );
