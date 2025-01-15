@@ -34,7 +34,7 @@ const TokenSelect: React.FC<Props> = ({ value, onChange }) => {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <div
-                    className="w-fit shrink-0 flex items-center hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-md px-2 py-1 gap-2 cursor-pointer transition-colors duration-200"
+                    className="w-fit shrink-0 flex items-center bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 rounded-md px-2 py-1 gap-2 cursor-pointer transition-colors duration-200"
                 >
                     {
                         value ? (

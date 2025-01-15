@@ -8,7 +8,7 @@ import { ArrowUpRight, Copy } from 'lucide-react';
 
 import { Button, Skeleton, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui';
 
-import { useTokenAccounts } from '@/hooks';
+import { usePortfolio } from '@/hooks';
 
 import { cn } from '@/lib/utils';
 import TokenBalance from './token-balance';
@@ -58,9 +58,7 @@ const WalletAddress: React.FC<Props> = ({ address, className }) => {
 
 const WalletBalances = ({ address }: { address: string }) => {
 
-    const { data: tokenAccounts, isLoading: tokenAccountsLoading } = useTokenAccounts(address);
-
-    const totalBalance = tokenAccounts.reduce((acc, account) => acc + account.amount / (10 ** account.token_data.decimals) * account.price, 0);
+    const { data: portfolio, isLoading: portfolioLoading } = usePortfolio(address);
 
     return (
         <div className="flex flex-col gap-4">
@@ -69,25 +67,38 @@ const WalletBalances = ({ address }: { address: string }) => {
                     Balances
                 </h3>
                 {
-                    tokenAccountsLoading ? (
+                    portfolioLoading ? (
                         <Skeleton className="h-4 w-24" /> 
                     ) : (
-                        <p className="text-xs font-bold">
-                            ${totalBalance.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-                        </p>
+                        portfolio && (
+                            <p className="text-xs font-bold">
+                                ${portfolio.totalUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                            </p>
+                        )
                     )
                 }
             </div>
             {
-                tokenAccountsLoading ? (
-                    <Skeleton className="h-8 w-full" />
+                portfolioLoading ? (
+                    <Skeleton className="h-16 w-full" />
                 ) : (
-                    <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
-                        {tokenAccounts.map((account) => (
-                            <TokenBalance key={account.token_data.id} balance={account.amount / (10 ** account.token_data.decimals)} logoURI={account.token_data.logoURI} name={account.token_data.name} symbol={account.token_data.symbol} price={account.price} />
-                        )) || <p className="text-sm text-muted-foreground">No balances found</p>
-                    }
-                    </div>
+                    portfolio ? (
+                        <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
+                            {portfolio.items.filter((item) => item.valueUsd > 0.01).map((token) => (
+                                <TokenBalance 
+                                    key={token.address}
+                                    symbol={token.symbol}
+                                    balance={token.uiAmount}
+                                    logoURI={token.logoURI}
+                                    name={token.name}
+                                    price={token.priceUsd}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-sm text-muted-foreground">No balances found</p>
+                    )
+                    
                 )
             }
         </div>

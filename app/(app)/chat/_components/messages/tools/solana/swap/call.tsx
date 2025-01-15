@@ -25,7 +25,7 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
     const { data: outputTokenData, isLoading: outputTokenLoading } = useTokenDataByAddress(args.outputMint || "");
     
     return (
-        <Card className="p-4">
+        <Card className="p-2">
             {
                 inputTokenLoading || outputTokenLoading ? (
                     <Skeleton className="h-48 w-96" />
@@ -33,6 +33,8 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
                     <Swap
                         initialInputToken={inputTokenData}
                         initialOutputToken={outputTokenData}
+                        inputLabel="Sell"
+                        outputLabel="Buy"
                         initialInputAmount={args.inputAmount?.toString()}
                         swapText="Swap"
                         swappingText="Swapping..."
