@@ -16,12 +16,14 @@ import {
     Transfer,
     GetTokenAddress,
     GetTopHolders,
-    BubbleMaps
+    BubbleMaps,
+    GetPools,
+    DepositLiquidity,
+    NumHolders,
 } from './solana'
-
 import { SearchRecentTweets } from './twitter'
-
 import { SearchKnowledge } from './knowledge'
+import { InvokeAgent } from './invoke'
 
 import { 
     SOLANA_BALANCE_NAME,
@@ -41,14 +43,12 @@ import {
     SOLANA_TOP_HOLDERS_NAME,
     SOLANA_BUBBLE_MAPS_NAME,
     SOLANA_TOKEN_HOLDERS_NAME,
-    SOLANA_GET_POOLS_NAME
+    SOLANA_GET_POOLS_NAME,
+    INVOKE_AGENT_NAME,
+    SOLANA_DEPOSIT_LIQUIDITY_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
-import { INVOKE_AGENT_NAME } from '@/ai/invoke/actions/invoke-agent/name'
-import { InvokeAgent } from './invoke'
-import NumHolders from './solana/num-holders'
-import { GetPools } from './solana/liquidity'
 
 interface Props {
     tool: ToolInvocationType,
@@ -99,6 +99,8 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <NumHolders tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_GET_POOLS_NAME:
             return <GetPools tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_DEPOSIT_LIQUIDITY_NAME:
+            return <DepositLiquidity tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

@@ -8,7 +8,7 @@ import { useLogin } from '@/hooks'
 import { Wallet } from '@privy-io/react-auth'
 
 interface Props {
-    onComplete?: (wallet: Wallet) => void
+    onComplete?: (wallet: Wallet) => void,
 }
 
 const LogInButton: React.FC<Props> = ({ onComplete }) => {
@@ -23,7 +23,7 @@ const LogInButton: React.FC<Props> = ({ onComplete }) => {
             onClick={() => { if(user) { connectWallet() } else { login() } }}
             className="w-full"
         >
-            Connect Wallet
+            Connect {user?.wallet?.address}
         </Button>
     )
 }
