@@ -9,40 +9,49 @@ import {
     SidebarHeader, 
     SidebarContent, 
     SidebarInset,
-    SidebarTrigger,
-    Separator,
     SidebarFooter,
-    SidebarMenu,
     SidebarMenuItem,
     SidebarMenuButton,
     SidebarSeparator,
+    SidebarMenu as SidebarMenuUI,
 } from '@/components/ui'
 
 
 import AuthButton from './auth-button';
-import ColorModeToggle from './color-mode-toggle';
 import Logo from './logo';
-import ChatsGroup from './chats-group';
+import SidebarMenu from './sidebar-menu';
 
+import OpenSidebarTrigger from './open-sidebar-trigger';
+import ClosedSidebarTrigger from './closed-sidebar-trigger';
+import ColorModeToggle from './color-mode-toggle';
+import MobileNavbar from './mobile-navbar';
 
 interface Props {
     children: React.ReactNode;
 }
 
 const Sidebar: React.FC<Props> = ({ children }) => {
+
     return (
         <>
             <SidebarUI variant="inset" collapsible='icon'>
                 <SidebarHeader>
-                    <Logo />
-                    <AuthButton />
+                    <div className="flex items-center justify-between">
+                        <Logo />
+                        <div className="flex items-center gap-2">
+                            <ColorModeToggle />
+                            <OpenSidebarTrigger />
+                        </div>
+                    </div>
                 </SidebarHeader>
+                <SidebarSeparator />
                 <SidebarContent className="relative">
-                    <ChatsGroup />
+                    <SidebarMenu />
                 </SidebarContent>
                 <SidebarSeparator />
                 <SidebarFooter>
-                    <SidebarMenu>
+                    <SidebarMenuUI>
+                        <AuthButton />
                         <SidebarMenuItem>
                             <SidebarMenuButton 
                                 asChild 
@@ -69,18 +78,13 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                    </SidebarMenu>
+                    </SidebarMenuUI>
                 </SidebarFooter>
             </SidebarUI>
             <SidebarInset>
-                <header className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
-                    <div className="flex items-center gap-2">
-                        <SidebarTrigger />
-                        <Separator orientation="vertical" className="h-4" />    
-                    </div>
-                    <ColorModeToggle />
-                </header>
-                <div className="p-4 flex-1 h-0 overflow-y-hidden">
+                <div className="p-2 pt-0 md:p-4 flex-1 h-0 overflow-y-hidden relative flex flex-col">
+                    <ClosedSidebarTrigger />
+                    <MobileNavbar />
                     {children}
                 </div>
             </SidebarInset>
