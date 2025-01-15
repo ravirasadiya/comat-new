@@ -8,10 +8,11 @@ import { ArrowUpRight, Copy } from 'lucide-react';
 
 import { Button, Skeleton, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui';
 
+import TokenBalance from './token-balance';
+
 import { usePortfolio } from '@/hooks';
 
 import { cn } from '@/lib/utils';
-import TokenBalance from './token-balance';
 
 interface Props {
     address: string;

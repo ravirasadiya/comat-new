@@ -10,5 +10,9 @@ export const knownAddresses: Record<string, { name: string, logo: string }> = {
     "u6PJ8DtQuPFnfmwHbGFULQ4u4EgjDiyYKjVEsynXq2w": {
         name: "Gate.io",
         logo: "/exchanges/gate.png",
+    },
+    "5PAhQiYdLBd6SVdjzBQDxUAEFyDdF5ExNPQfcscnPRj5": {
+        name: "MEXC",
+        logo: "/exchanges/mexc.png",
     }
 } as const;
