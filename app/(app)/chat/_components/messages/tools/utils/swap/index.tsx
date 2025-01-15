@@ -93,7 +93,7 @@ const Swap: React.FC<Props> = ({ initialInputToken, initialOutputToken, initialI
     }, [inputToken, outputToken, inputAmount]);
     
     return (
-        <div className="flex flex-col gap-4 w-96">
+        <div className="flex flex-col gap-4 w-96 max-w-full">
             <div className="flex flex-col gap-2 items-center w-full">
                 <TokenInput
                     amount={inputAmount}

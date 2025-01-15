@@ -29,13 +29,15 @@ const GetTrendingTokens: React.FC<Props> = ({ tool, prevToolAgent }) => {
             }}
             defaultOpen={true}
             prevToolAgent={prevToolAgent}
+            className="w-full"
         />
     )
 }
 
 const TrendingTokens = ({ body }: { body: GetTrendingTokensResultBodyType }) => {
+
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {body.tokens.map((token: JupiterTokenData, index: number) => (
                 <TokenCard
                     key={token.address} 
@@ -58,7 +60,7 @@ const TokenCard = ({ token, price }: { token: JupiterTokenData, price: number })
                 />
                 <div className="flex flex-col">
                     <p className="text-sm font-bold">{token.name} ({token.symbol})</p>
-                    <p className="text-xs text-muted-foreground">${price.toLocaleString()}</p>
+                    <p className="text-xs text-muted-foreground">${price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
                 </div>
             </div>
             <div className="flex flex-col">

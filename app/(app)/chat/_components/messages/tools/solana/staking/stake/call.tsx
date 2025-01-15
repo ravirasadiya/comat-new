@@ -25,10 +25,10 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
     const { data: outputTokenData, isLoading: outputTokenLoading } = useTokenDataByAddress(args.contractAddress);
     
     return (
-        <Card className="p-4">
+        <Card className="p-4 max-w-full">
             {
                 inputTokenLoading || outputTokenLoading ? (
-                    <Skeleton className="h-48 w-96" />
+                    <Skeleton className="h-48 w-96 max-w-full" />
                 ) : (
                     <Swap
                         initialInputToken={inputTokenData}
