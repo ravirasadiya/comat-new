@@ -33,6 +33,8 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
                     <Swap
                         initialInputToken={inputTokenData}
                         initialOutputToken={outputTokenData}
+                        inputLabel="Stake"
+                        outputLabel="Receive"
                         initialInputAmount={args.amount?.toString()}
                         swapText="Stake"
                         swappingText="Staking..."

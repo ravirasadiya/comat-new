@@ -33,6 +33,8 @@ const UnstakeCallBody: React.FC<Props> = ({ toolCallId, args }) => {
                     <Swap
                         initialInputToken={inputTokenData}
                         initialOutputToken={outputTokenData}
+                        inputLabel="Unstake"
+                        outputLabel="Receive"
                         initialInputAmount={args.amount?.toString()}
                         swapText="Unstake"
                         swappingText="Unstaking..."

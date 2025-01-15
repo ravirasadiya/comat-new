@@ -17,6 +17,7 @@ export const useSendTransaction = () => {
     }
 
     return {
+        wallets,
         sendTransaction
     }
 }
