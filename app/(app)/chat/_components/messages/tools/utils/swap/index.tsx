@@ -8,8 +8,6 @@ import { VersionedTransaction } from '@solana/web3.js';
 
 import Decimal from 'decimal.js';
 
-import { useSolanaWallets } from '@privy-io/react-auth';
-
 import { Button, Separator } from '@/components/ui';
 
 import LogInButton from '@/app/(app)/_components/log-in-button';
@@ -49,8 +47,6 @@ const Swap: React.FC<Props> = ({
     onCancel 
 }) => {
 
-    const { wallets } = useSolanaWallets();
-
     const [inputAmount, setInputAmount] = useState<string>(initialInputAmount || "");
     const [inputToken, setInputToken] = useState<Token | null>(initialInputToken);
 
@@ -62,9 +58,9 @@ const Swap: React.FC<Props> = ({
 
     const [isSwapping, setIsSwapping] = useState<boolean>(false);
 
-    const { sendTransaction } = useSendTransaction();
+    const { sendTransaction, wallet } = useSendTransaction();
 
-    const { balance: inputBalance, isLoading: inputBalanceLoading } = useTokenBalance(inputToken?.id || "", wallets[0]?.address || "");
+    const { balance: inputBalance, isLoading: inputBalanceLoading } = useTokenBalance(inputToken?.id || "", wallet?.address || "");
 
     const onChangeInputOutput = () => {
         const tempInputToken = inputToken;
@@ -76,10 +72,10 @@ const Swap: React.FC<Props> = ({
     }
 
     const onSwap = async () => {
-        if(wallets.length === 0 || !quoteResponse) return;
+        if(!wallet || !quoteResponse) return;
         setIsSwapping(true);
         try {
-            const { swapTransaction} = await getSwapObj(wallets[0].address, quoteResponse);
+            const { swapTransaction} = await getSwapObj(wallet.address, quoteResponse);
             const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
             const txHash = await sendTransaction(transaction);
@@ -121,7 +117,7 @@ const Swap: React.FC<Props> = ({
                     onChange={setInputAmount}
                     token={inputToken}
                     onChangeToken={setInputToken}
-                    address={wallets[0]?.address}
+                    address={wallet?.address}
                 />
                 <Button 
                     variant="ghost" 
@@ -136,13 +132,13 @@ const Swap: React.FC<Props> = ({
                     amount={outputAmount}
                     token={outputToken}
                     onChangeToken={setOutputToken}
-                    address={wallets[0]?.address}
+                    address={wallet?.address}
                 />
             </div>
             <Separator />
             <div className="flex flex-col gap-2">
                 {
-                    wallets.length > 0 ? (
+                    wallet ? (
                         <Button 
                             variant="brand" 
                             className="w-full"
