@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import TransactionHash from '@/app/_components/transaction-hash'
+
 import type { SolanaDepositLiquidityResultBodyType } from '@/ai'
 
 interface Props {
@@ -11,9 +13,7 @@ interface Props {
 const DepositLiquidityResult: React.FC<Props> = ({ body }) => {
     
     return (
-        <p>
-            Deposited liquidity into the pool!
-        </p>
+        <TransactionHash hash={body.transaction} />
     )
 }
 

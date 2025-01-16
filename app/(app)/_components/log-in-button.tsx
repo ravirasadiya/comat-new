@@ -17,13 +17,15 @@ const LogInButton: React.FC<Props> = ({ onComplete }) => {
         onComplete
     })
 
+    const address = user?.wallet?.address;
+
     return (
         <Button 
             variant="brand"
             onClick={() => { if(user) { connectWallet() } else { login() } }}
             className="w-full"
         >
-            Connect {user?.wallet?.address}
+            Connect {address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''}
         </Button>
     )
 }

@@ -17,6 +17,7 @@ import { useSendTransaction, useTokenBalance, useTokenDataByAddress } from '@/ho
 import { useChat } from '@/app/(app)/chat/_contexts/chat'
 
 import { raydiumApiClient, raydiumTransactionClient } from '@/services/raydium'
+import { SolanaDepositLiquidityResultBodyType } from '@/ai/solana/actions/raydium/deposit/types'
 
 
 interface Props {
@@ -37,6 +38,8 @@ const StandardPool: React.FC<Props> = ({ pool, toolCallId }) => {
     const [otherAmountMin, setOtherAmountMin] = useState<string>("");
     const [isDepositing, setIsDepositing] = useState<boolean>(false);
 
+    const [slippage] = useState<Percent>(new Percent(25, 1000));
+
     const { sendTransaction, wallet } = useSendTransaction();
 
     const { data: mintA } = useTokenDataByAddress(pool.mintA.address);
@@ -49,13 +52,13 @@ const StandardPool: React.FC<Props> = ({ pool, toolCallId }) => {
         setAmountA(amount);
         setAmountsLoading(true);
         const raydium = await raydiumApiClient;
-        const { anotherAmount, minAnotherAmount } = raydium.liquidity.computePairAmount({
+        const { maxAnotherAmount, minAnotherAmount } = raydium.liquidity.computePairAmount({
             poolInfo: pool,
             amount: amount,
-            slippage: new Percent(5, 100),
+            slippage,
             baseIn: true,
         });
-        setAmountB(anotherAmount.toExact());
+        setAmountB(maxAnotherAmount.toExact());
         setOtherAmountMin(minAnotherAmount.toExact());
         setBaseIn(true);
         setAmountsLoading(false);
@@ -65,13 +68,13 @@ const StandardPool: React.FC<Props> = ({ pool, toolCallId }) => {
         setAmountB(amount);
         setAmountsLoading(true);
         const raydium = await raydiumApiClient;
-        const { anotherAmount, minAnotherAmount } = raydium.liquidity.computePairAmount({
+        const { maxAnotherAmount, minAnotherAmount } = raydium.liquidity.computePairAmount({
             poolInfo: pool,
             amount: amount,
-            slippage: new Percent(5, 100),
+            slippage,
             baseIn: false,
         });
-        setAmountA(anotherAmount.toExact());
+        setAmountA(maxAnotherAmount.toExact());
         setOtherAmountMin(minAnotherAmount.toExact());
         setBaseIn(false);
         setAmountsLoading(false);
@@ -80,31 +83,46 @@ const StandardPool: React.FC<Props> = ({ pool, toolCallId }) => {
     const onSubmit = async () => {
         if(!wallet || !wallet.address) return;
         setIsDepositing(true);
-        const raydium = await raydiumTransactionClient(wallet.address);
-        console.log(amountA, amountB, otherAmountMin, baseIn);
-        const { transaction } = await raydium.liquidity.addLiquidity({
-            poolInfo: pool,
+        console.log({
             amountInA: new TokenAmount(
                 toToken(pool.mintA),
                 new Decimal(amountA).mul(10 ** pool.mintA.decimals).toFixed(0)
-            ),
+            ).toExact(),
             amountInB: new TokenAmount(
-                toToken(pool.mintB),
+                toToken(pool.mintB), 
                 new Decimal(amountB).mul(10 ** pool.mintB.decimals).toFixed(0)
-            ),
+            ).toExact(),
             otherAmountMin: new TokenAmount(
                 toToken(baseIn ? pool.mintA : pool.mintB),
                 new Decimal(otherAmountMin).mul(10 ** (baseIn ? pool.mintA.decimals : pool.mintB.decimals)).toFixed(0)
-            ),
+            ).toExact(),
             fixedSide: baseIn ? "a" : "b",
             txVersion: TxVersion.V0
         });
         try {
-            const tx = await sendTransaction(transaction);
-            addToolResult(toolCallId, {
-                message: "Deposit liquidity successful",
+            const raydium = await raydiumTransactionClient(wallet.address);
+            const { transaction } = await raydium.liquidity.addLiquidity({
+                poolInfo: pool,
+                amountInA: new TokenAmount(
+                    toToken(pool.mintA),
+                    new Decimal(amountA).mul(10 ** pool.mintA.decimals).toFixed(0)
+                ),
+                amountInB: new TokenAmount(
+                    toToken(pool.mintB),
+                    new Decimal(amountB).mul(10 ** pool.mintB.decimals).toFixed(0)
+                ),
+                otherAmountMin: new TokenAmount(
+                    toToken(baseIn ? pool.mintA : pool.mintB),
+                    new Decimal(otherAmountMin).mul(10 ** (baseIn ? pool.mintA.decimals : pool.mintB.decimals)).toFixed(0)
+                ),
+                fixedSide: baseIn ? "a" : "b",
+                txVersion: TxVersion.V0
+            });
+            const txHash = await sendTransaction(transaction);
+            addToolResult<SolanaDepositLiquidityResultBodyType>(toolCallId, {
+                message: "Deposit liquidity successful. The user is shown the transaction hash, so you do not have to repeat it. Ask what they want to do next.",
                 body: {
-                    tx,
+                    transaction: txHash,
                 }
             });
         } catch (error) {

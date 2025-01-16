@@ -4,7 +4,7 @@ import LoginButton from '@/app/(app)/_components/log-in-button';
 
 import ToolCard from '../tool-card';
 
-import { usePrivy, useSolanaWallets, Wallet } from '@privy-io/react-auth';
+import { usePrivy, Wallet } from '@privy-io/react-auth';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 

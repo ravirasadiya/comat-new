@@ -40,7 +40,10 @@ const DepositLiquidityCall: React.FC<Props> = ({ toolCallId, args }) => {
                 ) : (
                     pool ? (
                         pool.type === "Standard" ? (
-                            <StandardPool pool={pool as ApiV3PoolInfoStandardItem} toolCallId={toolCallId} />
+                            <StandardPool 
+                                pool={pool as ApiV3PoolInfoStandardItem} 
+                                toolCallId={toolCallId} 
+                            />
                         ) : (
                             <div>
                                 <p>The Hive does not support {pool.type} pools yet.</p>

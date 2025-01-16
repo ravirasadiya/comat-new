@@ -15,10 +15,10 @@ export async function getLpTokens(args: GetLpTokensArgumentsType): Promise<Solan
         const lpTokens = await getLpTokensByAddress(args.address);
 
         return {
-            message: `Successfully retrieved ${lpTokens.length} LP Tokens for address ${args.address}`,
             body: {
                 lpTokens
-            }
+            },
+            message: `Successfully retrieved ${lpTokens.length} LP Tokens for address ${args.address}. DO NOT REITERATE THESE POOLS, THE USER IS SHOWN THEM IN THE UI.`,
         }
     } catch (error) {
         return {
