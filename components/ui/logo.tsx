@@ -5,10 +5,11 @@ import { cn } from '@/lib/utils'
 
 interface Props {
     className?: string,
-    showText?: boolean
+    showText?: boolean,
+    textClassName?: string
 }
 
-export const Logo: React.FC<Props> = ({ className, showText = false }) => {
+export const Logo: React.FC<Props> = ({ className, showText = false, textClassName }) => {
     return (
         <div className="flex items-center gap-2">
             <Image 
@@ -26,9 +27,9 @@ export const Logo: React.FC<Props> = ({ className, showText = false }) => {
                 className={cn("w-10 h-10 block dark:hidden", className)} 
             />
             {showText && (
-                <span className="text-lg font-bold">
+                <h3 className={cn("text-lg font-bold", textClassName)}>
                     The Hive
-                </span>
+                </h3>
             )}
         </div>
     )

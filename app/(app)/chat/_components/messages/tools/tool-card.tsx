@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 import type { ToolInvocation } from 'ai'
 import type { BaseActionResult } from '@/ai'
 import { getAgentIcon, getAgentName } from './tool-to-agent'
+import { ChevronDown } from 'lucide-react'
 
 interface Props<ActionResultBodyType, ActionArgsType> {
     tool: ToolInvocation,
@@ -52,12 +53,14 @@ const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, loadingText, res
                             : <Icon name="X" className="w-4 h-4 text-red-500 dark:text-red-400" />)
                         : <Icon name={agentIcon} className="w-4 h-4 text-neutral-500 dark:text-neutral-400" />
                 }
-                <p className="text-lg font-bold">{agentName}</p>
+                <p className="text-sm md:text-lg font-bold">{agentName}</p>
             </div>
             <div>
                 {
                     tool.state === "partial-call" ? (
-                        <AnimatedShinyText>
+                        <AnimatedShinyText
+                            className="text-sm"
+                        >
                             {loadingText}
                         </AnimatedShinyText>
                     ) : (
@@ -70,14 +73,19 @@ const ToolCard = <ActionResultBodyType, ActionArgsType>({ tool, loadingText, res
                                     </div>
                                 ) 
                                 : (
-                                    <AnimatedShinyText>
+                                    <AnimatedShinyText
+                                        className="text-sm"
+                                    >
                                         {loadingText}
                                     </AnimatedShinyText>
                                 )
                         ) : (
                             <Collapsible defaultOpen={defaultOpen}>
-                                <CollapsibleTrigger className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
+                                <CollapsibleTrigger 
+                                    className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:underline"
+                                >
                                     <p className="text-sm">{result.heading(tool.result)}</p>
+                                    <ChevronDown className="w-4 h-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                                 </CollapsibleTrigger>
                                 <CollapsibleContent className="text-sm pt-2">
                                     {result.body(tool.result)}

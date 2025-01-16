@@ -3,8 +3,8 @@ import React from 'react';
 
 import ToolCard from '../../tool-card';
 
-import TransferCallBody from './transfer-call-body';
-import TransferResult from './transfer-result';
+import TransferCallBody from './call';
+import TransferResult from './result';
 
 import type { SolanaTransferArgumentsType, SolanaTransferResultType } from '@/ai';
 import type { ToolInvocation } from 'ai';

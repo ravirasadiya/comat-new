@@ -14,11 +14,12 @@ const LIQUID_STAKING_QUERY = (limit: number) => `
         ) {
             outputAssets(limit: 1) {
                 symbol
+                name
+                logoUrl
             }
             providers(limit: 1) {
                 name
                 slug
-                logoUrl
                 isVerified
             }
             metrics(

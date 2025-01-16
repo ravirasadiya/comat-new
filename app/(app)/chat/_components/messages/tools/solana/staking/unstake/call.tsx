@@ -10,7 +10,7 @@ import { useTokenDataByAddress } from '@/hooks';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
-import type { UnstakeArgumentsType } from '@/ai';
+import { UnstakeResultBodyType, type UnstakeArgumentsType } from '@/ai';
 
 interface Props {
     toolCallId: string,
@@ -25,22 +25,26 @@ const UnstakeCallBody: React.FC<Props> = ({ toolCallId, args }) => {
     const { data: outputTokenData, isLoading: outputTokenLoading } = useTokenDataByAddress("So11111111111111111111111111111111111111112");
     
     return (
-        <Card className="p-4">
+        <Card className="p-4 max-w-full">
             {
                 inputTokenLoading || outputTokenLoading ? (
-                    <Skeleton className="h-48 w-96" />
+                    <Skeleton className="h-48 w-96 max-w-full" />
                 ) : (
                     <Swap
                         initialInputToken={inputTokenData}
                         initialOutputToken={outputTokenData}
+                        inputLabel="Unstake"
+                        outputLabel="Receive"
                         initialInputAmount={args.amount?.toString()}
                         swapText="Unstake"
                         swappingText="Unstaking..."
                         onSuccess={(tx) => {
-                            addToolResult(toolCallId, {
+                            addToolResult<UnstakeResultBodyType>(toolCallId, {
                                 message: `Unstake successful!`,
                                 body: {
-                                    tx
+                                    tx,
+                                    inputAmount: args.amount || 0,
+                                    symbol: outputTokenData?.symbol || "",
                                 }
                             });
                         }}

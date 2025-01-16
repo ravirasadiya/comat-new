@@ -10,7 +10,7 @@ import { useTokenDataByAddress } from '@/hooks';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
-import type { StakeArgumentsType } from '@/ai';
+import type { StakeArgumentsType, StakeResultBodyType } from '@/ai';
 
 interface Props {
     toolCallId: string,
@@ -25,22 +25,25 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
     const { data: outputTokenData, isLoading: outputTokenLoading } = useTokenDataByAddress(args.contractAddress);
     
     return (
-        <Card className="p-4">
+        <Card className="p-4 max-w-full">
             {
                 inputTokenLoading || outputTokenLoading ? (
-                    <Skeleton className="h-48 w-96" />
+                    <Skeleton className="h-48 w-96 max-w-full" />
                 ) : (
                     <Swap
                         initialInputToken={inputTokenData}
                         initialOutputToken={outputTokenData}
+                        inputLabel="Stake"
+                        outputLabel="Receive"
                         initialInputAmount={args.amount?.toString()}
                         swapText="Stake"
                         swappingText="Staking..."
                         onSuccess={(tx) => {
-                            addToolResult(toolCallId, {
+                            addToolResult<StakeResultBodyType>(toolCallId, {
                                 message: `Stake successful!`,
                                 body: {
-                                    tx
+                                    tx,
+                                    symbol: outputTokenData?.symbol || "",
                                 }
                             });
                         }}

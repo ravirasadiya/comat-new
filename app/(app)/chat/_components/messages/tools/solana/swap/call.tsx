@@ -10,7 +10,7 @@ import { useTokenDataByAddress } from '@/hooks';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
-import type { SolanaTradeArgumentsType } from '@/ai';
+import type { SolanaTradeArgumentsType, SolanaTradeResultBodyType } from '@/ai';
 
 interface Props {
     toolCallId: string,
@@ -25,7 +25,7 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
     const { data: outputTokenData, isLoading: outputTokenLoading } = useTokenDataByAddress(args.outputMint || "");
     
     return (
-        <Card className="p-4">
+        <Card className="p-2">
             {
                 inputTokenLoading || outputTokenLoading ? (
                     <Skeleton className="h-48 w-96" />
@@ -33,14 +33,19 @@ const SwapCallBody: React.FC<Props> = ({ toolCallId, args }) => {
                     <Swap
                         initialInputToken={inputTokenData}
                         initialOutputToken={outputTokenData}
+                        inputLabel="Sell"
+                        outputLabel="Buy"
                         initialInputAmount={args.inputAmount?.toString()}
                         swapText="Swap"
                         swappingText="Swapping..."
                         onSuccess={(tx) => {
-                            addToolResult(toolCallId, {
+                            addToolResult<SolanaTradeResultBodyType>(toolCallId, {
                                 message: `Swap successful!`,
                                 body: {
-                                    tx
+                                    transaction: tx,
+                                    inputAmount: args.inputAmount || 0,
+                                    inputToken: inputTokenData?.symbol || "",
+                                    outputToken: outputTokenData?.symbol || "",
                                 }
                             });
                         }}

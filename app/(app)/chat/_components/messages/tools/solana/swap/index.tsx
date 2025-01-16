@@ -35,6 +35,7 @@ const Swap: React.FC<SwapProps> = ({ tool, prevToolAgent }) => {
             }}
             defaultOpen={true}
             prevToolAgent={prevToolAgent}
+            className="max-w-full"
         />
     );
 };

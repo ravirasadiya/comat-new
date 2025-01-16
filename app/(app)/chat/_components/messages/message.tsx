@@ -33,7 +33,7 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
     return (
         <div className={cn(
             // base styles
-            "flex w-full px-2 py-4 max-w-full last:border-b-0 first:pt-0",
+            "flex w-full px-2 py-4 max-w-full last:border-b-0 md:first:pt-0 h-fit",
             // mobile styles
             "flex-col gap-2",
             // desktop styles
@@ -45,17 +45,17 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
 
         )}>
             <div className={cn(
-                "flex items-center md:items-start gap-4",
+                "flex items-center md:items-start gap-2 md:gap-4",
                 previousMessageSameRole && "hidden md:block"
             )}>
                 <div className={cn(
-                    "flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full",
+                    "hidden md:flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full",
                     isUser && "bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700",
                     previousMessageSameRole && "opacity-0"
                 )}>
                     {
                         isUser ? (
-                            <Avatar>
+                            <Avatar className="w-10 h-10">
                                 <AvatarFallback>
                                     <Icon name="User" className="w-4 h-4 md:w-6 md:h-6" />
                                 </AvatarFallback>
@@ -67,18 +67,18 @@ const Message: React.FC<Props> = ({ message, className, previousMessage, nextMes
                             </Avatar>
                             
                         ) : (
-                            <Logo className="w-6 h-6 md:w-10 md:h-10" />
+                            <Logo className='h-10 w-10' />
                         )
                     }
                 </div>
                 <p className={cn(
                     "text-sm font-semibold md:hidden",
-                    isUser ? "text-neutral-900 dark:text-neutral-100" : "text-brand-500 dark:text-brand-500"
+                    isUser ? "text-neutral-900 dark:text-neutral-100" : "text-brand-600 dark:text-brand-600"
                 )}>
                     {message.role === 'user' ? 'You' : 'The Hive'}
                 </p>
             </div>
-            <div className="md:pt-2 w-full max-w-full md:flex-1 md:w-0 overflow-hidden flex flex-col gap-2">
+            <div className="pt-2 w-full max-w-full md:flex-1 md:w-0 overflow-hidden flex flex-col gap-2">
                 {
                     message.content && (
                         <MessageMarkdown content={message.content} />

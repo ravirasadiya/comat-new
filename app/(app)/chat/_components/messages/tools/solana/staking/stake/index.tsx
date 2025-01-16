@@ -34,6 +34,7 @@ const Stake: React.FC<Props> = ({ tool, prevToolAgent }) => {
             }}
             defaultOpen={true}
             prevToolAgent={prevToolAgent}
+            className="max-w-full"
         />
     );
 };

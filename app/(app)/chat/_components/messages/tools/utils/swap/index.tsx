@@ -8,9 +8,7 @@ import { VersionedTransaction } from '@solana/web3.js';
 
 import Decimal from 'decimal.js';
 
-import { useSolanaWallets } from '@privy-io/react-auth';
-
-import { Button } from '@/components/ui';
+import { Button, Separator } from '@/components/ui';
 
 import LogInButton from '@/app/(app)/_components/log-in-button';
 
@@ -26,6 +24,8 @@ import type { Token } from '@/db/types';
 interface Props {
     initialInputToken: Token | null,    
     initialOutputToken: Token | null,
+    inputLabel: string,
+    outputLabel: string,
     initialInputAmount?: string,
     swapText?: string,
     swappingText?: string,
@@ -34,9 +34,18 @@ interface Props {
     onCancel?: () => void,
 }
 
-const Swap: React.FC<Props> = ({ initialInputToken, initialOutputToken, initialInputAmount, swapText, swappingText, onSuccess, onError, onCancel }) => {
-
-    const { wallets } = useSolanaWallets();
+const Swap: React.FC<Props> = ({ 
+    initialInputToken, 
+    initialOutputToken, 
+    inputLabel, 
+    outputLabel, 
+    initialInputAmount, 
+    swapText, 
+    swappingText,
+    onSuccess, 
+    onError, 
+    onCancel 
+}) => {
 
     const [inputAmount, setInputAmount] = useState<string>(initialInputAmount || "");
     const [inputToken, setInputToken] = useState<Token | null>(initialInputToken);
@@ -49,9 +58,9 @@ const Swap: React.FC<Props> = ({ initialInputToken, initialOutputToken, initialI
 
     const [isSwapping, setIsSwapping] = useState<boolean>(false);
 
-    const { sendTransaction } = useSendTransaction();
+    const { sendTransaction, wallet } = useSendTransaction();
 
-    const { balance: inputBalance, isLoading: inputBalanceLoading } = useTokenBalance(inputToken?.id || "", wallets[0]?.address || "");
+    const { balance: inputBalance, isLoading: inputBalanceLoading } = useTokenBalance(inputToken?.id || "", wallet?.address || "");
 
     const onChangeInputOutput = () => {
         const tempInputToken = inputToken;
@@ -63,10 +72,10 @@ const Swap: React.FC<Props> = ({ initialInputToken, initialOutputToken, initialI
     }
 
     const onSwap = async () => {
-        if(wallets.length === 0 || !quoteResponse) return;
+        if(!wallet || !quoteResponse) return;
         setIsSwapping(true);
         try {
-            const { swapTransaction} = await getSwapObj(wallets[0].address, quoteResponse);
+            const { swapTransaction} = await getSwapObj(wallet.address, quoteResponse);
             const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
             const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
             const txHash = await sendTransaction(transaction);
@@ -79,7 +88,7 @@ const Swap: React.FC<Props> = ({ initialInputToken, initialOutputToken, initialI
     }
 
     useEffect(() => {
-        if (inputToken && outputToken && inputAmount && Number(inputAmount) > 0) {
+        if (inputToken && outputToken) {
             const fetchQuoteAndUpdate = async () => {
                 setIsQuoteLoading(true);
                 setOutputAmount("");
@@ -88,62 +97,74 @@ const Swap: React.FC<Props> = ({ initialInputToken, initialOutputToken, initialI
                 setOutputAmount(new Decimal(quote.outAmount).div(new Decimal(10).pow(outputToken.decimals)).toString());
                 setIsQuoteLoading(false);
             }
-            fetchQuoteAndUpdate();
+
+
+            if (inputAmount && Number(inputAmount) > 0) {
+                fetchQuoteAndUpdate();
+            } else {
+                setQuoteResponse(null);
+                setOutputAmount("");
+            }
         }
     }, [inputToken, outputToken, inputAmount]);
     
     return (
-        <div className="flex flex-col gap-4 w-96">
+        <div className="flex flex-col gap-4 w-96 max-w-full">
             <div className="flex flex-col gap-2 items-center w-full">
                 <TokenInput
+                    label={inputLabel}
                     amount={inputAmount}
                     onChange={setInputAmount}
                     token={inputToken}
                     onChangeToken={setInputToken}
-                    address={wallets[0]?.address}
+                    address={wallet?.address}
                 />
                 <Button 
                     variant="ghost" 
                     size="icon"
-                    className="group"
+                    className="group h-fit w-fit p-1"
                     onClick={onChangeInputOutput}
                 >
                     <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
                 </Button>
                 <TokenInput
+                    label={outputLabel}
                     amount={outputAmount}
                     token={outputToken}
                     onChangeToken={setOutputToken}
-                    address={wallets[0]?.address}
+                    address={wallet?.address}
                 />
             </div>
-            {
-                wallets.length > 0 ? (
-                    <Button 
-                        variant="brand" 
-                        className="w-full"
-                        onClick={onSwap}
-                        disabled={isSwapping || isQuoteLoading || !quoteResponse || !inputToken || !outputToken || !inputAmount || !outputAmount || !inputBalance || inputBalanceLoading || Number(inputAmount) > Number(inputBalance)}
-                    >
-                        {
-                            isQuoteLoading 
-                                ? "Loading..." 
-                                : Number(inputAmount) > Number(inputBalance)
-                                    ? "Insufficient balance"
-                                    : isSwapping
-                                        ? swappingText || "Swapping..."
-                                        : swapText || "Swap"
-                        }
-                    </Button>
-                ) : (
-                    <LogInButton />
-                )
-            }
-            {
-                onCancel && (
-                    <Button variant="ghost" className="w-full" onClick={onCancel}>Cancel</Button>
-                )
-            }
+            <Separator />
+            <div className="flex flex-col gap-2">
+                {
+                    wallet ? (
+                        <Button 
+                            variant="brand" 
+                            className="w-full"
+                            onClick={onSwap}
+                            disabled={isSwapping || isQuoteLoading || !quoteResponse || !inputToken || !outputToken || !inputAmount || !outputAmount || !inputBalance || inputBalanceLoading || Number(inputAmount) > Number(inputBalance)}
+                        >
+                            {
+                                isQuoteLoading 
+                                    ? "Loading..." 
+                                    : Number(inputAmount) > Number(inputBalance)
+                                        ? "Insufficient balance"
+                                        : isSwapping
+                                            ? swappingText || "Swapping..."
+                                            : swapText || "Swap"
+                            }
+                        </Button>
+                    ) : (
+                        <LogInButton />
+                    )
+                }
+                {
+                    onCancel && (
+                        <Button variant="ghost" className="w-full" onClick={onCancel}>Cancel</Button>
+                    )
+                }
+            </div>
         </div>
     )
 }
