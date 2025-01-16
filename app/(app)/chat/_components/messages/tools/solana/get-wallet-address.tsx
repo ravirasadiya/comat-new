@@ -4,7 +4,7 @@ import LoginButton from '@/app/(app)/_components/log-in-button';
 
 import ToolCard from '../tool-card';
 
-import { useSolanaWallets, Wallet } from '@privy-io/react-auth';
+import { usePrivy, useSolanaWallets, Wallet } from '@privy-io/react-auth';
 
 import { useChat } from '@/app/(app)/chat/_contexts/chat';
 
@@ -41,20 +41,20 @@ const GetWalletAddress: React.FC<Props> = ({ tool, prevToolAgent }) => {
 
 const GetWalletAddressAction = ({ toolCallId }: { toolCallId: string }) => {
 
+    const { user } = usePrivy();
+
     const { addToolResult } = useChat();
 
-    const { wallets } = useSolanaWallets();
-
     useEffect(() => {
-        if(wallets.length) {
+        if(user?.wallet?.address) {
             addToolResult(toolCallId, {
                 message: "Wallet connected",
                 body: {
-                    address: wallets[0].address
+                    address: user.wallet.address
                 }
             });
         }
-    }, [wallets]);
+    }, [user]);
 
     const onComplete = (wallet: Wallet) => {
         addToolResult(toolCallId, {

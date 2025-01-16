@@ -20,6 +20,7 @@ import {
     GetPools,
     DepositLiquidity,
     NumHolders,
+    GetLpTokens,
 } from './solana'
 import { SearchRecentTweets } from './twitter'
 import { SearchKnowledge } from './knowledge'
@@ -45,7 +46,8 @@ import {
     SOLANA_TOKEN_HOLDERS_NAME,
     SOLANA_GET_POOLS_NAME,
     INVOKE_AGENT_NAME,
-    SOLANA_DEPOSIT_LIQUIDITY_NAME
+    SOLANA_DEPOSIT_LIQUIDITY_NAME,
+    SOLANA_GET_LP_TOKENS_NAME
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -101,6 +103,8 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <GetPools tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_DEPOSIT_LIQUIDITY_NAME:
             return <DepositLiquidity tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_GET_LP_TOKENS_NAME:
+            return <GetLpTokens tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

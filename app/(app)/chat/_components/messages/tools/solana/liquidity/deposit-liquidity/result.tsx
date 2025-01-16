@@ -8,7 +8,7 @@ interface Props {
     body: SolanaDepositLiquidityResultBodyType
 }
 
-const GetPoolsResult: React.FC<Props> = ({ }) => {
+const DepositLiquidityResult: React.FC<Props> = ({ body }) => {
     
     return (
         <p>
@@ -17,4 +17,4 @@ const GetPoolsResult: React.FC<Props> = ({ }) => {
     )
 }
 
-export default GetPoolsResult;
+export default DepositLiquidityResult;

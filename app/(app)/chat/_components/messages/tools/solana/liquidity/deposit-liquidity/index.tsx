@@ -26,7 +26,7 @@ const DepositLiquidity: React.FC<Props> = ({ tool, prevToolAgent }) => {
                 body: (result: SolanaDepositLiquidityResultType) => result.body 
                     ? (
                         <DepositLiquidityResult body={result.body} />
-                    ) : "Failed to deposit liquidity"
+                    ) : result.message
             }}
             prevToolAgent={prevToolAgent}
             call={{
