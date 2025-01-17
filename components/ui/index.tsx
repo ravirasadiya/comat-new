@@ -9,6 +9,7 @@ export * from "./collapsible";
 export * from "./progress";
 export * from "./chart";
 export * from "./alert-dialog";
+export * from "./dialog";
 export * from "./sidebar";
 export * from "./avatar";
 export * from "./dropdown-menu";

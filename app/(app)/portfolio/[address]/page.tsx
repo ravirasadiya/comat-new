@@ -8,6 +8,7 @@ import { getPortfolio } from '@/services/birdeye';
 import { getLpPortfolio } from '@/services/raydium';
 import { getTransactionHistory } from '@/services/helius';
 import Transactions from './_components/transactions';
+import { SwapModalProvider } from './_contexts/use-swap-modal';
 
 const Portfolio = async ({ params }: { params: Promise<{ address: string }> }) => {
 
@@ -24,21 +25,23 @@ const Portfolio = async ({ params }: { params: Promise<{ address: string }> }) =
     ])
 
     return (
-        <div className="max-w-4xl mx-auto w-full flex flex-col gap-8 md:pt-4 h-full overflow-y-scroll no-scrollbar">
-            <Header
-                address={address}
-            />
-            <Tokens
-                portfolio={portfolio}
-            />
-            <LiquidityPools
-                portfolio={lpPortfolio}
-            />
-            <Transactions
-                transactions={transactions}
-                address={address}
-            />
-        </div>
+        <SwapModalProvider>
+            <div className="max-w-4xl mx-auto w-full flex flex-col gap-8 md:pt-4 h-full overflow-y-scroll no-scrollbar">
+                <Header
+                    address={address}
+                />
+                <Tokens
+                    portfolio={portfolio}
+                />
+                <LiquidityPools
+                    portfolio={lpPortfolio}
+                />
+                <Transactions
+                    transactions={transactions}
+                    address={address}
+                />
+            </div>
+        </SwapModalProvider>
     )
 }
 
