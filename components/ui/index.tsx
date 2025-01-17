@@ -22,3 +22,5 @@ export * from "./select";
 export * from "./number-ticker";
 export * from "./command";
 export * from "./popover";
+export * from "./animated-beam";
+export * from "./table";
