@@ -4,7 +4,6 @@ import ToolCard from '../tool-card';
 
 import type { ToolInvocation } from 'ai';
 import type { GetTrendingTokensResultBodyType, GetTrendingTokensResultType } from '@/ai';
-import type { JupiterTokenData } from '@/services/jupiter';
 import { Card } from '@/components/ui';
 import { TrendingToken } from '@/services/birdeye';
 
@@ -39,7 +38,7 @@ const TrendingTokens = ({ body }: { body: GetTrendingTokensResultBodyType }) => 
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {body.tokens.map((token: TrendingToken, index: number) => (
+            {body.tokens.map((token: TrendingToken) => (
                 <TokenCard
                     key={token.address} 
                     token={token} 

@@ -4,3 +4,4 @@ export * from './price';
 export * from './trending';
 export * from './top-traders';
 export * from './trades';
+export * from './top-traders-by-token';

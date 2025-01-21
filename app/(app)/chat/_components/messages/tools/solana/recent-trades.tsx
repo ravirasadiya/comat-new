@@ -1,14 +1,8 @@
 import React, { useState } from 'react'
 
-import Image from 'next/image';
-
 import { Button, Card, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui';
 
-import WalletAddress from '@/app/_components/wallet-address';
-
 import ToolCard from '../tool-card';
-
-import { knownAddresses } from '@/lib/known-addresses';
 
 import type { ToolInvocation } from 'ai';
 import type { GetTraderTradesResultBodyType, GetTraderTradesResultType } from '@/ai';
@@ -48,8 +42,7 @@ const TradesTable = ({ body }: { body: GetTraderTradesResultBodyType }) => {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="text-center">Asset</TableHead>
-                        <TableHead className="text-center">Buy Volume</TableHead>
-                        <TableHead className="text-center">Sell Volume</TableHead>
+                        <TableHead className="text-center">Volume</TableHead>
                         <TableHead className="text-center">Balance Change</TableHead>
                         <TableHead className="text-center">Value Change</TableHead>
                     </TableRow>
@@ -57,27 +50,58 @@ const TradesTable = ({ body }: { body: GetTraderTradesResultBodyType }) => {
                 <TableBody>
                     {tokens.slice(0, showAll ? tokens.length : 5).map(([address, trade]) => (
                         <TableRow key={address}>
-                            <TableCell className="flex items-center justify-center gap-2">
-                                <img
-                                    src={trade.token.logoURI || '/placeholder.png'}
-                                    alt={trade.token.symbol}
-                                    width={24}
-                                    height={24}
-                                    className="rounded-full"
-                                />
-                                <span className="font-medium">{trade.token.symbol}</span>
+                            <TableCell className="">
+                                <div className="flex flex-row items-center justify-center gap-2">
+                                    <img
+                                        src={trade.token.logoURI || '/placeholder.png'}
+                                        alt={trade.token.symbol}
+                                        width={24}
+                                        height={24}
+                                        className="rounded-full"
+                                    />
+                                    <span className="font-medium">{trade.token.symbol}</span>
+                                </div>
+                                
                             </TableCell>
-                            <TableCell className="text-green-500">
-                                +${trade.volume.buy.toLocaleString()}
-                            </TableCell>
-                            <TableCell className="text-red-500">
-                                -${trade.volume.sell.toLocaleString()}
+                            <TableCell>
+                                <div className="flex flex-col w-full gap-1">
+                                    <div className="flex justify-between text-xs">
+                                        <span className="text-green-500">
+                                            {((trade.volume.buy / (trade.volume.buy + trade.volume.sell)) * 100).toFixed(2)}%
+                                        </span>
+                                        <span className="text-red-500">
+                                            {((trade.volume.sell / (trade.volume.buy + trade.volume.sell)) * 100).toFixed(2)}%
+                                        </span>
+                                    </div>
+                                    <div className="flex w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
+                                        <div 
+                                            className="bg-green-500 h-full"
+                                            style={{ 
+                                                width: `${(trade.volume.buy / (trade.volume.buy + trade.volume.sell)) * 100}%`
+                                            }}
+                                        />
+                                        <div 
+                                            className="bg-red-500 h-full"
+                                            style={{ 
+                                                width: `${(trade.volume.sell / (trade.volume.buy + trade.volume.sell)) * 100}%`
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between text-xs">
+                                        <span className="text-green-500">
+                                            {new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(trade.volume.buy)}
+                                        </span>
+                                        <span className="text-red-500">
+                                            {new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(trade.volume.sell)}
+                                        </span>
+                                    </div>
+                                </div>
                             </TableCell>
                             <TableCell className={trade.balanceChange >= 0 ? "text-green-500" : "text-red-500"}>
-                                {trade.balanceChange > 0 ? "+" : "-"}{trade.balanceChange.toLocaleString()}
+                                {trade.balanceChange > 0 ? "+" : ""}{trade.balanceChange.toLocaleString()}
                             </TableCell>
                             <TableCell className={trade.usdChange >= 0 ? "text-green-500" : "text-red-500"}>
-                                ${trade.usdChange > 0 ? "+" : "-"}{Math.abs(trade.usdChange).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                                {trade.usdChange > 0 ? "+" : "-"}${Math.abs(trade.usdChange).toLocaleString(undefined, { maximumFractionDigits: 2 })}
                             </TableCell>
                         </TableRow>
                     ))}

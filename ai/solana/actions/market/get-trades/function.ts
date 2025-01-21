@@ -16,11 +16,18 @@ export async function getTraderTrades(
   args: GetTraderTradesArgumentsType
 ): Promise<SolanaActionResult<GetTraderTradesResultBodyType>> {
   try {
-    const response = await seekTradesByTime({
-      address: args.address,
-    });
-
-    console.log(response.items);
+    const responses = await Promise.all(
+      Array.from({ length: 10 }, (_, i) => 
+        seekTradesByTime({
+          address: args.address,
+          offset: i * 100,
+          limit: 100
+        })
+      )
+    );
+    const response = {
+      items: responses.flatMap(r => r.items)
+    };
 
     const tokensTradedData: Record<string, Omit<TokenTraded, "token">> = {};
 
@@ -71,9 +78,6 @@ export async function getTraderTrades(
       acc[curr.token.id] = curr;
       return acc;
     }, {} as Record<string, TokenTraded>);
-
-    console.log(tokensTraded);
-
 
     return {
       message: `Found ${response.items.length} trades for the trader. The user is shown the trades, do not list them. Ask the user what they want to do with the trades.`,

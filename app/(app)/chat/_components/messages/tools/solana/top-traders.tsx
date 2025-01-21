@@ -47,7 +47,7 @@ const TopTraders = ({ body }: { body: GetTopTradersResultBodyType }) => {
             <Table className="text-center">
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-16">Rank</TableHead>
+                        <TableHead className="w-16 text-center">Rank</TableHead>
                         <TableHead className="text-center">Trader</TableHead>
                         <TableHead className="text-center">PNL</TableHead>
                         <TableHead className="text-center">Volume</TableHead>
