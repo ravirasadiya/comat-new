@@ -37,7 +37,6 @@ export const SwapModalProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     const openSell = async (tokenAddress: string) => {
         const token = await fetch(`/api/token/${tokenAddress}/data`).then(res => res.json());
-        console.log(token);
         if(!token) return;
         setInputToken(token);
         setOutputToken(null);
@@ -46,7 +45,6 @@ export const SwapModalProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     const openBuy = async (tokenAddress: string) => {
         const token = await fetch(`/api/token/${tokenAddress}/data`).then(res => res.json());
-        console.log(token);
         if(!token) return;
         setInputToken(null);
         setOutputToken(token);

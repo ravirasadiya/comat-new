@@ -21,6 +21,9 @@ import {
     NumHolders,
     GetLpTokens,
     WithdrawLiquidity,
+    GetTopTraders,
+    GetTrades,
+    GetTopTokenTraders,
 } from './solana'
 import { SearchRecentTweets } from './twitter'
 import { SearchKnowledge } from './knowledge'
@@ -47,7 +50,10 @@ import {
     INVOKE_AGENT_NAME,
     SOLANA_DEPOSIT_LIQUIDITY_NAME,
     SOLANA_GET_LP_TOKENS_NAME,
-    SOLANA_WITHDRAW_LIQUIDITY_NAME
+    SOLANA_WITHDRAW_LIQUIDITY_NAME,
+    SOLANA_GET_TOP_TRADERS_NAME,
+    SOLANA_GET_TRADER_TRADES_NAME,
+    SOLANA_TOKEN_TOP_TRADERS_NAME,
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -105,6 +111,12 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <GetLpTokens tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_WITHDRAW_LIQUIDITY_NAME:
             return <WithdrawLiquidity tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_GET_TOP_TRADERS_NAME:
+            return <GetTopTraders tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_GET_TRADER_TRADES_NAME:
+            return <GetTrades tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_TOKEN_TOP_TRADERS_NAME:
+            return <GetTopTokenTraders tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">
