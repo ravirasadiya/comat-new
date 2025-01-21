@@ -65,7 +65,7 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                        <SidebarMenuItem>
+                        {/* <SidebarMenuItem>
                             <SidebarMenuButton 
                                 asChild 
                             >
@@ -77,7 +77,7 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                                     <span className='truncate'>Join Discord</span>
                                 </Link>
                             </SidebarMenuButton>
-                        </SidebarMenuItem>
+                        </SidebarMenuItem> */}
                     </SidebarMenuUI>
                 </SidebarFooter>
             </SidebarUI>
