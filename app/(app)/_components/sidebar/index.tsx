@@ -2,7 +2,7 @@ import React from 'react'
 
 import Link from 'next/link';
 
-import { FaXTwitter } from 'react-icons/fa6';
+import { FaDiscord, FaXTwitter } from 'react-icons/fa6';
 
 import {
     Sidebar as SidebarUI, 
@@ -15,7 +15,6 @@ import {
     SidebarSeparator,
     SidebarMenu as SidebarMenuUI,
 } from '@/components/ui'
-
 
 import AuthButton from './auth-button';
 import Logo from './logo';
@@ -65,19 +64,19 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                        {/* <SidebarMenuItem>
+                        <SidebarMenuItem>
                             <SidebarMenuButton 
                                 asChild 
                             >
                                 <Link 
-                                    href={"https://discord.gg/6brt2aC9"} 
+                                    href={"https://discord.gg/8TVcFvySWG"} 
                                     target={'_blank'}
                                 >
                                     <FaDiscord />
                                     <span className='truncate'>Join Discord</span>
                                 </Link>
                             </SidebarMenuButton>
-                        </SidebarMenuItem> */}
+                        </SidebarMenuItem>
                     </SidebarMenuUI>
                 </SidebarFooter>
             </SidebarUI>
