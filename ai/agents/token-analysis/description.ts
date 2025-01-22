@@ -3,6 +3,7 @@ import {
     SOLANA_GET_TOKEN_ADDRESS_NAME, 
     SOLANA_GET_TOKEN_DATA_NAME, 
     SOLANA_TOKEN_HOLDERS_NAME, 
+    SOLANA_TOKEN_PRICE_CHART_NAME, 
     SOLANA_TOKEN_TOP_TRADERS_NAME, 
     SOLANA_TOP_HOLDERS_NAME 
 } from "@/ai/action-names";
@@ -29,6 +30,8 @@ ${SOLANA_BUBBLE_MAPS_NAME} requires a token address as input.
 ${SOLANA_TOKEN_HOLDERS_NAME} requires a token address as input.
 
 ${SOLANA_TOKEN_TOP_TRADERS_NAME} requires a token address as input.
+
+${SOLANA_TOKEN_PRICE_CHART_NAME} requires a token address as input.
 
 If the user provides a symbol and wants the top holders, top traders, or bubble map, you will first use ${SOLANA_GET_TOKEN_ADDRESS_NAME} to get the token address for those requests that require it.
 

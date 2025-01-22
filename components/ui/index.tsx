@@ -25,3 +25,4 @@ export * from "./command";
 export * from "./popover";
 export * from "./animated-beam";
 export * from "./table";
+export * from "./candlestick-chart";
