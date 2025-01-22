@@ -19,7 +19,7 @@ interface Props {
 
 const GetTokenDataResultHeading: React.FC<Props> = ({ token }) => {
     return (
-        <Card className="p-2 flex justify-between gap-4">
+        <Card className="p-2 flex flex-col md:flex-row justify-between gap-4">
             <div className="flex items-center gap-2">
                 <img 
                     src={token.logoURI} 
@@ -27,7 +27,7 @@ const GetTokenDataResultHeading: React.FC<Props> = ({ token }) => {
                     className="w-10 h-10 rounded-full" 
                 />
                 <div className="flex flex-col">
-                    <div className="flex gap-2 items-center">
+                    <div className="flex flex-col md:flex-row md:items-center md:gap-2">
                         <h1 className="text-xl font-bold">{token.name} ({token.symbol})</h1>
                         <Address address={token.address} />
                     </div>

@@ -16,7 +16,7 @@ const Stats: React.FC<Props> = ({ token }) => {
             <h2 className="text-lg font-semibold">
                 Market Stats
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
                 <div className="flex flex-col">
                     <h3 className="text-sm font-semibold">
                         Market Cap
