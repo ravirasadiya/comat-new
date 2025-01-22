@@ -1,12 +1,15 @@
 import React from 'react'
 
-import { CandlestickChart, Card } from '@/components/ui';
+import { Card, Skeleton } from '@/components/ui';
+
+import TokenChart from '@/app/(app)/_components/token-chart';
 
 import ToolCard from '../tool-card';
 
+import { useTokenMetadata } from '@/hooks';
+
 import type { ToolInvocation } from 'ai';
-import type { TokenPriceChartResultBodyType, TokenPriceChartResultType } from '@/ai';
-import type { UTCTimestamp } from 'lightweight-charts';
+import type { TokenPriceChartResultType } from '@/ai';
 
 interface Props {
     tool: ToolInvocation,
@@ -23,7 +26,7 @@ const PriceChart: React.FC<Props> = ({ tool, prevToolAgent }) => {
                     ? `Fetched Token Price Chart` 
                     : `Failed to fetch token price chart`,
                 body: (result: TokenPriceChartResultType) => result.body 
-                    ? <PriceChartBody body={result.body} /> 
+                    ? <PriceChartBody tokenAddress={tool.args.tokenAddress} /> 
                     : "No token price chart found"
             }}
             prevToolAgent={prevToolAgent}
@@ -32,19 +35,31 @@ const PriceChart: React.FC<Props> = ({ tool, prevToolAgent }) => {
     )
 }
 
-const PriceChartBody = ({ body }: { body: TokenPriceChartResultBodyType }) => {
+const PriceChartBody = ({ tokenAddress }: { tokenAddress: string }) => {
+    
+    const { data: tokenMetadata, isLoading } = useTokenMetadata(tokenAddress);
+
     return (
-        <Card className="w-full p-4">
-            <CandlestickChart 
-                data={body.prices.map(price => ({
-                    time: price.unixTime as UTCTimestamp,
-                    open: price.o,
-                    high: price.h,
-                    low: price.l,
-                    close: price.c,
-                }))} 
-                height={400}
-            />
+        <Card className="w-full p-4 flex flex-col gap-4">
+            {
+                isLoading ? (
+                    <Skeleton className="w-full h-8" />
+                ) : (
+                    tokenMetadata && (
+                        <div className="w-full flex items-center gap-2">
+                            <img 
+                                src={tokenMetadata.logo_uri} 
+                                alt={tokenMetadata.name} 
+                                className="rounded-full h-8 w-8"
+                            />
+                            <h3 
+                                className="text-xl font-bold">{tokenMetadata.name} (${tokenMetadata.symbol})
+                            </h3>
+                        </div>
+                    )
+                )
+            }
+            <TokenChart mint={tokenAddress} />
         </Card>
     )
 }

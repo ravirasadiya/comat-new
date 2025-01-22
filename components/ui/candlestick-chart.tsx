@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { createChart, ColorType, IChartApi, Time } from 'lightweight-charts';
-import { useColorMode } from '@/app/_contexts';
+import { useColorMode } from '@/app/_contexts/color-mode';
 
 interface CandlestickData {
     time: Time;
@@ -15,35 +15,27 @@ interface CandlestickData {
 
 interface CandlestickChartProps {
     data: CandlestickData[];
-    colors?: {
-        backgroundColor?: string;
-        lineColor?: string;
-        textColor?: string;
-        upColor?: string;
-        downColor?: string;
-        wickUpColor?: string;
-        wickDownColor?: string;
-    };
     height?: number;
     width?: number;
 }
 
 export function CandlestickChart({
     data,
-    colors = {
-        backgroundColor: 'white',
-        lineColor: '#2962FF',
-        textColor: 'black',
-        upColor: '#26a69a',
-        downColor: '#ef5350',
-        wickUpColor: '#26a69a',
-        wickDownColor: '#ef5350',
-    },
     height = 400,
     width = 600,
 }: CandlestickChartProps) {
 
     const { mode } = useColorMode();
+
+    const colors = {
+        backgroundColor: mode === 'dark' ? '#121212' : 'white',
+        lineColor: mode === 'dark' ? '#404040' : '#f5f5f5',
+        textColor: mode === 'dark' ? 'white' : 'black',
+        upColor: mode === 'dark' ? '#26a69a' : '#26a69a',
+        downColor: mode === 'dark' ? '#ef5350' : '#ef5350',
+        wickUpColor: mode === 'dark' ? '#26a69a' : '#26a69a',
+        wickDownColor: mode === 'dark' ? '#ef5350' : '#ef5350',
+    }
 
     const chartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
@@ -65,8 +57,20 @@ export function CandlestickChart({
                 background: { type: ColorType.Solid, color: "transparent" },
                 textColor: colors.textColor,
             },
+            grid: {
+                vertLines: { color: colors.lineColor },
+                horzLines: { color: colors.lineColor },
+            },
             width: chartContainerRef.current.clientWidth,
             height: height,
+            handleScroll: false,
+            handleScale: false,
+            rightPriceScale: {
+                borderColor: colors.lineColor,
+            },
+            timeScale: {
+                borderColor: colors.lineColor,
+            },
         });
         chartRef.current = chart;
 

@@ -8,8 +8,6 @@ export type TokenPriceChartSchemaType = typeof TokenPriceChartInputSchema;
 
 export type TokenPriceChartArgumentsType = z.infer<TokenPriceChartSchemaType>;
 
-export type TokenPriceChartResultBodyType = {
-    prices: OHLCVData[];
-}; 
+export type TokenPriceChartResultBodyType = {}; 
 
 export type TokenPriceChartResultType = SolanaActionResult<TokenPriceChartResultBodyType>;
