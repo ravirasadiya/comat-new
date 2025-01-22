@@ -5,6 +5,7 @@ export async function getPriceChart(): Promise<SolanaActionResult<TokenPriceChar
   try {
     return {
       message: `The price chart has been retrieved and displayed to the user. Do not reiterate the raw data.`,
+      body: {}
     };
   } catch (error) {
     return {
