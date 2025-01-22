@@ -26,3 +26,4 @@ export * from "./popover";
 export * from "./animated-beam";
 export * from "./table";
 export * from "./candlestick-chart";
+export * from "./optional-link";

@@ -6,3 +6,5 @@ export * from './top-traders';
 export * from './trades';
 export * from './top-traders-by-token';
 export * from './ohlcv';
+export * from './search';
+export * from './token-overview';
