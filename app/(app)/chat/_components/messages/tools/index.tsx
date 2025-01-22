@@ -24,6 +24,7 @@ import {
     GetTopTraders,
     GetTrades,
     GetTopTokenTraders,
+    PriceChart,
 } from './solana'
 import { SearchRecentTweets } from './twitter'
 import { SearchKnowledge } from './knowledge'
@@ -54,6 +55,7 @@ import {
     SOLANA_GET_TOP_TRADERS_NAME,
     SOLANA_GET_TRADER_TRADES_NAME,
     SOLANA_TOKEN_TOP_TRADERS_NAME,
+    SOLANA_TOKEN_PRICE_CHART_NAME,
 } from '@/ai/action-names'
 
 import type { ToolInvocation as ToolInvocationType } from 'ai'
@@ -117,6 +119,8 @@ const ToolInvocation: React.FC<Props> = ({ tool, prevToolAgent }) => {
             return <GetTrades tool={tool} prevToolAgent={prevToolAgent} />
         case SOLANA_TOKEN_TOP_TRADERS_NAME:
             return <GetTopTokenTraders tool={tool} prevToolAgent={prevToolAgent} />
+        case SOLANA_TOKEN_PRICE_CHART_NAME:
+            return <PriceChart tool={tool} prevToolAgent={prevToolAgent} />
         default:
             return (
                 <pre className="whitespace-pre-wrap">

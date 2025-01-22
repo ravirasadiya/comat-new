@@ -12,6 +12,7 @@ export { default as BubbleMaps } from './bubble-maps';
 export { default as NumHolders } from './num-holders';
 export { default as GetTrades } from './recent-trades';
 export { default as GetTopTokenTraders } from './top-token-traders';
+export { default as PriceChart } from './price-chart';
 
 export * from './liquidity';
 export * from './staking';
