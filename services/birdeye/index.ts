@@ -5,5 +5,7 @@ export * from './get-trending-tokens';
 export * from './get-top-traders';
 export * from './seek-trades-by-time';
 export * from './get-top-traders-by-token';
+export * from './search-tokens';
+export * from './get-token-overview';
 
 export * from './types';
