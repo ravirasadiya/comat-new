@@ -4,10 +4,10 @@ import { getPrices, Price } from "../birdeye";
 
 import { chunkArray } from "@/lib/utils";
 
-import type { LpToken } from "./types";
+import type { LpPortfolio, LpToken } from "./types";
 import type { ApiV3PoolInfoStandardItem } from "@raydium-io/raydium-sdk-v2";
 
-export const getLpPortfolio = async (address: string) => {
+export const getLpPortfolio = async (address: string): Promise<LpPortfolio> => {
 
     const lpTokens = await getLpTokensByAddress(address);
 
