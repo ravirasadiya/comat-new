@@ -1,11 +1,12 @@
 import React from 'react'
 
+import { Card } from '@/components/ui';
+
 import ToolCard from '../tool-card';
 
 import type { ToolInvocation } from 'ai';
 import type { GetTrendingTokensResultBodyType, GetTrendingTokensResultType } from '@/ai';
-import { Card } from '@/components/ui';
-import { TrendingToken } from '@/services/birdeye';
+import type { TrendingToken } from '@/services/birdeye/types';
 
 interface Props {
     tool: ToolInvocation,

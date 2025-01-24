@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TopTokenTradersInputSchema } from "./input-schema";
 import { SolanaActionResult } from "../../solana-action";
 
-import { TopTraderByToken } from "@/services/birdeye";
+import type { TopTraderByToken } from "@/services/birdeye/types";
 
 export type TopTokenTradersSchemaType = typeof TopTokenTradersInputSchema;
 

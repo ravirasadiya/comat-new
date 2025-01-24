@@ -2,8 +2,7 @@
 
 import type { SolanaActionResult } from "../../solana-action";
 import type { GetTokenDataArgumentsType, GetTokenDataResultBodyType } from "./types";
-import { searchTokens } from "@/services/birdeye";
-import { getTokenOverview } from "@/services/birdeye/get-token-overview";
+import { searchTokens, getTokenOverview } from "@/services/birdeye";
 
 /**
  * Gets the token data for a given ticker.

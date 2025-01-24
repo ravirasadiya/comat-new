@@ -52,8 +52,8 @@ const RaydiumStandardPortfolio: React.FC<Props> = ({ address }) => {
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[300px]">Asset</TableHead>
-                            <TableHead>Balance</TableHead>
-                            <TableHead>7d APY</TableHead>
+                            <TableHead className="text-center">Balance</TableHead>
+                            <TableHead className="text-center">7d APY</TableHead>
                             <TableHead className="text-right">Value</TableHead>
                         </TableRow>
                     </TableHeader>

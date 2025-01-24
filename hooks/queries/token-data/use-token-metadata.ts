@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 
-import { TokenMetadata } from "@/services/birdeye";
+import type { TokenMetadata } from "@/services/birdeye/types";
 
 export const useTokenMetadata = (address: string) => {
     const { data, isLoading, error } = useSWR<TokenMetadata | null>(

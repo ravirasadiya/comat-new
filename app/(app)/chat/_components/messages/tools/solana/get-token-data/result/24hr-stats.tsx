@@ -4,8 +4,9 @@ import React from 'react'
 
 import { Card } from '@/components/ui'
 
-import type { TokenOverview } from '@/services/birdeye'
 import BuySell from '../../../utils/buy-sell'
+
+import type { TokenOverview } from '@/services/birdeye/types'
 
 interface Props {
     token: TokenOverview

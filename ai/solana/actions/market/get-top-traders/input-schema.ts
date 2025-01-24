@@ -1,4 +1,4 @@
-import { TimeFrame } from "@/services/birdeye";
+import { TimeFrame } from "@/services/birdeye/types";
 import { z } from "zod";
 
 export const GetTopTradersInputSchema = z.object({

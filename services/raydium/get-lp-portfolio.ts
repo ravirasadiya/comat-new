@@ -1,11 +1,12 @@
 import { getLpTokensByAddress } from "./get-lp-tokens-by-address";
 
-import { getPrices, Price } from "../birdeye";
+import { getPrices } from "../birdeye";
 
 import { chunkArray } from "@/lib/utils";
 
 import type { LpPortfolio, LpToken } from "./types";
 import type { ApiV3PoolInfoStandardItem } from "@raydium-io/raydium-sdk-v2";
+import type { Price } from "../birdeye/types";
 
 export const getLpPortfolio = async (address: string): Promise<LpPortfolio> => {
 
@@ -22,7 +23,9 @@ export const getLpPortfolio = async (address: string): Promise<LpPortfolio> => {
 
         if(!pool.lpMint) return 0;
 
-        return ((lpToken.amount / 10 ** lpToken.decimals) / pool.lpAmount) * (pool.mintAmountB * (prices[pool.mintB.address].value || 0) + pool.mintAmountA * (prices[pool.mintA.address].value || 0))
+        if(!prices[pool.mintB.address] || !prices[pool.mintA.address]) return 0;
+
+        return ((lpToken.amount / 10 ** lpToken.decimals) / pool.lpAmount) * (pool.mintAmountB * (prices[pool.mintB.address]!.value || 0) + pool.mintAmountA * (prices[pool.mintA.address]!.value || 0))
     }
 
     return {
