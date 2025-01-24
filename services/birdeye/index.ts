@@ -9,5 +9,3 @@ export * from './fetch-ohlcv';
 export * from './search-tokens';
 export * from './get-token-overview';
 export * from './get-token-metadata';
-
-export * from './types';

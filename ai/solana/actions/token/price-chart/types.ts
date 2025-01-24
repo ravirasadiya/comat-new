@@ -1,8 +1,7 @@
 import { z } from "zod";
 
 import { TokenPriceChartInputSchema } from "./input-schema";
-import { SolanaActionResult } from "../../solana-action";
-import { OHLCVData } from "@/services/birdeye";
+import type { SolanaActionResult } from "../../solana-action";
 
 export type TokenPriceChartSchemaType = typeof TokenPriceChartInputSchema;
 

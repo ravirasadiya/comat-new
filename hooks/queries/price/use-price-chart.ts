@@ -2,7 +2,7 @@
 
 import useSWR from 'swr';
 
-import { OHLCVData, OHLCVTimeframe } from '@/services/birdeye';
+import { OHLCVData, OHLCVTimeframe } from '@/services/birdeye/types';
 
 export const usePriceChart = (mint: string, timeframe: OHLCVTimeframe, numDays: number) => {
 

@@ -49,9 +49,9 @@ const Transactions: React.FC<Props> = ({ address }) => {
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>Tx Hash</TableHead>
-                                        <TableHead>Type</TableHead>
-                                        <TableHead>Source</TableHead>
-                                        <TableHead>Balance Changes</TableHead>
+                                        <TableHead className="text-center">Type</TableHead>
+                                        <TableHead className="text-center">Source</TableHead>
+                                        <TableHead className="">Balance Changes</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody className="max-h-96 overflow-y-hidden">

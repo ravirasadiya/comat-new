@@ -29,6 +29,8 @@ const Tokens: React.FC<Props> = ({ address }) => {
 
     const { data: portfolio, isLoading } = usePortfolio(address);
 
+    console.log(portfolio);
+
     const { openSell, openBuy } = useSwapModal();
 
     return (
