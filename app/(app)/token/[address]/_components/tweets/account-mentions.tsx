@@ -2,7 +2,7 @@ import React from 'react'
 
 import Tweet from './tweet';
 
-import { searchAccountMentions } from '@/services/twitter';
+import { getMentionsByUserId } from '@/services/twitter';
 
 interface Props {
     username: string;
@@ -10,7 +10,7 @@ interface Props {
 
 const AccountMentions: React.FC<Props> = async ({ username }) => {
 
-    const tweets = await searchAccountMentions(username);
+    const tweets = await getMentionsByUserId(username);
 
     return (
         <div className="flex flex-col gap-2 h-full max-h-full overflow-y-hidden">

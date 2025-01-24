@@ -77,7 +77,7 @@
     "swr": "^2.3.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
-    "twitter-api-v2": "^1.18.2",
+    "twitter-api-v2": "^1.19.0",
     "viem": "^2.21.56",
     "zod": "^3.24.1"
   },
