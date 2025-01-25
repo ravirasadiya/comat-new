@@ -4,4 +4,3 @@ export * from "./open-lp-position";
 export * from "./addresses";
 export * from "./get-pool-from-lp-mint";
 export * from "./get-lp-tokens-by-address";
-export * from "./get-lp-portfolio";

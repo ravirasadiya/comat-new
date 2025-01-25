@@ -4,10 +4,12 @@ import React, { useState } from 'react'
 
 import { Button, CandlestickChart, Skeleton } from '@/components/ui';
 
-import { OHLCVTimeframe } from '@/services/birdeye';
 import { usePriceChart } from '@/hooks';
-import { UTCTimestamp } from 'lightweight-charts';
+
 import { cn } from '@/lib/utils';
+
+import type { UTCTimestamp } from 'lightweight-charts';
+import { OHLCVTimeframe } from '@/services/birdeye/types';
 
 const WINDOWS = [
     { 

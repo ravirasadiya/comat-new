@@ -1,5 +1,6 @@
-import { TopTradersByTokenTimeFrame } from "@/services/birdeye";
 import { z } from "zod";
+
+import { TopTradersByTokenTimeFrame } from "@/services/birdeye/types";
 
 export const TopTokenTradersInputSchema = z.object({
     tokenAddress: z.string().describe("The token address to check top traders for."),

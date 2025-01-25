@@ -10,8 +10,9 @@ import { Globe } from 'lucide-react'
 
 import { OptionalLink } from '@/components/ui';
 
-import type { TokenOverview } from '@/services/birdeye';
 import { cn } from '@/lib/utils';
+
+import type { TokenOverview } from '@/services/birdeye/types';
 
 const SOCIAL_LINKS = [
     {
