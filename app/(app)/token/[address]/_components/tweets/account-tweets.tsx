@@ -2,7 +2,7 @@ import React from 'react'
 
 import Tweet from './tweet';
 
-import { getPostsByUserId } from '@/services/twitter';
+import { getPostsByUsername } from '@/services/twitter';
 
 interface Props {
     username: string;
@@ -10,7 +10,7 @@ interface Props {
 
 const AccountTweets: React.FC<Props> = async ({ username }) => {
 
-    const tweets = await getPostsByUserId(username);
+    const tweets = await getPostsByUsername(username);
 
     return (
         <div className="flex flex-col gap-2 h-full max-h-full overflow-y-hidden">
@@ -19,8 +19,7 @@ const AccountTweets: React.FC<Props> = async ({ username }) => {
                 {tweets.map((tweet) => (
                     <Tweet 
                         key={tweet.tweet.id} 
-                        tweet={tweet.tweet} 
-                        user={tweet.user} 
+                        tweet={tweet} 
                     />
                 ))}
             </div>

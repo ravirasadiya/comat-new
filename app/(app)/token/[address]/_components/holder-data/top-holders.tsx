@@ -1,61 +1,78 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
+
+import { Skeleton } from "@/components/ui";
 
 import WalletAddress from "@/app/_components/wallet-address";
 
 import { Connection, PublicKey } from "@solana/web3.js";
 
-import { getTokenHolders } from "@/services/birdeye";
 import { getStreamsByMint } from "@/services/streamflow";
 
 import { knownAddresses } from "@/lib/known-addresses";
 
 import type { TokenHolder } from "@/services/birdeye/types";
+import { useTopHolders } from "@/hooks/queries/token/use-top-holders";
 
 interface Props {
     mint: string;
 }
 
-const TopHolders: React.FC<Props> = async ({ mint }) => {
+const TopHolders: React.FC<Props> = ({ mint }) => {
 
-    const { items: topHolders } = await getTokenHolders({
-        address: mint,
-        offset: 0,
-        limit: 10
-    });
+    const { data: topHolders, isLoading, error } = useTopHolders(mint);
 
-    const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!);
-    const mintInfo = await connection.getTokenSupply(new PublicKey(mint));
-    const totalSupply = Number(BigInt(mintInfo.value.amount) / BigInt(Math.pow(10, mintInfo.value.decimals)));
+    const [totalSupply, setTotalSupply] = useState<number>(0);
+    const [knownAddressesWithStreamflow, setKnownAddressesWithStreamflow] = useState<Record<string, { name: string, logo: string }>>(knownAddresses);
 
-    const streamflowAccounts = await getStreamsByMint(mint);
+    useEffect(() => {
+        const fetchData = async () => {
+            const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!);
+            const mintInfo = await connection.getTokenSupply(new PublicKey(mint));
+            setTotalSupply(Number(BigInt(mintInfo.value.amount) / BigInt(Math.pow(10, mintInfo.value.decimals))));
 
-    const knownAddressesWithStreamflow = {
-        ...knownAddresses,
-        ...streamflowAccounts.reduce((acc, account) => {
-            acc[account.account.escrowTokens] = {
-                name: "Streamflow Vault",
-                logo: "/vesting/streamflow.png"
-            }
-            return acc;
-        }, {} as Record<string, { name: string, logo: string }>)
-    }
+            const streamflowAccounts = await getStreamsByMint(mint);
+            
+            setKnownAddressesWithStreamflow({
+                ...knownAddresses,
+                ...streamflowAccounts.reduce((acc, account) => {
+                    acc[account.account.escrowTokens] = {
+                        name: "Streamflow Vault",
+                        logo: "/vesting/streamflow.png"
+                    }
+                    return acc;
+                }, {} as Record<string, { name: string, logo: string }>)
+            });
+        };
+
+        fetchData();
+    }, [mint]);
 
     return (
         <div className="flex flex-col gap-2 h-full max-h-full">
             <h2 className="text-lg font-bold">Top Holders</h2>
-            <div className="flex flex-col gap-2 flex-1 h-0 overflow-y-auto">
-                {topHolders.map((topHolder, index) => (
-                    <TopHolder
-                        key={topHolder.owner} 
-                        topHolder={topHolder}
-                        percentageOwned={topHolder.ui_amount / totalSupply * 100}
-                        index={index}
-                        knownAddresses={knownAddressesWithStreamflow}
-                    />
-                ))}
-            </div>
+            {
+                isLoading ? (
+                    <div className="flex flex-col gap-2 flex-1 h-0 overflow-y-auto no-scrollbar">
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                ) : (
+                    <div className="flex flex-col gap-2 flex-1 h-0 overflow-y-auto no-scrollbar">
+                        {topHolders.map((topHolder, index) => (
+                            <TopHolder
+                                key={topHolder.owner} 
+                                topHolder={topHolder}
+                                percentageOwned={topHolder.ui_amount / totalSupply * 100}
+                                index={index}
+                                knownAddresses={knownAddressesWithStreamflow}
+                            />
+                        ))}
+                    </div>
+                )
+            }
         </div>
     )
 }
@@ -73,7 +90,7 @@ const TopHolder = ({ topHolder, percentageOwned, index, knownAddresses }: TopHol
             <p className="text-sm text-muted-foreground">
                 {index + 1})
             </p>
-            <div className="flex flex-col">
+            <div className="flex justify-between w-full">
                 {
                     knownAddresses[topHolder.owner] ? (
                         <div className="flex flex-row items-center gap-2">

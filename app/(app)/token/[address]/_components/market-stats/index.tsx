@@ -1,27 +1,46 @@
+"use client"
+
 import React from 'react'
 
 import TimeStats from './time-stats';
 
-import type { TokenOverview } from '@/services/birdeye/types';
+import { useTokenOverview } from '@/hooks';
+import { Skeleton } from '@/components/ui';
 
 interface Props {
-    token: TokenOverview;
+    address: string;
 }
 
-const MarketStats: React.FC<Props> = ({ token }) => {
+const MarketStats: React.FC<Props> = ({ address }) => {
+
+    const { data: tokenOverview, isLoading } = useTokenOverview(address);
+
+    if(isLoading) {
+        return <Skeleton className="h-full w-full" />
+    }
 
     return (
         <div className='flex flex-col gap-2'>
             <h2 className="text-lg font-semibold">
                 Market Stats
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
-                <StatItem label="Market Cap" value={token.mc} prefix="$" />
-                <StatItem label="Liquidity" value={token.liquidity} prefix="$" />
-                <StatItem label="# of Holders" value={token.holder} />
-                <StatItem label="# of Markets" value={token.numberMarkets} />
-            </div>
-            <TimeStats token={token} />
+            {
+                tokenOverview ? (
+                    <>
+                        <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
+                            <StatItem label="Market Cap" value={tokenOverview.mc} prefix="$" />
+                            <StatItem label="Liquidity" value={tokenOverview.liquidity} prefix="$" />
+                            <StatItem label="# of Holders" value={tokenOverview.holder} />
+                            <StatItem label="# of Markets" value={tokenOverview.numberMarkets} />
+                        </div>
+                        <TimeStats token={tokenOverview} />
+                    </>
+                ) : (
+                    <p className="text-sm text-neutral-500">
+                        No data available
+                    </p>
+                )
+            }
         </div>
     )
 }
