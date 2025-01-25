@@ -1,12 +1,10 @@
 import React from 'react'
 
-import { Card } from '@/components/ui'
-
 import Address from '@/app/_components/address'
 
 import Links from './token-links'
 
-import type { TokenOverview } from '@/services/birdeye'
+import type { TokenOverview } from '@/services/birdeye/types'
 
 interface Props {
     token: TokenOverview

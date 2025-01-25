@@ -1,6 +1,6 @@
-import { getUserByUsername, searchTweets } from "@/services/twitter";
-import { getPostsByUserId } from "@/services/twitter/get-posts";
 import { NextResponse } from "next/server";
+
+import { getUserByUsername, getPostsByUserId } from "@/services/twitter";
 
 export const GET = async (request: Request, { params }: { params: Promise<{ username: string }> }) => {
     const { username } = await params;

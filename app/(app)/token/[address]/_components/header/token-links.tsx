@@ -12,7 +12,7 @@ import { OptionalLink } from '@/components/ui';
 
 import { cn } from '@/lib/utils';
 
-import type { TokenExtensions } from '@/services/birdeye';
+import type { TokenExtensions } from '@/services/birdeye/types';
 
 const SOCIAL_LINKS = [
     {

@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { Card } from '@/components/ui'
-
-import type { TokenOverview } from '@/services/birdeye';
 import TimeStats from './time-stats';
+
+import type { TokenOverview } from '@/services/birdeye/types';
 
 interface Props {
     token: TokenOverview;

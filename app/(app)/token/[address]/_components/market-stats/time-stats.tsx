@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react'
 
+import { Button } from '@/components/ui'
+
 import BuySell from '@/app/(app)/_components/buy-sell'
 
-import type { TokenOverview } from '@/services/birdeye'
-import { Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
+
+import type { TokenOverview } from '@/services/birdeye/types'
 
 interface Props {
     token: TokenOverview
@@ -141,7 +143,6 @@ interface StatSectionProps {
     buyLabel?: string
     sellLabel?: string
     prefix?: string
-    className?: string
 }
 
 const StatSection: React.FC<StatSectionProps> = ({
@@ -152,7 +153,6 @@ const StatSection: React.FC<StatSectionProps> = ({
     buyLabel,
     sellLabel,
     prefix,
-    className = ''
 }) => {
     return (
         <div className="flex gap-2 items-center h-16">

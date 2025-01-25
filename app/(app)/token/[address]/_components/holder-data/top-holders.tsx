@@ -2,16 +2,16 @@ import React from "react";
 
 import Image from "next/image";
 
-import { Card } from "@/components/ui";
-
 import WalletAddress from "@/app/_components/wallet-address";
 
 import { Connection, PublicKey } from "@solana/web3.js";
 
-import { getTokenHolders, TokenHolder } from "@/services/birdeye";
+import { getTokenHolders } from "@/services/birdeye";
 import { getStreamsByMint } from "@/services/streamflow";
 
 import { knownAddresses } from "@/lib/known-addresses";
+
+import type { TokenHolder } from "@/services/birdeye/types";
 
 interface Props {
     mint: string;

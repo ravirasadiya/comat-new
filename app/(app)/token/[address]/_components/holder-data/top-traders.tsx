@@ -2,7 +2,7 @@ import React from "react";
 
 import Image from "next/image";
 
-import { Card, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Button } from "@/components/ui";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui";
 
 import { getTopTradersByToken } from "@/services/birdeye";
 
