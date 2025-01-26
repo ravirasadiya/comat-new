@@ -23,7 +23,7 @@ interface Props {
 
 const TopHolders: React.FC<Props> = ({ mint }) => {
 
-    const { data: topHolders, isLoading, error } = useTopHolders(mint);
+    const { data: topHolders, isLoading } = useTopHolders(mint);
 
     const [totalSupply, setTotalSupply] = useState<number>(0);
     const [knownAddressesWithStreamflow, setKnownAddressesWithStreamflow] = useState<Record<string, { name: string, logo: string }>>(knownAddresses);
@@ -57,7 +57,7 @@ const TopHolders: React.FC<Props> = ({ mint }) => {
             {
                 isLoading ? (
                     <div className="flex flex-col gap-2 flex-1 h-0 overflow-y-auto no-scrollbar">
-                        <Skeleton className="h-10 w-full" />
+                        <Skeleton className="h-full w-full" />
                     </div>
                 ) : (
                     <div className="flex flex-col gap-2 flex-1 h-0 overflow-y-auto no-scrollbar">

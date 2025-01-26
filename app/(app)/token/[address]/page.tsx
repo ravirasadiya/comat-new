@@ -29,12 +29,12 @@ const TokenPage = async ({ params }: { params: Promise<{ address: string }> }) =
                 <Card className="p-4 h-full max-h-[300px]">
                     <TopHolders mint={address} />
                 </Card>
-                {/* <Card className="p-4 h-full max-h-[300px]">
+                <Card className="p-4 h-full max-h-[300px]">
                     <TopTraders address={address} />
                 </Card>
                 <Card className="p-4 h-full max-h-[300px]">
                     <BubbleMap address={address} />
-                </Card> */}
+                </Card>
             </div>
             {/* {
                 tokenOverview.extensions.twitter && (

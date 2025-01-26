@@ -52,7 +52,7 @@ const Tweet: React.FC<Props> = ({ tweet }) => {
     };
 
     return (
-        <div className="flex flex-col gap-2 p-4 border border-border rounded-lg">
+        <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 w-full overflow-hidden">
                 <img 
                     src={user.profile_image_url} 

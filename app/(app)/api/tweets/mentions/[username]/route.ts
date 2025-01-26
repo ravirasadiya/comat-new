@@ -1,8 +1,9 @@
-import { searchTweets } from "@/services/twitter";
 import { NextResponse } from "next/server";
+
+import { getMentionsByUsername } from "@/services/twitter";
 
 export const GET = async (request: Request, { params }: { params: Promise<{ username: string }> }) => {
     const { username } = await params;
-    const tweets = await searchTweets(`@${username} is:verified lang:en`);
+    const tweets = await getMentionsByUsername(username);
     return NextResponse.json(tweets);
 }
