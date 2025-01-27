@@ -3,5 +3,4 @@ export enum Models {
     Anthropic = "Anthropic",
     XAI = "XAI",
     Gemini = "Gemini",
-    Deepseek = "Deepseek",
 }

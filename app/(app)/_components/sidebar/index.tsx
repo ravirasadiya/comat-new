@@ -2,7 +2,7 @@ import React from 'react'
 
 import Link from 'next/link';
 
-import { FaDiscord, FaXTwitter } from 'react-icons/fa6';
+import { FaXTwitter } from 'react-icons/fa6';
 
 import {
     Sidebar as SidebarUI, 
@@ -58,13 +58,14 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                                 <Link 
                                     href={"https://x.com/askthehive_ai"} 
                                     target={'_blank'}
+                                    className='font-bold font-carlito'
                                 >
                                     <FaXTwitter />
-                                    <span className='truncate'>Follow Us</span>
+                                    <span className='truncate'>Twitter</span>
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                        <SidebarMenuItem>
+                        {/* <SidebarMenuItem>
                             <SidebarMenuButton 
                                 asChild 
                             >
@@ -76,7 +77,7 @@ const Sidebar: React.FC<Props> = ({ children }) => {
                                     <span className='truncate'>Join Discord</span>
                                 </Link>
                             </SidebarMenuButton>
-                        </SidebarMenuItem>
+                        </SidebarMenuItem> */}
                     </SidebarMenuUI>
                 </SidebarFooter>
             </SidebarUI>

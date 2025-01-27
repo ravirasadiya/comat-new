@@ -1,23 +1,28 @@
 import type { Metadata, Viewport } from "next";
 
-import { DM_Sans, DM_Mono } from "next/font/google";
+import { Barlow, Arimo, Carlito } from "next/font/google";
 
 import "./globals.css";
 import Providers from "./_contexts";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const barlow = Barlow({
+  variable: "--font-barlow",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
-
-const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
-  weight: ["300", "400", "500"],
+const carlito = Carlito({
+  variable: "--font-carlito",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+const arimo = Arimo({
+  variable: "--font-arimo",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "The Hive",
+  title: "Comet",
   description: "A modular network of interoperable DeFi agents",
 };
 
@@ -38,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${dmSans.variable} ${dmMono.variable} antialiased bg-white dark:bg-neutral-900`}
+        className={`${barlow.variable} ${arimo.variable} ${carlito.variable} antialiased bg-white dark:bg-[#000]`}
       >
         <Providers>
           {children}

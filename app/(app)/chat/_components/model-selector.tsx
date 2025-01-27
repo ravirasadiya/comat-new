@@ -21,7 +21,6 @@ const modelLogos = {
     [Models.Anthropic]: "/logos/anthropic.png",
     [Models.XAI]: "/logos/xai.png",
     [Models.Gemini]: "/logos/google.png",
-    [Models.Deepseek]: "/logos/deepseek.png",
 };
 
 const ModelSelector: React.FC<ModelSelectorProps> = ({
